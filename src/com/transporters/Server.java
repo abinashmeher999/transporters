@@ -11,6 +11,7 @@ public class Server {
     private static String url = "jdbc:mysql://localhost:3306/tccs";
     private static String user = "root";
     private static String password = "alsk";
+    private Database database;
 
     //
     // Constructors
