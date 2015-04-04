@@ -1,9 +1,17 @@
 package com.transporters;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class Consignment
  */
 public class Consignment {
+
+    private Address Address(String string, String string0, String string1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     //
     // Fields
@@ -15,56 +23,70 @@ public class Consignment {
         DELIVERED
     };
 
-    private int consignment_id;
-    private int waiting_time = Integer.MAX_VALUE;
-    private long volume = 0;
+    private int id;
+    private Time waiting_time;
+    private long volume;
     private String name_sender;
     private String name_receiver;
+    private String name_billing;
     private Address address_sender;
     private Address address_receiver;
-    private Status status_delivery = Status.PENDING;
+    private Address address_billing;
+    private Status status_delivery;
+    private List<Truck> carrier_trucks;
 
     //
     // Constructors
     //
     public Consignment() {
+        this.id = -1;
+        this.waiting_time = new Time(0);
+        this.volume = 0;
+        this.name_sender = "0";
+        this.name_receiver = "0";
+        this.name_billing = "0";
+        this.address_sender = Address("0", "0", "0");
+        this.address_receiver = Address("0", "0", "0");
+        this.address_billing = Address("0", "0", "0");
+        this.status_delivery = Status.PENDING;
+        this.carrier_trucks = new ArrayList<Truck>();
     }
 
     ;
   
-	//
-	// Methods
-	//
+    //
+    // Methods
+    //
 
 
-	//
-	// Accessor methods
-	//
+    //
+    // Accessor methods
+    //
 
-	/**
-	 * Set the value of consignment_id
-	 * @param newVar the new value of consignment_id
-	 */
-        private void setConsignement_id(int newVar) {
-        consignment_id = newVar;
+    /**
+     * Set the value of id
+     * @param _consignment_id the new value of id
+     */
+    public void setConsignment_id(int _consignment_id) {
+        id = _consignment_id;
     }
 
     /**
-     * Get the value of consignment_id
+     * Get the value of id
      *
-     * @return the value of consignment_id
+     * @return the value of id
      */
-    private int getConsignement_id() {
-        return consignment_id;
+    public int getConsignment_id() {
+        return id;
     }
 
     /**
      * Set the value of waiting_time
      *
-     * @param newVar the new value of waiting_time
+     * @param _waiting_time the new value of waiting_time
      */
-    private void setWaiting_time(int newVar) {
-        waiting_time = newVar;
+    public void setWaiting_time(Time _waiting_time) {
+        waiting_time = _waiting_time;
     }
 
     /**
@@ -72,17 +94,17 @@ public class Consignment {
      *
      * @return the value of waiting_time
      */
-    private int getWaiting_time() {
+    public Time getWaiting_time() {
         return waiting_time;
     }
 
     /**
      * Set the value of volume
      *
-     * @param newVar the new value of volume
+     * @param _volume the new value of volume
      */
-    private void setVolume(long newVar) {
-        volume = newVar;
+    public void setVolume(long _volume) {
+        volume = _volume;
     }
 
     /**
@@ -90,17 +112,17 @@ public class Consignment {
      *
      * @return the value of volume
      */
-    private long getVolume() {
+    public long getVolume() {
         return volume;
     }
 
     /**
      * Set the value of name_sender
      *
-     * @param newVar the new value of name_sender
+     * @param _sender_name the new value of name_sender
      */
-    private void setName_sender(String newVar) {
-        name_sender = newVar;
+    public void setName_sender(String _sender_name) {
+        name_sender = _sender_name;
     }
 
     /**
@@ -108,17 +130,17 @@ public class Consignment {
      *
      * @return the value of name_sender
      */
-    private String getName_sender() {
+    public String getName_sender() {
         return name_sender;
     }
 
     /**
      * Set the value of name_receiver
      *
-     * @param newVar the new value of name_receiver
+     * @param _receiver_name the new value of name_receiver
      */
-    private void setName_receiver(String newVar) {
-        name_receiver = newVar;
+    public void setName_receiver(String _receiver_name) {
+        name_receiver = _receiver_name;
     }
 
     /**
@@ -126,17 +148,17 @@ public class Consignment {
      *
      * @return the value of name_receiver
      */
-    private String getName_receiver() {
+    public String getName_receiver() {
         return name_receiver;
     }
 
     /**
      * Set the value of address_sender
      *
-     * @param newVar the new value of address_sender
+     * @param _sender_address the new value of address_sender
      */
-    private void setAddress_sender(Address newVar) {
-        address_sender = newVar;
+    public void setAddress_sender(Address _sender_address) {
+        address_sender = _sender_address;
     }
 
     /**
@@ -144,17 +166,17 @@ public class Consignment {
      *
      * @return the value of address_sender
      */
-    private Address getAddress_sender() {
+    public Address getAddress_sender() {
         return address_sender;
     }
 
     /**
      * Set the value of address_receiver
      *
-     * @param newVar the new value of address_receiver
+     * @param _receiver_address the new value of address_receiver
      */
-    private void setAddress_receiver(Address newVar) {
-        address_receiver = newVar;
+    public void setAddress_receiver(Address _receiver_address) {
+        address_receiver = _receiver_address;
     }
 
     /**
@@ -162,7 +184,7 @@ public class Consignment {
      *
      * @return the value of address_receiver
      */
-    private Address getAddress_receiver() {
+    public Address getAddress_receiver() {
         return address_receiver;
     }
 
@@ -171,7 +193,7 @@ public class Consignment {
      *
      * @param newVar the new value of status_delivery
      */
-    private void setStatus_delivery(Status newVar) {
+    public void setStatus_delivery(Status newVar) {
         status_delivery = newVar;
     }
 
@@ -180,7 +202,7 @@ public class Consignment {
      *
      * @return the value of status_delivery
      */
-    private Status getStatus_delivery() {
+    public Status getStatus_delivery() {
         return status_delivery;
     }
 
@@ -195,7 +217,8 @@ public class Consignment {
      * @param _sender_name
      * @param _sender_address
      */
-    public void Consignment(int _id, long _volume,
+    public void Consignment(int _id, 
+            long _volume,
             String _receiver_name,
             Address _receiver_address,
             String _sender_name,
@@ -274,23 +297,17 @@ public class Consignment {
     }
 
     /**
-     * @param status
+     * @param _status
      */
-    public void setDeliveryStatus(Status status) {
+    public void setDeliveryStatus(Status _status) {
+        status_delivery = _status;
     }
 
     /**
      * @return StatusDelivery
      */
     public Status getDeliveryStatus() {
-        return null;
-    }
-
-    /**
-     * @return undef
-     */
-    private Status queryStatus() {
-        return null;
+        return status_delivery;
     }
 
     /**

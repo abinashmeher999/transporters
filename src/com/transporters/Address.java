@@ -8,31 +8,36 @@ public class Address {
     //
     // Fields
     //
+    private String contact;
     private String street;
     private String city;
 
     //
     // Constructors
     //
-    public Address() {
+    /**
+     * @param _contact
+     * @param _street
+     * @param _city
+     */
+    public Address(String _contact, String _street, String _city) {
+        contact = _contact;
+        street = _street;
+        city = _city;
     }
 
-    ;
-  
-	//
-	// Methods
-	//
-
-
-	//
-	// Accessor methods
-	//
-
-	/**
-	 * Set the value of street
-	 * @param newVar the new value of street
-	 */
-  private void setStreet(String newVar) {
+    //
+    // Methods
+    //
+    //
+    // Accessor methods
+    //
+    /**
+     * Set the value of street
+     *
+     * @param newVar the new value of street
+     */
+    public void setStreet(String newVar) {
         street = newVar;
     }
 
@@ -41,7 +46,7 @@ public class Address {
      *
      * @return the value of street
      */
-    private String getStreet() {
+    public String getStreet() {
         return street;
     }
 
@@ -50,7 +55,7 @@ public class Address {
      *
      * @param newVar the new value of city
      */
-    private void setCity(String newVar) {
+    public void setCity(String newVar) {
         city = newVar;
     }
 
@@ -59,18 +64,19 @@ public class Address {
      *
      * @return the value of city
      */
-    private String getCity() {
+    public String getCity() {
         return city;
+    }
+
+    public void setContact(String _contact) {
+        contact = _contact;
+    }
+
+    public String getString() {
+        return contact;
     }
 
     //
     // Other methods
     //
-    /**
-     * @param _street
-     * @param _city
-     */
-    public void Address(String _street, String _city) {
-    }
-
 }

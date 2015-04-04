@@ -15,38 +15,44 @@ public class Truck {
         ENROUTE
     }
 
-    private int id;
-    private Status status = Status.AVAILABLE;
-    private Office current_office;
-    private long max_capacity = 500;
-    private int usage = 0;//TODO : change the type
-    private long current_occupancy;
+    private static final long MAX_CAPACITY = 500;
 
-    private Office m_current_office;
+    private int id;
+    private Status status;
+    private Office current_office;
+    private Office destination_office;
+    private int total_km;
+    private long current_occupied_volume;
 
     //
     // Constructors
     //
     public Truck() {
+        id = -1;
+        this.status = Status.AVAILABLE;
+        current_office = new Branch();
+        destination_office = new Branch();
+        total_km = 0;
+        current_occupied_volume = 0;
     }
 
     ;
   
-	//
-	// Methods
-	//
+    //
+    // Methods
+    //
 
 
-	//
-	// Accessor methods
-	//
+    //
+    // Accessor methods
+    //
 
-	/**
-	 * Set the value of id
-	 * @param newVar the new value of id
-	 */
-  private void setId(int newVar) {
-        id = newVar;
+    /**
+     * Set the value of id
+     * @param _id the new value of id
+     */
+    private void setId(int _id) {
+        id = _id;
     }
 
     /**
@@ -61,10 +67,10 @@ public class Truck {
     /**
      * Set the value of status
      *
-     * @param newVar the new value of status
+     * @param _status the new value of status
      */
-    private void setStatus(Status newVar) {
-        status = newVar;
+    private void setStatus(Status _status) {
+        status = _status;
     }
 
     /**
@@ -79,10 +85,10 @@ public class Truck {
     /**
      * Set the value of current_office
      *
-     * @param newVar the new value of current_office
+     * @param _current_office the new value of current_office
      */
-    private void setCurrent_office(Office newVar) {
-        current_office = newVar;
+    private void setCurrentOffice(Office _current_office) {
+        current_office = _current_office;
     }
 
     /**
@@ -90,75 +96,53 @@ public class Truck {
      *
      * @return the value of current_office
      */
-    private Office getCurrent_office() {
+    private Office getCurrentOffice() {
         return current_office;
     }
 
     /**
-     * Set the value of max_capacity
+     * Get the value of MAX_CAPACITY
      *
-     * @param newVar the new value of max_capacity
-     */
-    private void setMax_capacity(long newVar) {
-        max_capacity = newVar;
-    }
-
-    /**
-     * Get the value of max_capacity
-     *
-     * @return the value of max_capacity
+     * @return the value of MAX_CAPACITY
      */
     private long getMax_capacity() {
-        return max_capacity;
+        return MAX_CAPACITY;
     }
 
     /**
-     * Set the value of usage
+     * Set the value of total_km
      *
-     * @param newVar the new value of usage
+     * @param newVar the new value of total_km
      */
-    private void setUsage(int newVar) {
-        usage = newVar;
+    private void setTotalKM(int newVar) {
+        total_km = newVar;
     }
 
     /**
-     * Get the value of usage
+     * Get the value of total_km
      *
-     * @return the value of usage
+     * @return the value of total_km
      */
-    private int getUsage() {//change return to timespan
-        return usage;
+    private int getTotalKM() {//change return to timespan
+        return total_km;
     }
 
     /**
-     * Set the value of current_occupancy
+     * Set the value of current_occupied_volume
      *
-     * @param newVar the new value of current_occupancy
+     * @param newVar the new value of current_occupied_volume
      */
-    private void setCurrent_occupancy(long newVar) {
-        current_occupancy = newVar;
+    private void setCurrentOccupiedVolume(long newVar) {
+        current_occupied_volume = newVar;
     }
 
     /**
-     * Get the value of current_occupancy
+     * Get the value of current_occupied_volume
      *
-     * @return the value of current_occupancy
+     * @return the value of current_occupied_volume
      */
-    private long getCurrent_occupancy() {
-        return current_occupancy;
-    }
-
-    /**
-     * @param _volume
-     */
-    public void setCurrentOccupancy(int _volume) {
-    }
-
-    /**
-     * @return long
-     */
-    public long getCurrentOccupancy() {
-        return current_occupancy;
+    private long getCurrentOccupiedVolume() {
+        return current_occupied_volume;
     }
 
     /**
