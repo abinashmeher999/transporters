@@ -1,43 +1,40 @@
 package com.transporters;
 
-
 import java.util.*;
-
 
 /**
  * Class Branch
  */
 public class Branch extends Office {
 
-	//
-	// Fields
-	//
+    //
+    // Fields
+    //
+    //
+    // Constructors
+    //
+    public Branch() {
+    }
 
+    ;
   
-	//
-	// Constructors
-	//
-	public Branch () { };
-  
-	//
-	// Methods
-	//
+    //
+    // Methods
+    //
 
 
-	//
-	// Accessor methods
-	//
+    //
+    // Accessor methods
+    //
 
-	//
-	// Other methods
-	//
+    //
+    // Other methods
+    //
 
-	/**
-	 * @param        _name
-	 */
-  public void Branch(String _name)
-  {
-	}
-
+    /**
+     * @param   _name
+     */
+    public void Branch(String _name) {
+    }
 
 }
