@@ -25,55 +25,494 @@ public class Employee extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        bg_delievery_type = new javax.swing.ButtonGroup();
+        jButton2 = new javax.swing.JButton();
+        p_employee = new javax.swing.JPanel();
+        tp_employee = new javax.swing.JTabbedPane();
+        p_distpatch = new javax.swing.JPanel();
+        if_available_trucks = new javax.swing.JInternalFrame();
+        l_available_trucks = new javax.swing.JLabel();
+        l_dispatch_truck_plate_num = new javax.swing.JLabel();
+        tf_dispatch_truck_plate_num = new javax.swing.JTextField();
+        b_dispatch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ta_dispatch_details = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        p_receive = new javax.swing.JPanel();
+        l_receive_truck_plate_num = new javax.swing.JLabel();
+        tf_receive_truck_plate_num = new javax.swing.JTextField();
+        if_truck_details = new javax.swing.JInternalFrame();
+        l_truck_details = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        p_new_consignment = new javax.swing.JPanel();
+        tp_new_consignment = new javax.swing.JTabbedPane();
+        p_general = new javax.swing.JPanel();
+        l_volume = new javax.swing.JLabel();
+        tf_volume = new javax.swing.JTextField();
+        l_pieces = new javax.swing.JLabel();
+        tf_pieces = new javax.swing.JTextField();
+        rb_regular_delievery = new javax.swing.JRadioButton();
+        rb_express_delievery = new javax.swing.JRadioButton();
+        p_sender = new javax.swing.JPanel();
+        l_sender_name = new javax.swing.JLabel();
+        l_sender_address = new javax.swing.JLabel();
+        l_sender_contact = new javax.swing.JLabel();
+        tf_sender_name = new javax.swing.JTextField();
+        tf_sender_contact = new javax.swing.JTextField();
+        tf_sender_address = new javax.swing.JTextField();
+        p_receiver = new javax.swing.JPanel();
+        l_reciever_name = new javax.swing.JLabel();
+        l_receiver_contact = new javax.swing.JLabel();
+        l_receiver_address = new javax.swing.JLabel();
+        tf_receiver_name = new javax.swing.JTextField();
+        tf_receiver_contact = new javax.swing.JTextField();
+        tf_receiver_address = new javax.swing.JTextField();
+        p_billing = new javax.swing.JPanel();
+        b_bill_to_receiver = new javax.swing.JButton();
+        l_billing_address = new javax.swing.JLabel();
+        tf_billing_address = new javax.swing.JTextField();
+        l_billing_name = new javax.swing.JLabel();
+        l_billing_contact = new javax.swing.JLabel();
+        tf_billing_name = new javax.swing.JTextField();
+        tf_billing_contact = new javax.swing.JTextField();
+        if_new_consignment = new javax.swing.JInternalFrame();
+        sp_billing_details = new javax.swing.JScrollPane();
+        ta_billing_details = new javax.swing.JTextArea();
+        b_generate_bill = new javax.swing.JButton();
+        b_back = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+
+        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/protectedimage.jpg"))); // NOI18N
+        p_employee.setOpaque(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 36, Short.MAX_VALUE))
-        );
+        tp_employee.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        if_available_trucks.setVisible(true);
+
+        javax.swing.GroupLayout if_available_trucksLayout = new javax.swing.GroupLayout(if_available_trucks.getContentPane());
+        if_available_trucks.getContentPane().setLayout(if_available_trucksLayout);
+        if_available_trucksLayout.setHorizontalGroup(
+            if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        if_available_trucksLayout.setVerticalGroup(
+            if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 228, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        l_available_trucks.setText("Available Trucks");
+
+        l_dispatch_truck_plate_num.setText("Truck Plate Number");
+
+        b_dispatch.setText("Dispatch Truck");
+
+        ta_dispatch_details.setColumns(20);
+        ta_dispatch_details.setRows(5);
+        jScrollPane1.setViewportView(ta_dispatch_details);
+
+        jLabel7.setText("Dispatch Details");
+
+        javax.swing.GroupLayout p_distpatchLayout = new javax.swing.GroupLayout(p_distpatch);
+        p_distpatch.setLayout(p_distpatchLayout);
+        p_distpatchLayout.setHorizontalGroup(
+            p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_distpatchLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(if_available_trucks)
+                    .addGroup(p_distpatchLayout.createSequentialGroup()
+                        .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_available_trucks)
+                            .addGroup(p_distpatchLayout.createSequentialGroup()
+                                .addComponent(l_dispatch_truck_plate_num)
+                                .addGap(18, 18, 18)
+                                .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(b_dispatch)
+                                    .addComponent(tf_dispatch_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        p_distpatchLayout.setVerticalGroup(
+            p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_distpatchLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_distpatchLayout.createSequentialGroup()
+                        .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(l_dispatch_truck_plate_num)
+                            .addComponent(tf_dispatch_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(b_dispatch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(l_available_trucks))
+                    .addGroup(p_distpatchLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(if_available_trucks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142))
+        );
+
+        tp_employee.addTab("Dispatch Truck", p_distpatch);
+
+        l_receive_truck_plate_num.setText("Truck Plate Number");
+
+        if_truck_details.setVisible(true);
+
+        javax.swing.GroupLayout if_truck_detailsLayout = new javax.swing.GroupLayout(if_truck_details.getContentPane());
+        if_truck_details.getContentPane().setLayout(if_truck_detailsLayout);
+        if_truck_detailsLayout.setHorizontalGroup(
+            if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        if_truck_detailsLayout.setVerticalGroup(
+            if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 228, Short.MAX_VALUE)
+        );
+
+        l_truck_details.setText("Truck Details");
+
+        jButton3.setText("Receive Truck");
+
+        javax.swing.GroupLayout p_receiveLayout = new javax.swing.GroupLayout(p_receive);
+        p_receive.setLayout(p_receiveLayout);
+        p_receiveLayout.setHorizontalGroup(
+            p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_receiveLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(if_truck_details)
+                    .addGroup(p_receiveLayout.createSequentialGroup()
+                        .addGroup(p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_truck_details)
+                            .addGroup(p_receiveLayout.createSequentialGroup()
+                                .addComponent(l_receive_truck_plate_num)
+                                .addGap(18, 18, 18)
+                                .addGroup(p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tf_receive_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 292, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        p_receiveLayout.setVerticalGroup(
+            p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_receiveLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_receive_truck_plate_num)
+                    .addComponent(tf_receive_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(l_truck_details)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(if_truck_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        tp_employee.addTab("Receive Truck", p_receive);
+
+        l_volume.setText("Total Volume");
+
+        l_pieces.setText("Pieces");
+
+        bg_delievery_type.add(rb_regular_delievery);
+        rb_regular_delievery.setText("Regular Delivery");
+
+        bg_delievery_type.add(rb_express_delievery);
+        rb_express_delievery.setText("Express Delivery");
+
+        javax.swing.GroupLayout p_generalLayout = new javax.swing.GroupLayout(p_general);
+        p_general.setLayout(p_generalLayout);
+        p_generalLayout.setHorizontalGroup(
+            p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_generalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_generalLayout.createSequentialGroup()
+                        .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_pieces)
+                            .addComponent(l_volume, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_volume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_pieces, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_generalLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rb_express_delievery, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rb_regular_delievery, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
+        );
+        p_generalLayout.setVerticalGroup(
+            p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_generalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_volume)
+                    .addComponent(tf_volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(l_pieces)
+                    .addComponent(tf_pieces, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(rb_express_delievery)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rb_regular_delievery)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tp_new_consignment.addTab("General", p_general);
+
+        l_sender_name.setText("Name");
+
+        l_sender_address.setText("Address");
+
+        l_sender_contact.setText("Contact");
+
+        javax.swing.GroupLayout p_senderLayout = new javax.swing.GroupLayout(p_sender);
+        p_sender.setLayout(p_senderLayout);
+        p_senderLayout.setHorizontalGroup(
+            p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_senderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_senderLayout.createSequentialGroup()
+                        .addGroup(p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_sender_name)
+                            .addComponent(l_sender_address))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addGroup(p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_sender_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_sender_address, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(p_senderLayout.createSequentialGroup()
+                        .addComponent(l_sender_contact)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_sender_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        p_senderLayout.setVerticalGroup(
+            p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_senderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_sender_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_sender_name))
+                .addGap(7, 7, 7)
+                .addGroup(p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_sender_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_sender_contact))
+                .addGap(7, 7, 7)
+                .addGroup(p_senderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_senderLayout.createSequentialGroup()
+                        .addComponent(l_sender_address)
+                        .addGap(0, 65, Short.MAX_VALUE))
+                    .addComponent(tf_sender_address))
+                .addContainerGap())
+        );
+
+        tp_new_consignment.addTab("Sender", p_sender);
+
+        l_reciever_name.setText("Name");
+
+        l_receiver_contact.setText("Contact");
+
+        l_receiver_address.setText("Address");
+
+        javax.swing.GroupLayout p_receiverLayout = new javax.swing.GroupLayout(p_receiver);
+        p_receiver.setLayout(p_receiverLayout);
+        p_receiverLayout.setHorizontalGroup(
+            p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_receiverLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l_receiver_contact)
+                    .addComponent(l_receiver_address)
+                    .addComponent(l_reciever_name))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGroup(p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_receiver_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_receiver_contact, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_receiver_address, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        p_receiverLayout.setVerticalGroup(
+            p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_receiverLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_receiver_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_reciever_name))
+                .addGap(7, 7, 7)
+                .addGroup(p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_receiver_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_receiver_contact))
+                .addGap(7, 7, 7)
+                .addGroup(p_receiverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_receiverLayout.createSequentialGroup()
+                        .addComponent(l_receiver_address)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(tf_receiver_address, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        tp_new_consignment.addTab("Receiver", p_receiver);
+
+        b_bill_to_receiver.setText("Bill to Receiver");
+
+        l_billing_address.setText("Address");
+
+        l_billing_name.setText("Name");
+
+        l_billing_contact.setText("Contact");
+
+        javax.swing.GroupLayout p_billingLayout = new javax.swing.GroupLayout(p_billing);
+        p_billing.setLayout(p_billingLayout);
+        p_billingLayout.setHorizontalGroup(
+            p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_billingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_billingLayout.createSequentialGroup()
+                        .addGroup(p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_billing_address)
+                            .addComponent(l_billing_name)
+                            .addComponent(l_billing_contact))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_billing_name)
+                            .addComponent(tf_billing_address, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(tf_billing_contact)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_billingLayout.createSequentialGroup()
+                        .addGap(0, 182, Short.MAX_VALUE)
+                        .addComponent(b_bill_to_receiver)))
+                .addContainerGap())
+        );
+        p_billingLayout.setVerticalGroup(
+            p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_billingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_billing_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_billing_name))
+                .addGap(7, 7, 7)
+                .addGroup(p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_billing_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_billing_contact))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(p_billingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_billing_address, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_billing_address))
+                .addGap(5, 5, 5)
+                .addComponent(b_bill_to_receiver))
         );
+
+        tp_new_consignment.addTab("Billing Address", p_billing);
+
+        if_new_consignment.setVisible(true);
+
+        javax.swing.GroupLayout if_new_consignmentLayout = new javax.swing.GroupLayout(if_new_consignment.getContentPane());
+        if_new_consignment.getContentPane().setLayout(if_new_consignmentLayout);
+        if_new_consignmentLayout.setHorizontalGroup(
+            if_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        if_new_consignmentLayout.setVerticalGroup(
+            if_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 137, Short.MAX_VALUE)
+        );
+
+        ta_billing_details.setColumns(20);
+        ta_billing_details.setRows(5);
+        sp_billing_details.setViewportView(ta_billing_details);
+
+        b_generate_bill.setText("Generate Bill");
+
+        javax.swing.GroupLayout p_new_consignmentLayout = new javax.swing.GroupLayout(p_new_consignment);
+        p_new_consignment.setLayout(p_new_consignmentLayout);
+        p_new_consignmentLayout.setHorizontalGroup(
+            p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                        .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                            .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                                .addComponent(b_generate_bill)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(if_new_consignment)))
+                .addContainerGap())
+        );
+        p_new_consignmentLayout.setVerticalGroup(
+            p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, p_new_consignmentLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(b_generate_bill)
+                        .addGap(2, 2, 2)
+                        .addComponent(sp_billing_details))
+                    .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(if_new_consignment)
+                .addContainerGap())
+        );
+
+        tp_employee.addTab("New Consignment", p_new_consignment);
+
+        b_back.setText("Back");
+
+        javax.swing.GroupLayout p_employeeLayout = new javax.swing.GroupLayout(p_employee);
+        p_employee.setLayout(p_employeeLayout);
+        p_employeeLayout.setHorizontalGroup(
+            p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tp_employee)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_employeeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(b_back, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        p_employeeLayout.setVerticalGroup(
+            p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_employeeLayout.createSequentialGroup()
+                .addContainerGap(150, Short.MAX_VALUE)
+                .addComponent(tp_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(b_back)
+                .addContainerGap())
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(p_employee, gridBagConstraints);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/protectedimage.jpg"))); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(800, 150));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(jLabel1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -114,8 +553,61 @@ public class Employee extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_back;
+    private javax.swing.JButton b_bill_to_receiver;
+    private javax.swing.JButton b_dispatch;
+    private javax.swing.JButton b_generate_bill;
+    private javax.swing.ButtonGroup bg_delievery_type;
+    private javax.swing.JInternalFrame if_available_trucks;
+    private javax.swing.JInternalFrame if_new_consignment;
+    private javax.swing.JInternalFrame if_truck_details;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel l_available_trucks;
+    private javax.swing.JLabel l_billing_address;
+    private javax.swing.JLabel l_billing_contact;
+    private javax.swing.JLabel l_billing_name;
+    private javax.swing.JLabel l_dispatch_truck_plate_num;
+    private javax.swing.JLabel l_pieces;
+    private javax.swing.JLabel l_receive_truck_plate_num;
+    private javax.swing.JLabel l_receiver_address;
+    private javax.swing.JLabel l_receiver_contact;
+    private javax.swing.JLabel l_reciever_name;
+    private javax.swing.JLabel l_sender_address;
+    private javax.swing.JLabel l_sender_contact;
+    private javax.swing.JLabel l_sender_name;
+    private javax.swing.JLabel l_truck_details;
+    private javax.swing.JLabel l_volume;
+    private javax.swing.JPanel p_billing;
+    private javax.swing.JPanel p_distpatch;
+    private javax.swing.JPanel p_employee;
+    private javax.swing.JPanel p_general;
+    private javax.swing.JPanel p_new_consignment;
+    private javax.swing.JPanel p_receive;
+    private javax.swing.JPanel p_receiver;
+    private javax.swing.JPanel p_sender;
+    private javax.swing.JRadioButton rb_express_delievery;
+    private javax.swing.JRadioButton rb_regular_delievery;
+    private javax.swing.JScrollPane sp_billing_details;
+    private javax.swing.JTextArea ta_billing_details;
+    private javax.swing.JTextArea ta_dispatch_details;
+    private javax.swing.JTextField tf_billing_address;
+    private javax.swing.JTextField tf_billing_contact;
+    private javax.swing.JTextField tf_billing_name;
+    private javax.swing.JTextField tf_dispatch_truck_plate_num;
+    private javax.swing.JTextField tf_pieces;
+    private javax.swing.JTextField tf_receive_truck_plate_num;
+    private javax.swing.JTextField tf_receiver_address;
+    private javax.swing.JTextField tf_receiver_contact;
+    private javax.swing.JTextField tf_receiver_name;
+    private javax.swing.JTextField tf_sender_address;
+    private javax.swing.JTextField tf_sender_contact;
+    private javax.swing.JTextField tf_sender_name;
+    private javax.swing.JTextField tf_volume;
+    private javax.swing.JTabbedPane tp_employee;
+    private javax.swing.JTabbedPane tp_new_consignment;
     // End of variables declaration//GEN-END:variables
 }
