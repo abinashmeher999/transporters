@@ -5,9 +5,9 @@ import java.util.*;
 
 
 /**
- * Class Head
+ * Class HeadOffice
  */
-public class Head extends Office {
+public class HeadOffice extends Office {
 
 	//
 	// Fields
@@ -18,7 +18,7 @@ public class Head extends Office {
 	//
 	// Constructors
 	//
-	public Head () { };
+	public HeadOffice () { };
   
 	//
 	// Methods

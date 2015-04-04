@@ -5,7 +5,7 @@ package com.transporters;
  */
 public class System {
 
-	//
+    //
     // Fields
     //
     //
@@ -16,24 +16,24 @@ public class System {
 
     ;
   
-	//
-	// Methods
-	//
+    //
+    // Methods
+    //
 
 
-	//
-	// Accessor methods
-	//
+    //
+    // Accessor methods
+    //
 
-	//
-	// Other methods
-	//
+    //
+    // Other methods
+    //
 
 	/**
 	 * @return        int
 	 */
   public int allotNextTruck() {
-      return (0);
+        return (0);
     }
 
     /**
