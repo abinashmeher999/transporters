@@ -1,5 +1,6 @@
 transporters
 ==============
+[![Build Status](https://magnum.travis-ci.com/abinashmeher999/transporters.svg?token=1ykhcB8LH7xSoXfCVNts&branch=master)](https://magnum.travis-ci.com/abinashmeher999/transporters)
 ###Transport Company Computerization Software (TCCS):###
 
 A transport company wishes to computerize various book keeping activities associated with its operations.  
