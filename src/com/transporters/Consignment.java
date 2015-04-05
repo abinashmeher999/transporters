@@ -9,10 +9,6 @@ import java.util.List;
  */
 public class Consignment {
 
-    private Address Address(String string, String string0, String string1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     //
     // Fields
     //
@@ -45,9 +41,9 @@ public class Consignment {
         this.name_sender = "0";
         this.name_receiver = "0";
         this.name_billing = "0";
-        this.address_sender = Address("0", "0", "0");
-        this.address_receiver = Address("0", "0", "0");
-        this.address_billing = Address("0", "0", "0");
+        this.address_sender = null;
+        this.address_receiver = null;
+        this.address_billing = null;
         this.status_delivery = Status.PENDING;
         this.carrier_trucks = new ArrayList<Truck>();
     }
@@ -217,7 +213,7 @@ public class Consignment {
      * @param _sender_name
      * @param _sender_address
      */
-    public void Consignment(int _id, 
+    public void Consignment(int _id,
             long _volume,
             String _receiver_name,
             Address _receiver_address,
@@ -313,13 +309,17 @@ public class Consignment {
     /**
      * @return long
      */
-    private long computeBill() {
+    public long computeBill() {
         return 0;
     }
 
     /**
      */
-    private void printBill() {
+    public void printBill() {
+        String bill = null;
+        bill.concat("Consignment: "+Integer.toString(id)+"\n");
+        //similarly for others
+        
     }
 
 }

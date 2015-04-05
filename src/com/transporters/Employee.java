@@ -72,12 +72,6 @@ public class Employee {
     }
 
     /**
-     * @param _id
-     */
-    public void Employee(int _id) {
-    }
-
-    /**
      * @return boolean
      * @param _truck_id
      */

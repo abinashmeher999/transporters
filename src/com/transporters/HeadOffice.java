@@ -1,60 +1,44 @@
 package com.transporters;
 
-
+import java.sql.SQLException;
 import java.util.*;
-
 
 /**
  * Class HeadOffice
  */
 public class HeadOffice extends Office {
 
-	//
-	// Fields
-	//
+    //
+    // Fields
+    //
+    //
+    // Constructors
+    //
 
-  private Server base_server_system;
-  
-	//
-	// Constructors
-	//
-	public HeadOffice () { };
-  
-	//
-	// Methods
-	//
+    /**
+     *
+     * @param _name
+     * @param _address
+     * @throws SQLException
+     */
+        public HeadOffice(String _name, Address _address) throws SQLException{
+        super(_name,_address);
+        Database _database = this.getDatabase();
+        _database.setUser("root");
+        _database.setUrl("jdbc:mysql://localhost:3306/tccs");
+        _database.setPassword("alsk");
+        _database.connect();
+    }
 
-
-	//
-	// Accessor methods
-	//
-
-	/**
-	 * Set the value of base_server_system
-	 * @param newVar the new value of base_server_system
-	 */
-  private void setBase_server_system (Server newVar) {//convert string to server
-  	base_server_system = newVar;
-  }
-
-	/**
-	 * Get the value of base_server_system
-	 * @return the value of base_server_system
-	 */
-  private Server getBase_server_system () {
-  	return base_server_system;
-  }
+;
 
 	//
-	// Other methods
+// Methods
+//
 	//
-
-	/**
-	 * @param        _name
-	 */
-  public void Head(String _name)
-  {
-	}
-
-
+// Accessor methods
+//
+    //
+// Other methods
+//
 }

@@ -70,20 +70,18 @@ public class Manager extends Employee {
     /**
      * @return int
      */
-    public int queryAvgConsignmentWaitTime() {
+    public int queryAvgConsignmentWaitTime(String branch_name) {
         return 0;
     }
 
     /**
      * @return int
      */
-    public int queryTruckIdleTimeAtBranch() {
+    public int queryTruckIdleTimeAtBranch(String branch_name) {
         return 0;
     }
-
-    /**
-     */
-    private void Manager() {
+    
+    public void addNewBranch(){
+        
     }
-
 }
