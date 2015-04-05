@@ -30,8 +30,8 @@ public class Truck {
     public Truck() {
         id = -1;
         this.status = Status.AVAILABLE;
-        current_office = new Branch();
-        destination_office = new Branch();
+        current_office = null;
+        destination_office = null;
         total_km = 0;
         current_occupied_volume = 0;
     }
