@@ -72,7 +72,7 @@ public class Address {
         contact = _contact;
     }
 
-    public String getString() {
+    public String getContact() {
         return contact;
     }
 
