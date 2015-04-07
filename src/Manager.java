@@ -60,6 +60,19 @@ public class Manager extends javax.swing.JFrame {
         l_fire_reason = new javax.swing.JLabel();
         tf_fire_reason = new javax.swing.JTextField();
         b_fire = new javax.swing.JButton();
+        Address = new javax.swing.JPanel();
+        l_branch_name = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        l_contact = new javax.swing.JLabel();
+        l_address = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        b_add_branch = new javax.swing.JButton();
+        l_user_name = new javax.swing.JLabel();
+        l_password = new javax.swing.JLabel();
+        tf_user_name = new javax.swing.JTextField();
+        tf_password = new javax.swing.JTextField();
+        b_reset = new javax.swing.JButton();
         p_queries = new javax.swing.JPanel();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         cmb_query = new javax.swing.JComboBox();
@@ -108,6 +121,11 @@ public class Manager extends javax.swing.JFrame {
         l_branch.setText("Branch");
 
         tf_employee_name.setText("Employee Name");
+        tf_employee_name.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_employee_nameFocusGained(evt);
+            }
+        });
         tf_employee_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_employee_nameActionPerformed(evt);
@@ -115,6 +133,14 @@ public class Manager extends javax.swing.JFrame {
         });
 
         tf_employee_address.setText("Employee Address");
+        tf_employee_address.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_employee_addressFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_employee_addressFocusLost(evt);
+            }
+        });
 
         cmb_branch_list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -315,6 +341,87 @@ public class Manager extends javax.swing.JFrame {
 
         tp_administration.addTab("Fire Employee", p_fire);
 
+        l_branch_name.setText("Branch Name");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        l_contact.setText("Contact");
+
+        l_address.setText("Address");
+
+        b_add_branch.setText("Add Branch");
+
+        l_user_name.setText("User Name");
+
+        l_password.setText("Password");
+
+        b_reset.setText("Reset");
+
+        javax.swing.GroupLayout AddressLayout = new javax.swing.GroupLayout(Address);
+        Address.setLayout(AddressLayout);
+        AddressLayout.setHorizontalGroup(
+            AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddressLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l_branch_name)
+                    .addComponent(l_contact)
+                    .addComponent(l_address))
+                .addGap(18, 18, 18)
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(jTextField3)
+                    .addComponent(jTextField4))
+                .addGap(66, 66, 66)
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(AddressLayout.createSequentialGroup()
+                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_user_name)
+                            .addComponent(l_password))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_user_name, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(tf_password)))
+                    .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(b_reset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(b_add_branch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        AddressLayout.setVerticalGroup(
+            AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddressLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l_branch_name)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_user_name)
+                    .addComponent(tf_user_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_contact)
+                    .addComponent(l_password)
+                    .addComponent(tf_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddressLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(l_address)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(AddressLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(b_reset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(b_add_branch)))
+                .addContainerGap(346, Short.MAX_VALUE))
+        );
+
+        tp_administration.addTab("Add Branch", Address);
+
         javax.swing.GroupLayout p_administrationLayout = new javax.swing.GroupLayout(p_administration);
         p_administration.setLayout(p_administrationLayout);
         p_administrationLayout.setHorizontalGroup(
@@ -485,6 +592,11 @@ public class Manager extends javax.swing.JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(800, 150));
 
         b_back.setText("Back");
+        b_back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_backMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -505,7 +617,7 @@ public class Manager extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tp_manager, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(b_back)
                 .addContainerGap())
         );
@@ -528,6 +640,28 @@ public class Manager extends javax.swing.JFrame {
     private void b_view_employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_employeeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_employeeActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void b_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_backMouseClicked
+        Home home = new Home();
+        home.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_b_backMouseClicked
+
+    private void tf_employee_nameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_employee_nameFocusGained
+        tf_employee_name.setText("");
+    }//GEN-LAST:event_tf_employee_nameFocusGained
+
+    private void tf_employee_addressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_employee_addressFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_employee_addressFocusLost
+
+    private void tf_employee_addressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_employee_addressFocusGained
+        tf_employee_address.setText("");
+    }//GEN-LAST:event_tf_employee_addressFocusGained
 
     /**
      * @param args the command line arguments
@@ -565,11 +699,14 @@ public class Manager extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Address;
+    private javax.swing.JButton b_add_branch;
     private javax.swing.JButton b_back;
     private javax.swing.JButton b_fire;
     private javax.swing.JButton b_get_details;
     private javax.swing.JButton b_get_truck_usage;
     private javax.swing.JButton b_hire;
+    private javax.swing.JButton b_reset;
     private javax.swing.JButton b_view_applicatns;
     private javax.swing.JButton b_view_employee;
     private javax.swing.ButtonGroup bg_company_stats;
@@ -597,15 +734,23 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel l_address;
     private javax.swing.JLabel l_branch;
+    private javax.swing.JLabel l_branch_name;
+    private javax.swing.JLabel l_contact;
     private javax.swing.JLabel l_cost;
     private javax.swing.JLabel l_employee_address;
     private javax.swing.JLabel l_employee_id;
     private javax.swing.JLabel l_employee_name;
     private javax.swing.JLabel l_fire_reason;
     private javax.swing.JLabel l_model;
+    private javax.swing.JLabel l_password;
     private javax.swing.JLabel l_plate_number;
     private javax.swing.JLabel l_truck_plate_number;
+    private javax.swing.JLabel l_user_name;
     private javax.swing.JPanel p_administration;
     private javax.swing.JPanel p_buy_truck;
     private javax.swing.JPanel p_company_statistics;
@@ -617,9 +762,11 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextField tf_employee_id;
     private javax.swing.JTextField tf_employee_name;
     private javax.swing.JTextField tf_fire_reason;
+    private javax.swing.JTextField tf_password;
     private javax.swing.JTextField tf_plate_number;
     private javax.swing.JTextField tf_truck_model;
     private javax.swing.JTextField tf_truck_plate_num;
+    private javax.swing.JTextField tf_user_name;
     private javax.swing.JTabbedPane tp_administration;
     private javax.swing.JTabbedPane tp_manager;
     // End of variables declaration//GEN-END:variables

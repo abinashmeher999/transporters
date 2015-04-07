@@ -34,6 +34,7 @@ public class Home extends javax.swing.JFrame {
         pf_password = new javax.swing.JPasswordField();
         l_employee_id = new javax.swing.JLabel();
         l_password = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         l_home_background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,11 +42,16 @@ public class Home extends javax.swing.JFrame {
 
         p_home.setOpaque(false);
 
-        l_name.setFont(new java.awt.Font("Lucida MAC", 0, 36)); // NOI18N
+        l_name.setFont(new java.awt.Font("Droid Serif", 0, 100)); // NOI18N
         l_name.setForeground(new java.awt.Color(255, 255, 255));
-        l_name.setText("Transformer Trucks");
+        l_name.setText("Transformer");
 
         b_login.setText("Login");
+        b_login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_loginMouseClicked(evt);
+            }
+        });
 
         tf_employee_id.setText("Employee Id");
         tf_employee_id.setToolTipText("");
@@ -71,14 +77,14 @@ public class Home extends javax.swing.JFrame {
 
         l_password.setText("Password");
 
+        jLabel1.setFont(new java.awt.Font("Droid Serif", 0, 100)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.white);
+        jLabel1.setText("Trucks");
+
         javax.swing.GroupLayout p_homeLayout = new javax.swing.GroupLayout(p_home);
         p_home.setLayout(p_homeLayout);
         p_homeLayout.setHorizontalGroup(
             p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_homeLayout.createSequentialGroup()
-                .addContainerGap(234, Short.MAX_VALUE)
-                .addComponent(l_name)
-                .addGap(220, 220, 220))
             .addGroup(p_homeLayout.createSequentialGroup()
                 .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_homeLayout.createSequentialGroup()
@@ -92,15 +98,23 @@ public class Home extends javax.swing.JFrame {
                         .addGap(51, 51, 51)
                         .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pf_password, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_employee_id, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tf_employee_id, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(p_homeLayout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(l_name))
+                    .addGroup(p_homeLayout.createSequentialGroup()
+                        .addGap(259, 259, 259)
+                        .addComponent(jLabel1)))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         p_homeLayout.setVerticalGroup(
             p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_homeLayout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(l_name, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(93, 93, 93)
+                .addComponent(l_name)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28)
                 .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_employee_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(l_employee_id))
@@ -110,7 +124,7 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(l_password))
                 .addGap(43, 43, 43)
                 .addComponent(b_login)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -147,6 +161,18 @@ public class Home extends javax.swing.JFrame {
     private void pf_passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pf_passwordFocusGained
         pf_password.setText("");
     }//GEN-LAST:event_pf_passwordFocusGained
+
+    private void b_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_loginMouseClicked
+        //Check for id and password
+        if(tf_employee_id.getText().equals("1")){
+            Manager manager = new Manager();
+            manager.setVisible(true);
+        }else if(tf_employee_id.getText().equals("1")){
+            Employee employee = new Employee();
+            employee.setVisible(true);
+        }
+        dispose();
+    }//GEN-LAST:event_b_loginMouseClicked
 
     /**
      * @param args the command line arguments
@@ -185,6 +211,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_login;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel l_employee_id;
     private javax.swing.JLabel l_home_background;
     private javax.swing.JLabel l_name;
