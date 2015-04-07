@@ -22,7 +22,7 @@ public class HeadOffice extends Office {
      * @throws SQLException
      */
         public HeadOffice(String _name, Address _address) throws SQLException{
-        super(_name,_address);
+        super(-1,_name,_address);
         Database _database = this.getDatabase();
         _database.setUser("root");
         _database.setUrl("jdbc:mysql://localhost:3306/tccs");

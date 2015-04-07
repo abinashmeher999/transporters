@@ -21,8 +21,8 @@ public class Branch extends Office {
      * @param _database
      * @throws java.sql.SQLException
      */
-    public Branch(String _name, Address _address, Database _database) throws SQLException {
-        super(_name, _address);
+    public Branch(int _id, String _name, Address _address, Database _database) throws SQLException {
+        super(_id, _name, _address);
         this.setDatabase(_database);
         this.getDatabase().connect();
     }
