@@ -11,6 +11,7 @@ abstract public class Office {
     //
     // Fields
     //
+    private final int id;
     private String name;
     private Address address;
     private long volume_received;
@@ -26,7 +27,8 @@ abstract public class Office {
     //
     // Constructors
     //
-    public Office(String _office_name, Address _office_address) {
+    public Office(int _id, String _office_name, Address _office_address) {
+        id = _id;
         name = _office_name;
         address = _office_address;
         volume_received = 0;
@@ -39,15 +41,22 @@ abstract public class Office {
     }
 
     ;
-  
-	//
-	// Methods
-	//
 
+    /**
+     *
+     * @return
+     */
+    public int getId() {
+        return id;
+    }
 
-	//
-	// Accessor methods
-	//
+    /**
+     *
+     * @return
+     */
+        public Time getAvg_consignment_waiting_time() {
+        return avg_consignment_waiting_time;
+    }
 
     /**
      * Set the value of name

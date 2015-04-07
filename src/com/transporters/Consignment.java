@@ -34,8 +34,8 @@ public class Consignment {
     //
     // Constructors
     //
-    public Consignment() {
-        this.id = -1;
+    public Consignment(int id) {
+        this.id = id;
         this.waiting_time = new Time(0);
         this.volume = 0;
         this.name_sender = "0";
@@ -317,9 +317,9 @@ public class Consignment {
      */
     public void printBill() {
         String bill = null;
-        bill.concat("Consignment: "+Integer.toString(id)+"\n");
+        //bill.concat("Consignment: " + Integer.toString(id) + "\n");
         //similarly for others
-        
+
     }
 
 }
