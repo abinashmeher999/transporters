@@ -1,13 +1,12 @@
 package com.transporters;
 
-import java.sql.Time;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Class Office
  */
-abstract public class Office {
-    
+abstract public class Office implements Serializable{
     //
     // Fields
     //
@@ -17,17 +16,9 @@ abstract public class Office {
     private long volume_received;
     private long volume_dispatched;
     private long cumulative_truck_count;
-    private Time truck_avg_idle_time;
+    private long truck_avg_idle_time;
     private long revenue;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    private Time avg_consignment_waiting_time;
+    private long avg_consignment_waiting_time;
     private Database database;
     private String password;
     
@@ -44,10 +35,11 @@ abstract public class Office {
         volume_received = 0;
         volume_dispatched = 0;
         cumulative_truck_count = 0;
-        truck_avg_idle_time = new Time(0);
+        truck_avg_idle_time = 0;
         revenue = 0;
-        avg_consignment_waiting_time = new Time(0);
+        avg_consignment_waiting_time = 0;
         this.available_truck_list = new ArrayList<>();
+        database = new Database();
     }
 
     ;
@@ -64,7 +56,7 @@ abstract public class Office {
      *
      * @return
      */
-        public Time getAvg_consignment_waiting_time() {
+        public long getAvg_consignment_waiting_time() {
         return avg_consignment_waiting_time;
     }
 
@@ -144,7 +136,7 @@ abstract public class Office {
      *
      * @param _avg_idle_time the new value of truck_avg_idle_time
      */
-    public void setTruck_avg_idle_time(Time _avg_idle_time) {
+    public void setTruck_avg_idle_time(long _avg_idle_time) {
         truck_avg_idle_time = _avg_idle_time;
     }
 
@@ -153,7 +145,7 @@ abstract public class Office {
      *
      * @return the value of truck_avg_idle_time
      */
-    public Time getTruck_avg_idle_time() {
+    public long getTruck_avg_idle_time() {
         return truck_avg_idle_time;
     }
 
@@ -180,7 +172,7 @@ abstract public class Office {
      *
      * @param _avg_consignment_waiting_time the new avg_consignment_waiting_time
      */
-    public void setAvgConsignmentWaitingTime(Time _avg_consignment_waiting_time) {
+    public void setAvgConsignmentWaitingTime(long _avg_consignment_waiting_time) {
         avg_consignment_waiting_time = _avg_consignment_waiting_time;
     }
 
@@ -189,7 +181,7 @@ abstract public class Office {
      *
      * @return the value of avg_consignment_waiting_time
      */
-    public Time getAvgConsignmentWaitingTime() {
+    public long getAvgConsignmentWaitingTime() {
         return avg_consignment_waiting_time;
     }
 
@@ -246,5 +238,14 @@ abstract public class Office {
 
     public void setDatabase(Database database) {
         this.database = database;
+    }
+    
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

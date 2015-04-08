@@ -1,9 +1,11 @@
 package com.transporters;
 
+import java.io.Serializable;
+
 /**
  * Class Manager
  */
-public class Manager extends Employee {
+public class Manager extends Employee implements Serializable{
 
 	//
     // Fields

@@ -2,11 +2,12 @@ package com.transporters;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * Class Truck
  */
-public class Truck {
+public class Truck implements Serializable{
 
     //
     // Fields

@@ -1,5 +1,6 @@
 package com.transporters;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Class Consignment
  */
-public class Consignment {
+public class Consignment implements Serializable{
 
     //
     // Fields
