@@ -1,5 +1,8 @@
 package com.transporters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class Truck
  */
@@ -24,6 +27,14 @@ public class Truck {
     private int total_km;
     private long current_occupied_volume;
 
+    public ArrayList<Consignment> getConsignment_list() {
+        return consignment_list;
+    }
+
+    public void setConsignment_list(ArrayList<Consignment> consignment_list) {
+        this.consignment_list = consignment_list;
+    }
+    private ArrayList<Consignment> consignment_list;
     //
     // Constructors
     //
@@ -34,6 +45,7 @@ public class Truck {
         destination_office = null;
         total_km = 0;
         current_occupied_volume = 0;
+        consignment_list = new ArrayList<Consignment>();
     }
 
     ;
@@ -51,7 +63,7 @@ public class Truck {
      * Set the value of id
      * @param _id the new value of id
      */
-    private void setId(int _id) {
+    public void setId(int _id) {
         id = _id;
     }
 
@@ -60,7 +72,7 @@ public class Truck {
      *
      * @return the value of id
      */
-    private int getId() {
+    public int getId() {
         return id;
     }
 
@@ -69,7 +81,7 @@ public class Truck {
      *
      * @param _status the new value of status
      */
-    private void setStatus(Status _status) {
+    public void setStatus(Status _status) {
         status = _status;
     }
 
@@ -78,7 +90,7 @@ public class Truck {
      *
      * @return the value of status
      */
-    private Status getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -87,7 +99,7 @@ public class Truck {
      *
      * @param _current_office the new value of current_office
      */
-    private void setCurrentOffice(Office _current_office) {
+    public void setCurrentOffice(Office _current_office) {
         current_office = _current_office;
     }
 
@@ -96,7 +108,7 @@ public class Truck {
      *
      * @return the value of current_office
      */
-    private Office getCurrentOffice() {
+    public Office getCurrentOffice() {
         return current_office;
     }
 
@@ -105,7 +117,7 @@ public class Truck {
      *
      * @return the value of MAX_CAPACITY
      */
-    private long getMax_capacity() {
+    public long getMax_capacity() {
         return MAX_CAPACITY;
     }
 
@@ -114,7 +126,7 @@ public class Truck {
      *
      * @param newVar the new value of total_km
      */
-    private void setTotalKM(int newVar) {
+    public void setTotalKM(int newVar) {
         total_km = newVar;
     }
 
@@ -123,7 +135,7 @@ public class Truck {
      *
      * @return the value of total_km
      */
-    private int getTotalKM() {//change return to timespan
+    public int getTotalKM() {//change return to timespan
         return total_km;
     }
 
@@ -132,7 +144,7 @@ public class Truck {
      *
      * @param newVar the new value of current_occupied_volume
      */
-    private void setCurrentOccupiedVolume(long newVar) {
+    public void setCurrentOccupiedVolume(long newVar) {
         current_occupied_volume = newVar;
     }
 
@@ -141,7 +153,7 @@ public class Truck {
      *
      * @return the value of current_occupied_volume
      */
-    private long getCurrentOccupiedVolume() {
+    public long getCurrentOccupiedVolume() {
         return current_occupied_volume;
     }
 

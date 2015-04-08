@@ -1,7 +1,22 @@
 
+import com.transporters.Branch;
 import com.transporters.Consignment;
+import com.transporters.Database;
+import com.transporters.HeadOffice;
+import com.transporters.Truck;
+import java.awt.HeadlessException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -15,12 +30,81 @@ import javax.swing.JOptionPane;
  * @author best1yash
  */
 public class Employee extends javax.swing.JFrame {
+    private int branch_id;
+    Database db;
+    HeadOffice head_office;
+    List<Branch> branch_list;
+    List<Truck> truck_list;
+    List<Consignment> consignment_list;
 
+    int head_counter;
+    int branch_counter;
+    int truck_counter;
+    int consignment_counter;
+    public int getBranch_id() {
+        return branch_id;
+    }
+
+    public void setBranch_id(int branch_id) {
+        this.branch_id = branch_id;
+    }
     /**
      * Creates new form Employee
      */
-    public Employee() {
+    public Employee(int id) {
+        branch_id = id;
         initComponents();
+        try {
+            Database.setIPAddress("localhost");
+            db.setUrl(Database.getBranchURL());
+            db.setUser("root");
+            db.setPassword("alsk");
+            db.connect();
+
+            Statement stmt = db.getConnection().createStatement();
+            String query = "SELECT * FROM Lists;";
+            ResultSet rs = stmt.executeQuery(query);
+            byte[] buf;
+            ObjectInputStream o;
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            branch_list = (ArrayList<Branch>) o.readObject();
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            truck_list = (ArrayList<Truck>) o.readObject();
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            consignment_list = (ArrayList<Consignment>) o.readObject();
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            head_office = (HeadOffice) o.readObject();
+
+            query = "SELECT * ID_data;";
+            rs = stmt.executeQuery(query);
+            
+            rs.next();
+            head_counter = rs.getInt("counter");
+            
+            rs.next();
+            branch_counter = rs.getInt("counter");
+            
+            rs.next();
+            truck_counter = rs.getInt("counter");
+            
+            rs.next();
+            consignment_counter = rs.getInt("counter");
+
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
@@ -52,6 +136,8 @@ public class Employee extends javax.swing.JFrame {
         l_receive_truck_plate_num = new javax.swing.JLabel();
         tf_receive_truck_plate_num = new javax.swing.JTextField();
         if_truck_details = new javax.swing.JInternalFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         l_truck_details = new javax.swing.JLabel();
         b_receive_truck = new javax.swing.JButton();
         p_new_consignment = new javax.swing.JPanel();
@@ -87,7 +173,6 @@ public class Employee extends javax.swing.JFrame {
         l_billing_contact = new javax.swing.JLabel();
         tf_billing_name = new javax.swing.JTextField();
         tf_billing_contact = new javax.swing.JTextField();
-        if_new_consignment = new javax.swing.JInternalFrame();
         sp_billing_details = new javax.swing.JScrollPane();
         ta_billing_details = new javax.swing.JTextArea();
         b_generate_bill = new javax.swing.JButton();
@@ -113,7 +198,7 @@ public class Employee extends javax.swing.JFrame {
         );
         if_available_trucksLayout.setVerticalGroup(
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGap(0, 220, Short.MAX_VALUE)
         );
 
         l_available_trucks.setText("Available Trucks");
@@ -121,6 +206,11 @@ public class Employee extends javax.swing.JFrame {
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
 
         b_dispatch.setText("Dispatch Truck");
+        b_dispatch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_dispatchMouseClicked(evt);
+            }
+        });
         b_dispatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_dispatchActionPerformed(evt);
@@ -173,9 +263,9 @@ public class Employee extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(if_available_trucks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142))
+                .addGap(279, 279, 279))
         );
 
         tp_employee.addTab("Dispatch Truck", p_distpatch);
@@ -184,15 +274,28 @@ public class Employee extends javax.swing.JFrame {
 
         if_truck_details.setVisible(true);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Consignement Id"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
         javax.swing.GroupLayout if_truck_detailsLayout = new javax.swing.GroupLayout(if_truck_details.getContentPane());
         if_truck_details.getContentPane().setLayout(if_truck_detailsLayout);
         if_truck_detailsLayout.setHorizontalGroup(
             if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         if_truck_detailsLayout.setVerticalGroup(
             if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
         );
 
         l_truck_details.setText("Truck Details");
@@ -240,9 +343,9 @@ public class Employee extends javax.swing.JFrame {
                 .addComponent(b_receive_truck)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(l_truck_details)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(if_truck_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(125, 125, 125))
         );
 
         tp_employee.addTab("Receive Truck", p_receive);
@@ -472,19 +575,6 @@ public class Employee extends javax.swing.JFrame {
 
         tp_new_consignment.addTab("Billing Address", p_billing);
 
-        if_new_consignment.setVisible(true);
-
-        javax.swing.GroupLayout if_new_consignmentLayout = new javax.swing.GroupLayout(if_new_consignment.getContentPane());
-        if_new_consignment.getContentPane().setLayout(if_new_consignmentLayout);
-        if_new_consignmentLayout.setHorizontalGroup(
-            if_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        if_new_consignmentLayout.setVerticalGroup(
-            if_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 137, Short.MAX_VALUE)
-        );
-
         ta_billing_details.setColumns(20);
         ta_billing_details.setRows(5);
         sp_billing_details.setViewportView(ta_billing_details);
@@ -501,18 +591,13 @@ public class Employee extends javax.swing.JFrame {
         p_new_consignmentLayout.setHorizontalGroup(
             p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
                     .addGroup(p_new_consignmentLayout.createSequentialGroup()
-                        .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addGroup(p_new_consignmentLayout.createSequentialGroup()
-                                .addComponent(b_generate_bill)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(p_new_consignmentLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(if_new_consignment)))
+                        .addComponent(b_generate_bill)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         p_new_consignmentLayout.setVerticalGroup(
@@ -525,9 +610,7 @@ public class Employee extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(sp_billing_details))
                     .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(if_new_consignment)
-                .addContainerGap())
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         tp_employee.addTab("New Consignment", p_new_consignment);
@@ -631,11 +714,16 @@ public class Employee extends javax.swing.JFrame {
             }
             consignment.setVolume(Double.parseDouble(tf_volume.getText()));
             consignment.setPieces(Integer.parseInt(tf_pieces.getText()));
+            com.transporters.Branch branch = null;
+            for(int i = 0; i < branch_list.size(); i++){
+                
+            }
+            consignment.setTo_branch(branch);
             String bill = null;
             bill = com.transporters.System.printBill(consignment);
             ta_billing_details.setText(bill);
             JOptionPane.showMessageDialog(this, "Consignment Added", "Success", 1);
-        }catch(Exception e){
+        }catch(NumberFormatException | HeadlessException e){
             JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
         }
     }//GEN-LAST:event_b_generate_billMouseClicked
@@ -652,7 +740,7 @@ public class Employee extends javax.swing.JFrame {
             if(tf_receive_truck_plate_num.getText().equals("")){
                 JOptionPane.showMessageDialog(this, "Provide Plate number", "Error", 0);
             }else{
-                //Check for plate number in sql and print in table.
+                // To do : @Abinash Check for plate number in sql and print in table.
             }
         }catch(Exception e){            
     }//GEN-LAST:event_b_receive_truckMouseClicked
@@ -662,17 +750,22 @@ public class Employee extends javax.swing.JFrame {
     }//GEN-LAST:event_b_receive_truckActionPerformed
 
     private void b_dispatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_dispatchActionPerformed
-    try{
+            // TODO add your handling code here:
+    }//GEN-LAST:event_b_dispatchActionPerformed
+
+    private void b_dispatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_dispatchMouseClicked
+       try{
             String plate_num = null;
             if(tf_dispatch.getText().equals("")){
                 JOptionPane.showMessageDialog(this, "Provide Plate number", "Error", 0);
             }else{
-                //Check for plate number in sql and print in table.
+                //to do : @Abinash Check for plate number in sql and print in table.
+                
             }
             
         }catch(Exception e){            
-        }          // TODO add your handling code here:
-    }//GEN-LAST:event_b_dispatchActionPerformed
+        }  
+    }//GEN-LAST:event_b_dispatchMouseClicked
     
     /**
      * @param args the command line arguments
@@ -690,21 +783,18 @@ public class Employee extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new Employee().setVisible(true);
+                new Employee(1).setVisible(true);
             }
         });
     }
@@ -718,12 +808,13 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.ButtonGroup bg_delievery_type;
     private javax.swing.JComboBox cmb_to_branch;
     private javax.swing.JInternalFrame if_available_trucks;
-    private javax.swing.JInternalFrame if_new_consignment;
     private javax.swing.JInternalFrame if_truck_details;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel l_available_trucks;
     private javax.swing.JLabel l_billing_address;
     private javax.swing.JLabel l_billing_contact;

@@ -23,6 +23,7 @@ public class Branch extends Office {
      */
     public Branch(int _id, String _name, Address _address, Database _database) throws SQLException {
         super(_id, _name, _address);
+        setPassword("branch" + _id);
         this.setDatabase(_database);
         this.getDatabase().connect();
     }

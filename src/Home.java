@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -238,12 +239,28 @@ public class Home extends javax.swing.JFrame {
 
     private void b_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_loginMouseClicked
         //Check for id and password
-        if(tf_employee_id.getText().equals("1")){
-            Manager manager = new Manager();
-            manager.setVisible(true);
-        }else if(tf_employee_id.getText().equals("2")){
-            Employee employee = new Employee();
-            employee.setVisible(true);
+        char[] temp = pf_password.getPassword();
+        String password = new String(temp);
+        if(tf_employee_id.getText().equals("0")){
+            
+            if(password.equals(head_office.getPassword())){
+                Manager manager = new Manager();
+                manager.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
+            }
+        }else{
+            int id = Integer.parseInt(tf_employee_id.getText());
+            if(id > branch_counter || id < 1){
+                JOptionPane.showMessageDialog(this, "Invalid id", "Error", 0);
+            }else{
+                if(password.equals(branch_list.get(id - 1).getPassword())){
+                    Employee employee = new Employee(id);
+                    employee.setVisible(true);  
+                }else{
+                    JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
+                }  
+            }
         }
         dispose();
     }//GEN-LAST:event_b_loginMouseClicked
