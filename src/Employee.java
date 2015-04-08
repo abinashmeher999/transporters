@@ -127,13 +127,13 @@ public class Employee extends javax.swing.JFrame {
         if_available_trucks = new javax.swing.JInternalFrame();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        l_available_trucks = new javax.swing.JLabel();
         l_dispatch_truck_plate_num = new javax.swing.JLabel();
         tf_dispatch = new javax.swing.JTextField();
         b_dispatch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_dispatch_details = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
+        b_show_available_trucks = new javax.swing.JButton();
         p_receive = new javax.swing.JPanel();
         l_receive_truck_plate_num = new javax.swing.JLabel();
         tf_receive_truck_plate_num = new javax.swing.JTextField();
@@ -223,10 +223,8 @@ public class Employee extends javax.swing.JFrame {
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(if_available_trucksLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
-
-        l_available_trucks.setText("Available Trucks");
 
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
 
@@ -248,6 +246,8 @@ public class Employee extends javax.swing.JFrame {
 
         jLabel7.setText("Dispatch Details");
 
+        b_show_available_trucks.setText("Show Available Trucks");
+
         javax.swing.GroupLayout p_distpatchLayout = new javax.swing.GroupLayout(p_distpatch);
         p_distpatch.setLayout(p_distpatchLayout);
         p_distpatchLayout.setHorizontalGroup(
@@ -258,13 +258,13 @@ public class Employee extends javax.swing.JFrame {
                     .addComponent(if_available_trucks)
                     .addGroup(p_distpatchLayout.createSequentialGroup()
                         .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(l_available_trucks)
                             .addGroup(p_distpatchLayout.createSequentialGroup()
                                 .addComponent(l_dispatch_truck_plate_num)
                                 .addGap(18, 18, 18)
                                 .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(b_dispatch)
-                                    .addComponent(tf_dispatch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tf_dispatch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(b_show_available_trucks))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,7 +283,7 @@ public class Employee extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_dispatch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(l_available_trucks))
+                        .addComponent(b_show_available_trucks))
                     .addGroup(p_distpatchLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -320,7 +320,7 @@ public class Employee extends javax.swing.JFrame {
         );
         if_truck_detailsLayout.setVerticalGroup(
             if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
         );
 
         l_truck_details.setText("Truck Details");
@@ -868,6 +868,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JButton b_dispatch;
     private javax.swing.JButton b_generate_bill;
     private javax.swing.JButton b_receive_truck;
+    private javax.swing.JButton b_show_available_trucks;
     private javax.swing.ButtonGroup bg_delievery_type;
     private javax.swing.JComboBox cmb_to_branch;
     private javax.swing.JInternalFrame if_available_trucks;
@@ -880,7 +881,6 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JLabel l_available_trucks;
     private javax.swing.JLabel l_billing_address;
     private javax.swing.JLabel l_billing_contact;
     private javax.swing.JLabel l_billing_name;
