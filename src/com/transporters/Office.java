@@ -16,14 +16,13 @@ abstract public class Office implements Serializable{
     private long volume_received;
     private long volume_dispatched;
     private long cumulative_truck_count;
+    private long cumulative_consignment_count;
     private long truck_avg_idle_time;
     private long revenue;
     private long avg_consignment_waiting_time;
     private Database database;
     private String password;
-    
-    
-    private List<Truck> available_truck_list;
+    private List<Truck> truck_list;
 
     //
     // Constructors
@@ -38,7 +37,7 @@ abstract public class Office implements Serializable{
         truck_avg_idle_time = 0;
         revenue = 0;
         avg_consignment_waiting_time = 0;
-        this.available_truck_list = new ArrayList<>();
+        this.truck_list = new ArrayList<>();
         database = new Database();
     }
 
@@ -186,21 +185,21 @@ abstract public class Office implements Serializable{
     }
 
     /**
-     * Set the value of available_truck_list
+     * Set the value of truck_list
      *
-     * @param _new_truck_list the new value of available_truck_list
+     * @param _new_truck_list the new value of truck_list
      */
-    public void setAvailable_truck_list(List<Truck> _new_truck_list) {
-        available_truck_list = _new_truck_list;
+    public void setTruck_list(List<Truck> _new_truck_list) {
+        truck_list = _new_truck_list;
     }
 
     /**
-     * Get the value of available_truck_list
+     * Get the value of truck_list
      *
-     * @return the value of available_truck_list
+     * @return the value of truck_list
      */
-    public List<Truck> getAvailable_truck_list() {
-        return available_truck_list;
+    public List<Truck> getTruck_list() {
+        return truck_list;
     }
 
     /**
@@ -209,7 +208,7 @@ abstract public class Office implements Serializable{
      * @param new_object
      */
     public void addAvailable_truck_list(Truck new_object) {
-        available_truck_list.add(new_object);
+        truck_list.add(new_object);
     }
 
     /**
@@ -218,7 +217,7 @@ abstract public class Office implements Serializable{
      * @param new_object
      */
     public void removeAvailable_truck_list(Truck new_object) {
-        available_truck_list.remove(new_object);
+        truck_list.remove(new_object);
     }
 
     //
@@ -248,4 +247,13 @@ abstract public class Office implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public long getCumulative_consignment_count() {
+        return cumulative_consignment_count;
+    }
+
+    public void setCumulative_consignment_count(long cumulative_consignment_count) {
+        this.cumulative_consignment_count = cumulative_consignment_count;
+    }
+    
 }
