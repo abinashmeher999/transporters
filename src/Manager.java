@@ -33,7 +33,6 @@ public class Manager extends javax.swing.JFrame {
         p_hire = new javax.swing.JPanel();
         b_view_applicatns = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        if_applicant_list = new javax.swing.JInternalFrame();
         l_employee_name = new javax.swing.JLabel();
         l_employee_address = new javax.swing.JLabel();
         l_branch = new javax.swing.JLabel();
@@ -41,6 +40,8 @@ public class Manager extends javax.swing.JFrame {
         tf_employee_address = new javax.swing.JTextField();
         cmb_branch_list = new javax.swing.JComboBox();
         b_hire = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         p_buy_truck = new javax.swing.JPanel();
         l_model = new javax.swing.JLabel();
         l_plate_number = new javax.swing.JLabel();
@@ -73,11 +74,21 @@ public class Manager extends javax.swing.JFrame {
         tf_user_name = new javax.swing.JTextField();
         tf_password = new javax.swing.JTextField();
         b_reset = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
+        l_set_ip = new javax.swing.JLabel();
+        tf_set_ip = new javax.swing.JTextField();
+        b_set_ip = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        tf_charge = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         p_queries = new javax.swing.JPanel();
         jInternalFrame1 = new javax.swing.JInternalFrame();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         cmb_query = new javax.swing.JComboBox();
         b_get_details = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        tf_query = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         p_company_statistics = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -112,8 +123,6 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        if_applicant_list.setVisible(true);
-
         l_employee_name.setText("Name");
 
         l_employee_address.setText("Addresss");
@@ -146,6 +155,34 @@ public class Manager extends javax.swing.JFrame {
 
         b_hire.setText("Hire");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Name", "Address", "Preferred Branch"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTable1);
+
         javax.swing.GroupLayout p_hireLayout = new javax.swing.GroupLayout(p_hire);
         p_hire.setLayout(p_hireLayout);
         p_hireLayout.setHorizontalGroup(
@@ -154,34 +191,37 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(p_hireLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_view_applicatns)
+                    .addComponent(jScrollPane3)
                     .addGroup(p_hireLayout.createSequentialGroup()
                         .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(l_employee_name)
-                            .addComponent(l_employee_address))
-                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(b_view_applicatns)
                             .addGroup(p_hireLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(tf_employee_name, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(98, 98, 98)
-                                .addComponent(l_branch))
-                            .addGroup(p_hireLayout.createSequentialGroup()
+                                .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(l_employee_name)
+                                    .addComponent(l_employee_address))
+                                .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(p_hireLayout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(tf_employee_name, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(98, 98, 98)
+                                        .addComponent(l_branch))
+                                    .addGroup(p_hireLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tf_employee_address, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(tf_employee_address, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmb_branch_list, 0, 180, Short.MAX_VALUE)
-                            .addComponent(b_hire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(if_applicant_list, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cmb_branch_list, 0, 180, Short.MAX_VALUE)
+                                    .addComponent(b_hire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 19, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         p_hireLayout.setVerticalGroup(
             p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_hireLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(b_view_applicatns)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(if_applicant_list, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -195,10 +235,10 @@ public class Manager extends javax.swing.JFrame {
                     .addComponent(l_employee_address)
                     .addComponent(b_hire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tf_employee_address))
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
-        tp_administration.addTab("Hire Employee", p_hire);
+        tp_administration.addTab("Add Employee", p_hire);
 
         l_model.setText("Model");
 
@@ -309,7 +349,7 @@ public class Manager extends javax.swing.JFrame {
                             .addComponent(l_fire_reason))
                         .addGap(54, 54, 54)
                         .addGroup(p_fireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_fire_reason, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                            .addComponent(tf_fire_reason, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
                             .addGroup(p_fireLayout.createSequentialGroup()
                                 .addGroup(p_fireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(b_fire)
@@ -339,7 +379,7 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tp_administration.addTab("Fire Employee", p_fire);
+        tp_administration.addTab("Remove Employee", p_fire);
 
         l_branch_name.setText("Branch Name");
 
@@ -361,6 +401,23 @@ public class Manager extends javax.swing.JFrame {
 
         b_reset.setText("Reset");
 
+        l_set_ip.setText("IP Address");
+
+        tf_set_ip.setText("198.16.1.1");
+        tf_set_ip.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_set_ipFocusGained(evt);
+            }
+        });
+
+        b_set_ip.setText("Set IP Address");
+
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel5.setText("Charge/Volume");
+
+        jButton3.setText("Set Charge/Volume");
+
         javax.swing.GroupLayout AddressLayout = new javax.swing.GroupLayout(Address);
         Address.setLayout(AddressLayout);
         AddressLayout.setHorizontalGroup(
@@ -368,28 +425,48 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(AddressLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(l_branch_name)
-                    .addComponent(l_contact)
-                    .addComponent(l_address))
-                .addGap(18, 18, 18)
-                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4))
-                .addGap(66, 66, 66)
-                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(AddressLayout.createSequentialGroup()
                         .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(l_user_name)
-                            .addComponent(l_password))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tf_user_name, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(tf_password)))
-                    .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(b_reset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(b_add_branch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addGroup(AddressLayout.createSequentialGroup()
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(l_branch_name)
+                                    .addComponent(l_contact)
+                                    .addComponent(l_address))
+                                .addGap(18, 18, 18)
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                    .addComponent(jTextField3)
+                                    .addComponent(jTextField4))
+                                .addGap(66, 66, 66)
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(AddressLayout.createSequentialGroup()
+                                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(l_user_name)
+                                            .addComponent(l_password))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(tf_user_name, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                            .addComponent(tf_password)))
+                                    .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(b_reset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(b_add_branch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))))
+                            .addGroup(AddressLayout.createSequentialGroup()
+                                .addComponent(l_set_ip)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tf_set_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(b_set_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(49, 49, 49)
+                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tf_charge)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         AddressLayout.setVerticalGroup(
             AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,10 +494,32 @@ public class Manager extends javax.swing.JFrame {
                         .addComponent(b_reset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_add_branch)))
-                .addContainerGap(346, Short.MAX_VALUE))
+                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddressLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AddressLayout.createSequentialGroup()
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tf_set_ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(l_set_ip))
+                                .addGap(18, 18, 18)
+                                .addComponent(b_set_ip))
+                            .addGroup(AddressLayout.createSequentialGroup()
+                                .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(tf_charge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddressLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(105, Short.MAX_VALUE))))
         );
 
-        tp_administration.addTab("Add Branch", Address);
+        tp_administration.addTab("Miscellaneous", Address);
 
         javax.swing.GroupLayout p_administrationLayout = new javax.swing.GroupLayout(p_administration);
         p_administration.setLayout(p_administrationLayout);
@@ -441,20 +540,46 @@ public class Manager extends javax.swing.JFrame {
 
         jInternalFrame1.setVisible(true);
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable2);
+
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane4)
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 212, Short.MAX_VALUE)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         cmb_query.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Consignment Details", "Truck Details" }));
+        cmb_query.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_queryActionPerformed(evt);
+            }
+        });
 
         b_get_details.setText("Get Details");
+
+        tf_query.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_queryFocusGained(evt);
+            }
+        });
 
         jLabel2.setText("Details");
 
@@ -470,12 +595,12 @@ public class Manager extends javax.swing.JFrame {
                         .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(p_queriesLayout.createSequentialGroup()
                                 .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(30, 30, 30)
                                 .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tf_query, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel2))
-                        .addGap(0, 388, Short.MAX_VALUE)))
+                        .addGap(0, 376, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         p_queriesLayout.setVerticalGroup(
@@ -484,7 +609,7 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(b_get_details)
                 .addGap(64, 64, 64)
@@ -663,6 +788,23 @@ public class Manager extends javax.swing.JFrame {
         tf_employee_address.setText("");
     }//GEN-LAST:event_tf_employee_addressFocusGained
 
+    private void tf_set_ipFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_set_ipFocusGained
+        tf_set_ip.setText("");
+    }//GEN-LAST:event_tf_set_ipFocusGained
+
+    private void cmb_queryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_queryActionPerformed
+        if(cmb_query.getSelectedIndex() == 0){
+            tf_query.setText("Consignment Id");
+        }else if(cmb_query.getSelectedIndex() == 1){
+            tf_query.setText("Truck Id");
+        }
+    }//GEN-LAST:event_cmb_queryActionPerformed
+
+    private void tf_queryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_queryFocusGained
+        tf_query.setText("");
+        
+    }//GEN-LAST:event_tf_queryFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -697,6 +839,7 @@ public class Manager extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Address;
@@ -707,33 +850,40 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JButton b_get_truck_usage;
     private javax.swing.JButton b_hire;
     private javax.swing.JButton b_reset;
+    private javax.swing.JButton b_set_ip;
     private javax.swing.JButton b_view_applicatns;
     private javax.swing.JButton b_view_employee;
     private javax.swing.ButtonGroup bg_company_stats;
     private javax.swing.JComboBox cmb_branch;
     private javax.swing.JComboBox cmb_branch_list;
     private javax.swing.JComboBox cmb_query;
-    private javax.swing.JInternalFrame if_applicant_list;
     private javax.swing.JInternalFrame if_employee_list;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -749,6 +899,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JLabel l_model;
     private javax.swing.JLabel l_password;
     private javax.swing.JLabel l_plate_number;
+    private javax.swing.JLabel l_set_ip;
     private javax.swing.JLabel l_truck_plate_number;
     private javax.swing.JLabel l_user_name;
     private javax.swing.JPanel p_administration;
@@ -757,6 +908,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JPanel p_fire;
     private javax.swing.JPanel p_hire;
     private javax.swing.JPanel p_queries;
+    private javax.swing.JTextField tf_charge;
     private javax.swing.JTextField tf_cost;
     private javax.swing.JTextField tf_employee_address;
     private javax.swing.JTextField tf_employee_id;
@@ -764,6 +916,8 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextField tf_fire_reason;
     private javax.swing.JTextField tf_password;
     private javax.swing.JTextField tf_plate_number;
+    private javax.swing.JTextField tf_query;
+    private javax.swing.JTextField tf_set_ip;
     private javax.swing.JTextField tf_truck_model;
     private javax.swing.JTextField tf_truck_plate_num;
     private javax.swing.JTextField tf_user_name;

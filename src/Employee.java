@@ -1,3 +1,9 @@
+
+import com.transporters.Consignment;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,6 +23,8 @@ public class Employee extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +43,7 @@ public class Employee extends javax.swing.JFrame {
         if_available_trucks = new javax.swing.JInternalFrame();
         l_available_trucks = new javax.swing.JLabel();
         l_dispatch_truck_plate_num = new javax.swing.JLabel();
-        tf_dispatch_truck_plate_num = new javax.swing.JTextField();
+        tf_dispatch = new javax.swing.JTextField();
         b_dispatch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_dispatch_details = new javax.swing.JTextArea();
@@ -45,7 +53,7 @@ public class Employee extends javax.swing.JFrame {
         tf_receive_truck_plate_num = new javax.swing.JTextField();
         if_truck_details = new javax.swing.JInternalFrame();
         l_truck_details = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        b_receive_truck = new javax.swing.JButton();
         p_new_consignment = new javax.swing.JPanel();
         tp_new_consignment = new javax.swing.JTabbedPane();
         p_general = new javax.swing.JPanel();
@@ -55,6 +63,8 @@ public class Employee extends javax.swing.JFrame {
         tf_pieces = new javax.swing.JTextField();
         rb_regular_delievery = new javax.swing.JRadioButton();
         rb_express_delievery = new javax.swing.JRadioButton();
+        cmb_to_branch = new javax.swing.JComboBox();
+        l_to_branch = new javax.swing.JLabel();
         p_sender = new javax.swing.JPanel();
         l_sender_name = new javax.swing.JLabel();
         l_sender_address = new javax.swing.JLabel();
@@ -103,7 +113,7 @@ public class Employee extends javax.swing.JFrame {
         );
         if_available_trucksLayout.setVerticalGroup(
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 228, Short.MAX_VALUE)
+            .addGap(0, 339, Short.MAX_VALUE)
         );
 
         l_available_trucks.setText("Available Trucks");
@@ -111,6 +121,11 @@ public class Employee extends javax.swing.JFrame {
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
 
         b_dispatch.setText("Dispatch Truck");
+        b_dispatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_dispatchActionPerformed(evt);
+            }
+        });
 
         ta_dispatch_details.setColumns(20);
         ta_dispatch_details.setRows(5);
@@ -134,7 +149,7 @@ public class Employee extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(b_dispatch)
-                                    .addComponent(tf_dispatch_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tf_dispatch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,7 +164,7 @@ public class Employee extends javax.swing.JFrame {
                     .addGroup(p_distpatchLayout.createSequentialGroup()
                         .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(l_dispatch_truck_plate_num)
-                            .addComponent(tf_dispatch_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tf_dispatch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_dispatch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,12 +192,22 @@ public class Employee extends javax.swing.JFrame {
         );
         if_truck_detailsLayout.setVerticalGroup(
             if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 228, Short.MAX_VALUE)
+            .addGap(0, 339, Short.MAX_VALUE)
         );
 
         l_truck_details.setText("Truck Details");
 
-        jButton3.setText("Receive Truck");
+        b_receive_truck.setText("Receive Truck");
+        b_receive_truck.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_receive_truckMouseClicked(evt);
+            }
+        });
+        b_receive_truck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_receive_truckActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_receiveLayout = new javax.swing.GroupLayout(p_receive);
         p_receive.setLayout(p_receiveLayout);
@@ -199,7 +224,7 @@ public class Employee extends javax.swing.JFrame {
                                 .addComponent(l_receive_truck_plate_num)
                                 .addGap(18, 18, 18)
                                 .addGroup(p_receiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(b_receive_truck, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tf_receive_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 292, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -212,8 +237,8 @@ public class Employee extends javax.swing.JFrame {
                     .addComponent(l_receive_truck_plate_num)
                     .addComponent(tf_receive_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(b_receive_truck)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(l_truck_details)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(if_truck_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,6 +249,12 @@ public class Employee extends javax.swing.JFrame {
 
         l_volume.setText("Total Volume");
 
+        tf_volume.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_volumeActionPerformed(evt);
+            }
+        });
+
         l_pieces.setText("Pieces");
 
         bg_delievery_type.add(rb_regular_delievery);
@@ -231,6 +262,15 @@ public class Employee extends javax.swing.JFrame {
 
         bg_delievery_type.add(rb_express_delievery);
         rb_express_delievery.setText("Express Delivery");
+        rb_express_delievery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_express_delieveryActionPerformed(evt);
+            }
+        });
+
+        cmb_to_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        l_to_branch.setText("To Branch");
 
         javax.swing.GroupLayout p_generalLayout = new javax.swing.GroupLayout(p_general);
         p_general.setLayout(p_generalLayout);
@@ -241,17 +281,21 @@ public class Employee extends javax.swing.JFrame {
                 .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_generalLayout.createSequentialGroup()
                         .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(l_pieces)
-                            .addComponent(l_volume, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                            .addComponent(l_volume)
+                            .addComponent(l_pieces))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_volume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_pieces, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tf_volume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_pieces, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_generalLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rb_express_delievery, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rb_regular_delievery, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(0, 7, Short.MAX_VALUE)
+                        .addComponent(rb_regular_delievery)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rb_express_delievery))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_generalLayout.createSequentialGroup()
+                        .addComponent(l_to_branch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmb_to_branch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         p_generalLayout.setVerticalGroup(
@@ -261,15 +305,19 @@ public class Employee extends javax.swing.JFrame {
                 .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_volume)
                     .addComponent(tf_volume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(11, 11, 11)
+                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_pieces)
                     .addComponent(tf_pieces, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(rb_express_delievery)
+                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rb_express_delievery)
+                    .addComponent(rb_regular_delievery))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rb_regular_delievery)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(p_generalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmb_to_branch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_to_branch))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         tp_new_consignment.addTab("General", p_general);
@@ -369,6 +417,11 @@ public class Employee extends javax.swing.JFrame {
         tp_new_consignment.addTab("Receiver", p_receiver);
 
         b_bill_to_receiver.setText("Bill to Receiver");
+        b_bill_to_receiver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_bill_to_receiverMouseClicked(evt);
+            }
+        });
 
         l_billing_address.setText("Address");
 
@@ -437,6 +490,11 @@ public class Employee extends javax.swing.JFrame {
         sp_billing_details.setViewportView(ta_billing_details);
 
         b_generate_bill.setText("Generate Bill");
+        b_generate_bill.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_generate_billMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_new_consignmentLayout = new javax.swing.GroupLayout(p_new_consignment);
         p_new_consignment.setLayout(p_new_consignmentLayout);
@@ -475,6 +533,11 @@ public class Employee extends javax.swing.JFrame {
         tp_employee.addTab("New Consignment", p_new_consignment);
 
         b_back.setText("Back");
+        b_back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_backMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_employeeLayout = new javax.swing.GroupLayout(p_employee);
         p_employee.setLayout(p_employeeLayout);
@@ -483,7 +546,7 @@ public class Employee extends javax.swing.JFrame {
             .addComponent(tp_employee)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_employeeLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(b_back, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(b_back, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         p_employeeLayout.setVerticalGroup(
@@ -517,6 +580,100 @@ public class Employee extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void b_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_backMouseClicked
+        //Save data in database
+        Home home = new Home();
+        home.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_b_backMouseClicked
+
+    private void rb_express_delieveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_express_delieveryActionPerformed
+        
+    }//GEN-LAST:event_rb_express_delieveryActionPerformed
+
+    private void b_bill_to_receiverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_bill_to_receiverMouseClicked
+        try {
+            if(tf_receiver_name.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(this, "Enter receiver's name", "Error", 0);
+            }else{
+                tf_billing_name.setText(tf_receiver_name.getText().trim());
+            }
+            if(tf_receiver_address.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(this, "Enter receiver's address", "Error", 0);
+            }else{
+                tf_billing_address.setText(tf_receiver_address.getText().trim());
+            }
+            if(tf_receiver_contact.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(this, "Enter receiver's contact", "Error", 0);
+            }else{
+                tf_billing_contact.setText(tf_receiver_contact.getText().trim());
+            }
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error in receiver's details", "Error", 0);
+        }
+    }//GEN-LAST:event_b_bill_to_receiverMouseClicked
+
+    private void b_generate_billMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_generate_billMouseClicked
+        try{
+            //To do: Abinash
+            Consignment consignment = new Consignment();
+            consignment.setConsignment_id(++(com.transporters.HeadOffice.count_consignment_id));
+            consignment.setName_sender(tf_sender_name.getText());
+            consignment.setName_receiver(tf_receiver_name.getText());
+            consignment.setName_billing(tf_billing_name.getText());
+            consignment.setAddress_sender(tf_sender_address.getText());
+            consignment.setAddress_receiver(tf_receiver_address.getText());
+            consignment.setAddress_billing(tf_billing_address.getText());
+            if(rb_express_delievery.isSelected()){
+                consignment.setType_delivery(Consignment.DeliveryType.EXPRESS);
+            }else{
+                consignment.setType_delivery(Consignment.DeliveryType.REGULAR);
+            }
+            consignment.setVolume(Double.parseDouble(tf_volume.getText()));
+            consignment.setPieces(Integer.parseInt(tf_pieces.getText()));
+            String bill = null;
+            bill = com.transporters.System.printBill(consignment);
+            ta_billing_details.setText(bill);
+            JOptionPane.showMessageDialog(this, "Consignment Added", "Success", 1);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
+        }
+    }//GEN-LAST:event_b_generate_billMouseClicked
+
+    private void tf_volumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_volumeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_volumeActionPerformed
+
+    private void b_receive_truckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_receive_truckMouseClicked
+        // TODO Check for plate number here;
+        try{
+            String plate_num = null;
+            
+            if(tf_receive_truck_plate_num.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Provide Plate number", "Error", 0);
+            }else{
+                //Check for plate number in sql and print in table.
+            }
+        }catch(Exception e){            
+    }//GEN-LAST:event_b_receive_truckMouseClicked
+    }
+    private void b_receive_truckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_receive_truckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_receive_truckActionPerformed
+
+    private void b_dispatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_dispatchActionPerformed
+    try{
+            String plate_num = null;
+            if(tf_dispatch.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Provide Plate number", "Error", 0);
+            }else{
+                //Check for plate number in sql and print in table.
+            }
+            
+        }catch(Exception e){            
+        }          // TODO add your handling code here:
+    }//GEN-LAST:event_b_dispatchActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -557,12 +714,13 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JButton b_bill_to_receiver;
     private javax.swing.JButton b_dispatch;
     private javax.swing.JButton b_generate_bill;
+    private javax.swing.JButton b_receive_truck;
     private javax.swing.ButtonGroup bg_delievery_type;
+    private javax.swing.JComboBox cmb_to_branch;
     private javax.swing.JInternalFrame if_available_trucks;
     private javax.swing.JInternalFrame if_new_consignment;
     private javax.swing.JInternalFrame if_truck_details;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
@@ -579,6 +737,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JLabel l_sender_address;
     private javax.swing.JLabel l_sender_contact;
     private javax.swing.JLabel l_sender_name;
+    private javax.swing.JLabel l_to_branch;
     private javax.swing.JLabel l_truck_details;
     private javax.swing.JLabel l_volume;
     private javax.swing.JPanel p_billing;
@@ -597,7 +756,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JTextField tf_billing_address;
     private javax.swing.JTextField tf_billing_contact;
     private javax.swing.JTextField tf_billing_name;
-    private javax.swing.JTextField tf_dispatch_truck_plate_num;
+    private javax.swing.JTextField tf_dispatch;
     private javax.swing.JTextField tf_pieces;
     private javax.swing.JTextField tf_receive_truck_plate_num;
     private javax.swing.JTextField tf_receiver_address;

@@ -7,7 +7,7 @@ import java.util.*;
  * Class Office
  */
 abstract public class Office {
-
+    
     //
     // Fields
     //
@@ -22,6 +22,7 @@ abstract public class Office {
     private Time avg_consignment_waiting_time;
     private Database database;
 
+    
     private List<Truck> available_truck_list;
 
     //

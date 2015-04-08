@@ -2,6 +2,7 @@ package com.transporters;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -12,31 +13,107 @@ public class Consignment {
     //
     // Fields
     //
-    enum Status {
+    public enum Status {
 
         PENDING,
         ENROUTE,
         DELIVERED
     };
-
+    
+    public enum DeliveryType{
+        
+        EXPRESS,
+        REGULAR
+    };
+    
     private int id;
-    private Time waiting_time;
-    private long volume;
+    private long waiting_time;
+    private double volume;
+    private double distance;
+    private static double charge;
+    private int pieces;
     private String name_sender;
     private String name_receiver;
     private String name_billing;
-    private Address address_sender;
-    private Address address_receiver;
-    private Address address_billing;
+    private String address_sender;
+    private String address_receiver;
+    private String address_billing;
     private Status status_delivery;
     private List<Truck> carrier_trucks;
+    private DeliveryType type_delivery;
+    private Calendar entry_date;
+ 
+    public int getPieces() {
+        return pieces;
+    }
+
+    public void setPieces(int pieces) {
+        this.pieces = pieces;
+    }
+    
+    public Calendar getEntry_date() {
+        return entry_date;
+    }
+
+    public void setEntry_date(Calendar entry_date) {
+        this.entry_date = entry_date;
+    }
+
+    public String getName_billing() {
+        return name_billing;
+    }
+
+    public void setName_billing(String name_billing) {
+        this.name_billing = name_billing;
+    }
+
+    public String getAddress_billing() {
+        return address_billing;
+    }
+
+    public void setAddress_billing(String address_billing) {
+        this.address_billing = address_billing;
+    }
+
+    public List<Truck> getCarrier_trucks() {
+        return carrier_trucks;
+    }
+
+    public void setCarrier_trucks(List<Truck> carrier_trucks) {
+        this.carrier_trucks = carrier_trucks;
+    }
+
+    public DeliveryType getType_delivery() {
+        return type_delivery;
+    }
 
     //
+    public void setType_delivery(DeliveryType type_delivery) {
+        this.type_delivery = type_delivery;
+    }
+
+    public double getDistance() {
+     
+        //return distance;
+        return 100;
+    }
+
+    public void setDistance(double distance) {
+        // To Do : Get from distance matrix in database
+        this.distance = distance;
+    }
+    public static double getCharge() {
+        return charge;
+    }
+
+    public static void setCharge(double charge) {
+        Consignment.charge = charge;
+    }
     // Constructors
     //
-    public Consignment(int id) {
-        this.id = id;
-        this.waiting_time = new Time(0);
+    public Consignment(){
+        this.id = -1;
+        this.waiting_time = 0;
         this.volume = 0;
         this.name_sender = "0";
         this.name_receiver = "0";
@@ -45,10 +122,27 @@ public class Consignment {
         this.address_receiver = null;
         this.address_billing = null;
         this.status_delivery = Status.PENDING;
+        this.type_delivery = DeliveryType.REGULAR;
+        this.pieces = 1;
         this.carrier_trucks = new ArrayList<Truck>();
+        this.entry_date = Calendar.getInstance();
     }
-
-    ;
+    public Consignment(int id) {
+        this.id = id;
+        this.waiting_time = 0;
+        this.volume = 0;
+        this.name_sender = "0";
+        this.name_receiver = "0";
+        this.name_billing = "0";
+        this.address_sender = null;
+        this.address_receiver = null;
+        this.address_billing = null;
+        this.status_delivery = Status.PENDING;
+        this.type_delivery = DeliveryType.REGULAR;
+        this.pieces = 1;
+        this.carrier_trucks = new ArrayList<Truck>();
+        this.entry_date = Calendar.getInstance();
+    }
   
     //
     // Methods
@@ -81,7 +175,7 @@ public class Consignment {
      *
      * @param _waiting_time the new value of waiting_time
      */
-    public void setWaiting_time(Time _waiting_time) {
+    public void setWaiting_time(long _waiting_time) {
         waiting_time = _waiting_time;
     }
 
@@ -90,7 +184,8 @@ public class Consignment {
      *
      * @return the value of waiting_time
      */
-    public Time getWaiting_time() {
+    public long getWaiting_time() {
+        waiting_time = (Calendar.getInstance().getTimeInMillis() - getEntry_date().getTimeInMillis())/1000;
         return waiting_time;
     }
 
@@ -99,7 +194,7 @@ public class Consignment {
      *
      * @param _volume the new value of volume
      */
-    public void setVolume(long _volume) {
+    public void setVolume(double _volume) {
         volume = _volume;
     }
 
@@ -108,7 +203,7 @@ public class Consignment {
      *
      * @return the value of volume
      */
-    public long getVolume() {
+    public double getVolume() {
         return volume;
     }
 
@@ -153,7 +248,7 @@ public class Consignment {
      *
      * @param _sender_address the new value of address_sender
      */
-    public void setAddress_sender(Address _sender_address) {
+    public void setAddress_sender(String _sender_address) {
         address_sender = _sender_address;
     }
 
@@ -162,7 +257,7 @@ public class Consignment {
      *
      * @return the value of address_sender
      */
-    public Address getAddress_sender() {
+    public String getAddress_sender() {
         return address_sender;
     }
 
@@ -171,7 +266,7 @@ public class Consignment {
      *
      * @param _receiver_address the new value of address_receiver
      */
-    public void setAddress_receiver(Address _receiver_address) {
+    public void setAddress_receiver(String _receiver_address) {
         address_receiver = _receiver_address;
     }
 
@@ -180,7 +275,7 @@ public class Consignment {
      *
      * @return the value of address_receiver
      */
-    public Address getAddress_receiver() {
+    public String getAddress_receiver() {
         return address_receiver;
     }
 
@@ -205,121 +300,12 @@ public class Consignment {
     //
     // Other methods
     //
-    /**
-     * @param _id
-     * @param _volume
-     * @param _receiver_name
-     * @param _receiver_address
-     * @param _sender_name
-     * @param _sender_address
-     */
-    public void Consignment(int _id,
-            long _volume,
-            String _receiver_name,
-            Address _receiver_address,
-            String _sender_name,
-            Address _sender_address) {
-    }
 
-    /**
-     * @return int
-     */
-    public int getWaitingTime() {
-        return 0;
-    }
-
-    /**
-     * @param hours
-     */
-    public void setWaitingTime(int hours) {
-    }
-
-    /**
-     * @param volume
-     */
-    public void setVolume(int volume) {
-    }
-
-    /**
-     * @param name
-     */
-    public void setSenderName(String name) {
-    }
-
-    /**
-     * @return String
-     */
-    public String getSenderName() {
-        return name_sender;
-    }
-
-    /**
-     * @param address
-     */
-    public void setSenderAddress(Address address) {
-    }
-
-    /**
-     * @return Address
-     */
-    public Address getSenderAddress() {
-        return null;
-    }
-
-    /**
-     * @param name
-     */
-    public void setReceiverName(String name) {
-    }
-
-    /**
-     * @return String
-     */
-    public String getReceiverName() {
-        return name_receiver;
-    }
-
-    /**
-     * @param address
-     */
-    public void setReceiverAddress(Address address) {
-    }
-
-    /**
-     * @return Address
-     */
-    public Address getRecevierAddress() {
-        return address_receiver;
-    }
-
-    /**
-     * @param _status
-     */
-    public void setDeliveryStatus(Status _status) {
-        status_delivery = _status;
-    }
-
-    /**
-     * @return StatusDelivery
-     */
-    public Status getDeliveryStatus() {
-        return status_delivery;
-    }
-
-    /**
-     * @return long
-     */
-    public long computeBill() {
-        return 0;
+    public double computeBill() {
+        return 100*volume*getDistance();        
     }
 
     /**
      */
-    public void printBill() {
-        String bill = null;
-        //bill.concat("Consignment: " + Integer.toString(id) + "\n");
-        //similarly for others
-
-    }
 
 }

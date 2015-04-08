@@ -7,7 +7,10 @@ import java.util.*;
  * Class HeadOffice
  */
 public class HeadOffice extends Office {
-
+    public static int count_employee_id = 20;
+    public static int count_truck_id = 0;
+    public static int count_consignment_id = 0;
+    
     //
     // Fields
     //
