@@ -1,12 +1,13 @@
 package com.transporters;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.*;
 
 /**
  * Class Database
  */
-public class Database {
+public class Database implements Serializable{
 
     //
     // Fields
@@ -15,7 +16,6 @@ public class Database {
     private String url;
     private String user;
     private String password;
-    Connection connection;
 
     //
     // Constructors
@@ -52,24 +52,22 @@ public class Database {
     public static void setIPAddress(String _ip_address) {
         Database.IP_ADDRESS = _ip_address;
     }
-    
-    public Connection getConnection(){
-        return connection;
-    }
 
     /**
      *
+     * @return 
      * @throws java.sql.SQLException
      */
-    public void connect() throws SQLException {
+    public Connection getConnection() throws SQLException {
         if (!url.equals("jdbc:mysql://localhost:3306/tccs")) {
             url = Database.getBranchURL();
         }
-        connection = DriverManager.getConnection(
+        Connection connection = DriverManager.getConnection(
                 url,
                 user,
                 password
         );
+        return connection;
     }
     //
     // Other methods

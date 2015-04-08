@@ -1,9 +1,11 @@
 package com.transporters;
 
+import java.io.Serializable;
+
 /**
  * Class Address
  */
-public class Address {
+public class Address implements Serializable{
 
     //
     // Fields

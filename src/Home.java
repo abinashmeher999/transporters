@@ -3,6 +3,7 @@ import com.transporters.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,6 +24,11 @@ import javax.swing.JOptionPane;
  */
 public class Home extends javax.swing.JFrame {
 
+    enum Session {
+
+        EMPLOYEE,
+        MANAGER
+    }
     Database db;
     HeadOffice head_office;
     List<Branch> branch_list;
@@ -34,6 +40,8 @@ public class Home extends javax.swing.JFrame {
     int truck_counter;
     int consignment_counter;
 
+    Branch current_branch;
+
     /**
      * Creates new form Home
      */
@@ -41,53 +49,74 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         try {
             Database.setIPAddress("localhost");
+            db = new Database();
             db.setUrl(Database.getBranchURL());
             db.setUser("root");
             db.setPassword("alsk");
-            db.connect();
-
             Statement stmt = db.getConnection().createStatement();
-            String query = "SELECT * FROM Lists;";
+            Statement stmt2 = db.getConnection().createStatement();
+            String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             byte[] buf;
             ObjectInputStream o;
 
-            rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            branch_list = (ArrayList<Branch>) o.readObject();
+            String query2 = "SELECT * FROM ID_data";
+            ResultSet rs2 = stmt2.executeQuery(query2);
 
+            rs2.next();
+            head_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            truck_list = (ArrayList<Truck>) o.readObject();
+            if (head_counter != 0) {
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                head_office = (HeadOffice) o.readObject();
+            } else {
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS", "IITKGP"));
+                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+                pstmt.setObject(1, head_office);
+                pstmt.executeUpdate();
+                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+            }
 
+            rs2.next();
+            branch_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            consignment_list = (ArrayList<Consignment>) o.readObject();
+            if (branch_counter != 0) {
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                branch_list = (ArrayList<Branch>) o.readObject();
+            } else {
+                branch_list = new ArrayList<>();
+            }
 
+            rs2.next();
+            truck_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            head_office = (HeadOffice) o.readObject();
+            if (truck_counter != 0) {
 
-            query = "SELECT * ID_data;";
-            rs = stmt.executeQuery(query);
-            
-            rs.next();
-            head_counter = rs.getInt("counter");
-            
-            rs.next();
-            branch_counter = rs.getInt("counter");
-            
-            rs.next();
-            truck_counter = rs.getInt("counter");
-            
-            rs.next();
-            consignment_counter = rs.getInt("counter");
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                truck_list = (ArrayList<Truck>) o.readObject();
+            } else {
+                truck_list = new ArrayList<>();
+            }
 
-        } catch (SQLException | IOException | ClassNotFoundException ex) {
+            rs2.next();
+            consignment_counter = rs2.getInt("counter");
+            rs.next();
+            if (consignment_counter != 0) {
+
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                consignment_list = (ArrayList<Consignment>) o.readObject();
+            } else {
+                consignment_list = new ArrayList<>();
+            }
+            rs.close();
+            rs2.close();
+        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+            java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

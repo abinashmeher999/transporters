@@ -1,12 +1,13 @@
 package com.transporters;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.*;
 
 /**
  * Class Branch
  */
-public class Branch extends Office {
+public class Branch extends Office implements Serializable{
 
     //
     // Fields
@@ -16,6 +17,7 @@ public class Branch extends Office {
     //
     /**
      *
+     * @param _id
      * @param _name
      * @param _address
      * @param _database
@@ -25,7 +27,6 @@ public class Branch extends Office {
         super(_id, _name, _address);
         setPassword("branch" + _id);
         this.setDatabase(_database);
-        this.getDatabase().connect();
     }
 
     ;
