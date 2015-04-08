@@ -59,7 +59,6 @@ public class Employee extends javax.swing.JFrame {
             db.setUrl(Database.getBranchURL());
             db.setUser("root");
             db.setPassword("alsk");
-            db.connect();
 
             Statement stmt = db.getConnection().createStatement();
             String query = "SELECT * FROM Lists;";

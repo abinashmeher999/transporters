@@ -1,11 +1,8 @@
 package com.transporters;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.io.Serializable;
->>>>>>> Data reading at the begin
 
 /**
  * Class Truck
