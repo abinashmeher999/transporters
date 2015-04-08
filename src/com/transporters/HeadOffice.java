@@ -40,5 +40,5 @@ public class HeadOffice extends Office implements Serializable{
     //
 // Other methods
 //
-    private static final long serialVersionUID = -372237070005638240L;
+    private static final long serialVersionUID = 1L;
 }
