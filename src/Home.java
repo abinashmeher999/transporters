@@ -241,7 +241,7 @@ public class Home extends javax.swing.JFrame {
         if(tf_employee_id.getText().equals("1")){
             Manager manager = new Manager();
             manager.setVisible(true);
-        }else if(tf_employee_id.getText().equals("1")){
+        }else if(tf_employee_id.getText().equals("2")){
             Employee employee = new Employee();
             employee.setVisible(true);
         }

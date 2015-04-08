@@ -48,7 +48,7 @@
               <Component id="tp_employee" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="b_back" min="-2" pref="180" max="-2" attributes="0"/>
+                  <Component id="b_back" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -97,7 +97,7 @@
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="b_dispatch" min="-2" max="-2" attributes="0"/>
-                                              <Component id="tf_dispatch_truck_plate_num" min="-2" pref="180" max="-2" attributes="0"/>
+                                              <Component id="tf_dispatch" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -120,7 +120,7 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="l_dispatch_truck_plate_num" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="tf_dispatch_truck_plate_num" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tf_dispatch" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="b_dispatch" min="-2" max="-2" attributes="0"/>
@@ -154,7 +154,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="228" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="342" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -169,12 +169,15 @@
                     <Property name="text" type="java.lang.String" value="Truck Plate Number"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="tf_dispatch_truck_plate_num">
+                <Component class="javax.swing.JTextField" name="tf_dispatch">
                 </Component>
                 <Component class="javax.swing.JButton" name="b_dispatch">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Dispatch Truck"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_dispatchActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                   <AuxValues>
@@ -221,7 +224,7 @@
                                           <Component id="l_receive_truck_plate_num" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jButton3" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="b_receive_truck" min="-2" pref="120" max="-2" attributes="0"/>
                                               <Component id="tf_receive_truck_plate_num" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -242,8 +245,8 @@
                               <Component id="tf_receive_truck_plate_num" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="30" max="32767" attributes="0"/>
+                          <Component id="b_receive_truck" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="l_truck_details" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="if_truck_details" min="-2" max="-2" attributes="0"/>
@@ -273,7 +276,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="228" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="342" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -283,10 +286,14 @@
                     <Property name="text" type="java.lang.String" value="Truck Details"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton3">
+                <Component class="javax.swing.JButton" name="b_receive_truck">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Receive Truck"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_receive_truckMouseClicked"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_receive_truckActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -365,21 +372,25 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="l_pieces" min="-2" max="-2" attributes="0"/>
-                                              <Component id="l_volume" min="-2" pref="130" max="-2" attributes="0"/>
+                                              <Component id="l_volume" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="l_pieces" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="47" max="32767" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="tf_volume" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                              <Component id="tf_pieces" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="tf_volume" alignment="1" min="-2" pref="180" max="-2" attributes="0"/>
+                                              <Component id="tf_pieces" alignment="1" min="-2" pref="180" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="rb_express_delievery" alignment="1" min="-2" max="-2" attributes="0"/>
-                                              <Component id="rb_regular_delievery" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
+                                          <Component id="rb_regular_delievery" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="rb_express_delievery" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="l_to_branch" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="cmb_to_branch" min="-2" pref="180" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -394,16 +405,22 @@
                                       <Component id="l_volume" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="tf_volume" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="l_pieces" min="-2" max="-2" attributes="0"/>
-                                      <Component id="tf_pieces" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="l_pieces" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tf_pieces" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="rb_express_delievery" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="rb_express_delievery" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rb_regular_delievery" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rb_regular_delievery" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="cmb_to_branch" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="l_to_branch" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="25" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -415,6 +432,9 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="tf_volume">
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_volumeActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="l_pieces">
                           <Properties>
@@ -437,6 +457,26 @@
                               <ComponentRef name="bg_delievery_type"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Express Delivery"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rb_express_delieveryActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JComboBox" name="cmb_to_branch">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="4">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="l_to_branch">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="To Branch"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -672,6 +712,9 @@
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Bill to Receiver"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_bill_to_receiverMouseClicked"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="l_billing_address">
                           <Properties>
@@ -735,6 +778,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Generate Bill"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_generate_billMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -744,6 +790,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Back"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_backMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
