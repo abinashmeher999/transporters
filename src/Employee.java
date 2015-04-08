@@ -699,7 +699,7 @@ public class Employee extends javax.swing.JFrame {
         try{
             //To do: Abinash
             Consignment consignment = new Consignment();
-            consignment.setConsignment_id(++(com.transporters.HeadOffice.count_consignment_id));
+            consignment.setConsignment_id(++(consignment_counter));
             consignment.setName_sender(tf_sender_name.getText());
             consignment.setName_receiver(tf_receiver_name.getText());
             consignment.setName_billing(tf_billing_name.getText());
