@@ -95,5 +95,6 @@ public class Employee implements Serializable{
     public String getID() {
         return null;
     }
+    private static final long serialVersionUID = -2672229822413412984L;
 
 }

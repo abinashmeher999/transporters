@@ -1,4 +1,5 @@
 
+import com.transporters.Address;
 import com.transporters.Branch;
 import com.transporters.Consignment;
 import com.transporters.Database;
@@ -9,6 +10,7 @@ import java.awt.HeadlessException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -59,52 +61,73 @@ public class Employee extends javax.swing.JFrame {
         initComponents();
         try {
             Database.setIPAddress("localhost");
+            db = new Database();
             db.setUrl(Database.getBranchURL());
             db.setUser("root");
             db.setPassword("alsk");
-
             Statement stmt = db.getConnection().createStatement();
-            String query = "SELECT * FROM Lists;";
+            Statement stmt2 = db.getConnection().createStatement();
+            String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             byte[] buf;
             ObjectInputStream o;
 
+            String query2 = "SELECT * FROM ID_data";
+            ResultSet rs2 = stmt2.executeQuery(query2);
+
+            rs2.next();
+            head_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            branch_list = (ArrayList<Branch>) o.readObject();
+            if (head_counter != 0) {
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                head_office = (HeadOffice) o.readObject();
+            } else {
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS", "IITKGP"));
+                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+                pstmt.setObject(1, head_office);
+                pstmt.executeUpdate();
+                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+            }
 
+            rs2.next();
+            branch_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            truck_list = (ArrayList<Truck>) o.readObject();
+            if (branch_counter != 0) {
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                branch_list = (ArrayList<Branch>) o.readObject();
+            } else {
+                branch_list = new ArrayList<>();
+            }
 
+            rs2.next();
+            truck_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            consignment_list = (ArrayList<Consignment>) o.readObject();
+            if (truck_counter != 0) {
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                truck_list = (ArrayList<Truck>) o.readObject();
+            } else {
+                truck_list = new ArrayList<>();
+            }
 
+            rs2.next();
+            consignment_counter = rs2.getInt("counter");
             rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            head_office = (HeadOffice) o.readObject();
+            if (consignment_counter != 0) {
 
-            query = "SELECT * ID_data;";
-            rs = stmt.executeQuery(query);
-
-            rs.next();
-            head_counter = rs.getInt("counter");
-
-            rs.next();
-            branch_counter = rs.getInt("counter");
-
-            rs.next();
-            truck_counter = rs.getInt("counter");
-
-            rs.next();
-            consignment_counter = rs.getInt("counter");
-
-        } catch (SQLException | IOException | ClassNotFoundException ex) {
+                buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                consignment_list = (ArrayList<Consignment>) o.readObject();
+            } else {
+                consignment_list = new ArrayList<>();
+            }
+            rs.close();
+            rs2.close();
+        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+            java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -804,14 +827,14 @@ public class Employee extends javax.swing.JFrame {
                                     ArrayList<Consignment> list_consignments = truck_list.get(i).getConsignment_list();
                                     Consignment consignment = null;
                                     long branch_waiting_time = 0;
-                                    for(int j = 0; j < list_consignments.size(); j++){
+                                    for (int j = 0; j < list_consignments.size(); j++) {
                                         consignment = list_consignments.get(j);
-                                        truck_list.get(i).getConsignment_list().get(j).setWaiting_time((consignment.getEntry_date().getTimeInMillis() - Calendar.getInstance().getTimeInMillis())/1000);
+                                        truck_list.get(i).getConsignment_list().get(j).setWaiting_time((consignment.getEntry_date().getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / 1000);
                                         truck_list.get(i).getConsignment_list().get(j).setStatus_delivery(Consignment.Status.ENROUTE);
                                         branch_waiting_time += consignment.getWaiting_time();
-                                    }   
+                                    }
                                     long consignment_count = truck_list.get(i).getCurrent_office().getCumulative_truck_count();
-                                    truck_list.get(i).getCurrent_office().setAvgConsignmentWaitingTime((truck_list.get(i).getCurrent_office().getAvg_consignment_waiting_time()*consignment_count + branch_waiting_time)/(consignment_count + list_consignments.size()));
+                                    truck_list.get(i).getCurrent_office().setAvgConsignmentWaitingTime((truck_list.get(i).getCurrent_office().getAvg_consignment_waiting_time() * consignment_count + branch_waiting_time) / (consignment_count + list_consignments.size()));
                                     truck_list.get(i).getCurrent_office().setCumulative_consignment_count(consignment_count + list_consignments.size());
                                     JOptionPane.showMessageDialog(this, "Truck " + plate_num + "dispatched.", "Dispatch Successful", 1);
                                 }

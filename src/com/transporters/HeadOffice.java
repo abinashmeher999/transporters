@@ -2,13 +2,12 @@ package com.transporters;
 
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.*;
 
 /**
  * Class HeadOffice
  */
 public class HeadOffice extends Office implements Serializable{
-
+    
     
     //
     // Fields
@@ -41,4 +40,5 @@ public class HeadOffice extends Office implements Serializable{
     //
 // Other methods
 //
+    private static final long serialVersionUID = -372237070005638240L;
 }

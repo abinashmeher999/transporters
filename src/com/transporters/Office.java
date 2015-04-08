@@ -6,10 +6,12 @@ import java.util.*;
 /**
  * Class Office
  */
-abstract public class Office implements Serializable{
+abstract public class Office implements Serializable {
+
     //
     // Fields
     //
+
     private final int id;
     private String name;
     private Address address;
@@ -55,12 +57,13 @@ abstract public class Office implements Serializable{
      *
      * @return
      */
-        public long getAvg_consignment_waiting_time() {
+    public long getAvg_consignment_waiting_time() {
         return avg_consignment_waiting_time;
     }
 
     /**
      * Set the value of name
+     *
      * @param newVar the new value of name
      */
     public void setName(String newVar) {
@@ -238,8 +241,7 @@ abstract public class Office implements Serializable{
     public void setDatabase(Database database) {
         this.database = database;
     }
-    
-    
+
     public String getPassword() {
         return password;
     }
@@ -255,5 +257,7 @@ abstract public class Office implements Serializable{
     public void setCumulative_consignment_count(long cumulative_consignment_count) {
         this.cumulative_consignment_count = cumulative_consignment_count;
     }
-    
+
+    private static final long serialVersionUID = 5539303527072866995L;
+
 }

@@ -72,4 +72,5 @@ public class Database implements Serializable{
     //
     // Other methods
     //
+    private static final long serialVersionUID = 2418519852800895063L;
 }

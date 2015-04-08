@@ -43,5 +43,6 @@ public class Branch extends Office implements Serializable{
     //
     // Other methods
     //
+    private static final long serialVersionUID = -320077864029228146L;
 
 }

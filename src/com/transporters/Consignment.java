@@ -328,8 +328,7 @@ public class Consignment implements Serializable{
     public double computeBill() {
         return 100*volume*getDistance();        
     }
-    /**
-     */
-
+    
+    private static final long serialVersionUID = 8927227389351703299L;
 
 }
