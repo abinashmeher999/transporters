@@ -42,6 +42,24 @@ public class Consignment {
     private List<Truck> carrier_trucks;
     private DeliveryType type_delivery;
     private Calendar entry_date;
+    private Branch to_branch;
+    private Branch from_branch;
+
+    public Branch getTo_branch() {
+        return to_branch;
+    }
+
+    public void setTo_branch(Branch to_branch) {
+        this.to_branch = to_branch;
+    }
+
+    public Branch getFrom_branch() {
+        return from_branch;
+    }
+
+    public void setFrom_branch(Branch from_branch) {
+        this.from_branch = from_branch;
+    }
  
     public int getPieces() {
         return pieces;

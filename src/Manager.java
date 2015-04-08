@@ -1,3 +1,20 @@
+
+import com.transporters.Branch;
+import com.transporters.Consignment;
+import com.transporters.Database;
+import com.transporters.HeadOffice;
+import com.transporters.Truck;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +26,72 @@
  * @author best1yash
  */
 public class Manager extends javax.swing.JFrame {
+    Database db;
+    HeadOffice head_office;
+    List<Branch> branch_list;
+    List<Truck> truck_list;
+    List<Consignment> consignment_list;
 
+    int head_counter;
+    int branch_counter;
+    int truck_counter;
+    int consignment_counter;
     /**
      * Creates new form Manager
      */
     public Manager() {
         initComponents();
+        try {
+            Database.setIPAddress("localhost");
+            db.setUrl(Database.getBranchURL());
+            db.setUser("root");
+            db.setPassword("alsk");
+            db.connect();
+
+            Statement stmt = db.getConnection().createStatement();
+            String query = "SELECT * FROM Lists;";
+            ResultSet rs = stmt.executeQuery(query);
+            byte[] buf;
+            ObjectInputStream o;
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            branch_list = (ArrayList<Branch>) o.readObject();
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            truck_list = (ArrayList<Truck>) o.readObject();
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            consignment_list = (ArrayList<Consignment>) o.readObject();
+
+            rs.next();
+            buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            head_office = (HeadOffice) o.readObject();
+
+            query = "SELECT * ID_data;";
+            rs = stmt.executeQuery(query);
+            
+            rs.next();
+            head_counter = rs.getInt("counter");
+            
+            rs.next();
+            branch_counter = rs.getInt("counter");
+            
+            rs.next();
+            truck_counter = rs.getInt("counter");
+            
+            rs.next();
+            consignment_counter = rs.getInt("counter");
+
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

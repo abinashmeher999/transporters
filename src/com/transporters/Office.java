@@ -19,9 +19,18 @@ abstract public class Office {
     private long cumulative_truck_count;
     private Time truck_avg_idle_time;
     private long revenue;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     private Time avg_consignment_waiting_time;
     private Database database;
-
+    private String password;
+    
     
     private List<Truck> available_truck_list;
 

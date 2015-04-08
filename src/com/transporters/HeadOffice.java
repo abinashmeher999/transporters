@@ -26,6 +26,7 @@ public class HeadOffice extends Office {
      */
         public HeadOffice(String _name, Address _address) throws SQLException{
         super(-1,_name,_address);
+        setPassword("head0");
         Database _database = this.getDatabase();
         _database.setUser("root");
         _database.setUrl("jdbc:mysql://localhost:3306/tccs");
