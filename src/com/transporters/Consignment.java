@@ -27,7 +27,7 @@ public class Consignment implements Serializable{
         REGULAR
     };
     
-    private int id;
+    private int consignment_id;
     private long waiting_time;
     private double volume;
     private int distance;
@@ -46,7 +46,51 @@ public class Consignment implements Serializable{
     private Branch to_branch;
     private Branch from_branch;
 
-    public Branch getTo_branch() {
+    
+    // Constructors
+    //
+    public Consignment(){
+        this.consignment_id = -1;
+        this.waiting_time = 0;
+        this.volume = 0;
+        this.name_sender = "0";
+        this.name_receiver = "0";
+        this.name_billing = "0";
+        this.address_sender = null;
+        this.address_receiver = null;
+        this.address_billing = null;
+        this.status_delivery = Status.PENDING;
+        this.type_delivery = DeliveryType.REGULAR;
+        this.pieces = 1;
+        this.carrier_trucks = new ArrayList<Truck>();
+        this.entry_date = Calendar.getInstance();
+    }
+    public Consignment(int id) {
+        this.consignment_id = id;
+        this.waiting_time = 0;
+        this.volume = 0;
+        this.name_sender = "0";
+        this.name_receiver = "0";
+        this.name_billing = "0";
+        this.address_sender = null;
+        this.address_receiver = null;
+        this.address_billing = null;
+        this.status_delivery = Status.PENDING;
+        this.type_delivery = DeliveryType.REGULAR;
+        this.pieces = 1;
+        this.carrier_trucks = new ArrayList<Truck>();
+        this.entry_date = Calendar.getInstance();
+    }
+  
+    //
+    // Methods
+    //
+
+
+    //
+    // Accessor methods
+    //
+public Branch getTo_branch() {
         return to_branch;
     }
 
@@ -126,65 +170,21 @@ public class Consignment implements Serializable{
     public static void setCharge(double charge) {
         Consignment.charge = charge;
     }
-    // Constructors
-    //
-    public Consignment(){
-        this.id = -1;
-        this.waiting_time = 0;
-        this.volume = 0;
-        this.name_sender = "0";
-        this.name_receiver = "0";
-        this.name_billing = "0";
-        this.address_sender = null;
-        this.address_receiver = null;
-        this.address_billing = null;
-        this.status_delivery = Status.PENDING;
-        this.type_delivery = DeliveryType.REGULAR;
-        this.pieces = 1;
-        this.carrier_trucks = new ArrayList<Truck>();
-        this.entry_date = Calendar.getInstance();
-    }
-    public Consignment(int id) {
-        this.id = id;
-        this.waiting_time = 0;
-        this.volume = 0;
-        this.name_sender = "0";
-        this.name_receiver = "0";
-        this.name_billing = "0";
-        this.address_sender = null;
-        this.address_receiver = null;
-        this.address_billing = null;
-        this.status_delivery = Status.PENDING;
-        this.type_delivery = DeliveryType.REGULAR;
-        this.pieces = 1;
-        this.carrier_trucks = new ArrayList<Truck>();
-        this.entry_date = Calendar.getInstance();
-    }
-  
-    //
-    // Methods
-    //
-
-
-    //
-    // Accessor methods
-    //
-
     /**
-     * Set the value of id
-     * @param _consignment_id the new value of id
+     * Set the value of consignment_id
+     * @param _consignment_id the new value of consignment_id
      */
     public void setConsignment_id(int _consignment_id) {
-        id = _consignment_id;
+        consignment_id = _consignment_id;
     }
 
     /**
-     * Get the value of id
+     * Get the value of consignment_id
      *
-     * @return the value of id
+     * @return the value of consignment_id
      */
     public int getConsignment_id() {
-        return id;
+        return consignment_id;
     }
 
     /**
@@ -314,19 +314,9 @@ public class Consignment implements Serializable{
         return status_delivery;
     }
 
-    public int getId() {
-        return id;        
-    }
-
-    //
-    // Other methods
-    //
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public double computeBill() {
-        return 100*volume*getDistance();        
+        return 100*getVolume()*getDistance();        
     }
     
     private static final long serialVersionUID = 8927227389351703299L;

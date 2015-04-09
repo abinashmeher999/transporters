@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -149,14 +150,14 @@ public class Employee extends javax.swing.JFrame {
         p_distpatch = new javax.swing.JPanel();
         if_available_trucks = new javax.swing.JInternalFrame();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        table_dispatchable_trucks = new javax.swing.JTable();
         l_dispatch_truck_plate_num = new javax.swing.JLabel();
         tf_dispatch = new javax.swing.JTextField();
         b_dispatch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_dispatch_details = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
-        b_show_available_trucks = new javax.swing.JButton();
+        b_show_dispatchable_trucks = new javax.swing.JButton();
         p_receive = new javax.swing.JPanel();
         l_receive_truck_plate_num = new javax.swing.JLabel();
         tf_receive_truck_plate_num = new javax.swing.JTextField();
@@ -215,12 +216,9 @@ public class Employee extends javax.swing.JFrame {
 
         if_available_trucks.setVisible(true);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table_dispatchable_trucks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Truck Plate No.", "Destination"
@@ -234,7 +232,7 @@ public class Employee extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(table_dispatchable_trucks);
 
         javax.swing.GroupLayout if_available_trucksLayout = new javax.swing.GroupLayout(if_available_trucks.getContentPane());
         if_available_trucks.getContentPane().setLayout(if_available_trucksLayout);
@@ -246,7 +244,7 @@ public class Employee extends javax.swing.JFrame {
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(if_available_trucksLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 39, Short.MAX_VALUE))
         );
 
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
@@ -269,7 +267,17 @@ public class Employee extends javax.swing.JFrame {
 
         jLabel7.setText("Dispatch Details");
 
-        b_show_available_trucks.setText("Show Available Trucks");
+        b_show_dispatchable_trucks.setText("Show Dispatchable Trucks");
+        b_show_dispatchable_trucks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_show_dispatchable_trucksMouseClicked(evt);
+            }
+        });
+        b_show_dispatchable_trucks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_show_dispatchable_trucksActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_distpatchLayout = new javax.swing.GroupLayout(p_distpatch);
         p_distpatch.setLayout(p_distpatchLayout);
@@ -287,7 +295,7 @@ public class Employee extends javax.swing.JFrame {
                                 .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(b_dispatch)
                                     .addComponent(tf_dispatch, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(b_show_available_trucks))
+                            .addComponent(b_show_dispatchable_trucks))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(p_distpatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,7 +314,7 @@ public class Employee extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_dispatch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(b_show_available_trucks))
+                        .addComponent(b_show_dispatchable_trucks))
                     .addGroup(p_distpatchLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -324,10 +332,7 @@ public class Employee extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Consignement Id"
@@ -343,10 +348,10 @@ public class Employee extends javax.swing.JFrame {
         );
         if_truck_detailsLayout.setVerticalGroup(
             if_truck_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        l_truck_details.setText("Truck Details");
+        l_truck_details.setText("Waiting Trucks");
 
         b_receive_truck.setText("Receive Truck");
         b_receive_truck.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -836,6 +841,9 @@ public class Employee extends javax.swing.JFrame {
                                     long consignment_count = truck_list.get(i).getCurrent_office().getCumulative_truck_count();
                                     truck_list.get(i).getCurrent_office().setAvgConsignmentWaitingTime((truck_list.get(i).getCurrent_office().getAvg_consignment_waiting_time() * consignment_count + branch_waiting_time) / (consignment_count + list_consignments.size()));
                                     truck_list.get(i).getCurrent_office().setCumulative_consignment_count(consignment_count + list_consignments.size());
+                                    String details = null;
+                                    details = com.transporters.System.printDispatchDetails(truck_list.get(i));
+                                    ta_dispatch_details.setText(details);
                                     JOptionPane.showMessageDialog(this, "Truck " + plate_num + "dispatched.", "Dispatch Successful", 1);
                                 }
                             } else {
@@ -852,6 +860,27 @@ public class Employee extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_b_dispatchMouseClicked
+
+    private void b_show_dispatchable_trucksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_show_dispatchable_trucksMouseClicked
+
+    }//GEN-LAST:event_b_show_dispatchable_trucksMouseClicked
+
+    private void b_show_dispatchable_trucksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_show_dispatchable_trucksActionPerformed
+        DefaultTableModel tb = (DefaultTableModel) table_dispatchable_trucks.getModel();
+        tb.setRowCount(0);
+        for (Truck truck : truck_list) {
+            if (truck.getCurrent_office().getId() == branch_id) {
+                if (truck.getStatus() == Truck.Status.DISPATCHABLE) {
+                    String plate_num = "";
+                    plate_num = truck.getPlate_number();
+                    String destination = "";
+                    destination = truck.getDestination_office().getName();
+                    Object[] rowData = new Object[]{plate_num, destination};
+                    tb.addRow(rowData);
+                }
+            }
+        }
+    }//GEN-LAST:event_b_show_dispatchable_trucksActionPerformed
 
     /**
      * @param args the command line arguments
@@ -891,7 +920,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JButton b_dispatch;
     private javax.swing.JButton b_generate_bill;
     private javax.swing.JButton b_receive_truck;
-    private javax.swing.JButton b_show_available_trucks;
+    private javax.swing.JButton b_show_dispatchable_trucks;
     private javax.swing.ButtonGroup bg_delievery_type;
     private javax.swing.JComboBox cmb_to_branch;
     private javax.swing.JInternalFrame if_available_trucks;
@@ -903,7 +932,6 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel l_billing_address;
     private javax.swing.JLabel l_billing_contact;
     private javax.swing.JLabel l_billing_name;
@@ -932,6 +960,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane sp_billing_details;
     private javax.swing.JTextArea ta_billing_details;
     private javax.swing.JTextArea ta_dispatch_details;
+    private javax.swing.JTable table_dispatchable_trucks;
     private javax.swing.JTextField tf_billing_address;
     private javax.swing.JTextField tf_billing_contact;
     private javax.swing.JTextField tf_billing_name;
