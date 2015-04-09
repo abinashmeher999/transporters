@@ -398,7 +398,7 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        cmb_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
         cmb_branch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cmb_branchFocusGained(evt);
@@ -823,17 +823,20 @@ public class Manager extends javax.swing.JFrame {
 
         jLabel3.setText("Branch");
 
-        cmb_cs_b.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_cs_b.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
         cmb_cs_b.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cmb_cs_bFocusGained(evt);
             }
         });
 
+        bg_company_stats.add(jRadioButton1);
         jRadioButton1.setText("Average Truck Idle Time");
 
+        bg_company_stats.add(jRadioButton2);
         jRadioButton2.setText("Average Consigment Waiting Time");
 
+        bg_company_stats.add(jRadioButton3);
         jRadioButton3.setText("Branch Consignment Handling");
 
         jTextArea2.setColumns(20);
