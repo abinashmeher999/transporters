@@ -185,5 +185,6 @@ public class Truck implements Serializable {
     public void setCost(double _cost) {
         cost = _cost;
     }
-
+    
+    
 }

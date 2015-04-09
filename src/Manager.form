@@ -412,6 +412,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Add to fleet"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

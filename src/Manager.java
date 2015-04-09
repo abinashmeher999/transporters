@@ -406,6 +406,11 @@ public class Manager extends javax.swing.JFrame {
         });
 
         jButton1.setText("Add to fleet");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_buy_truckLayout = new javax.swing.GroupLayout(p_buy_truck);
         p_buy_truck.setLayout(p_buy_truckLayout);
@@ -1099,6 +1104,59 @@ public class Manager extends javax.swing.JFrame {
         cmb_cs_b.showPopup();
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_cs_bFocusGained
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String name;
+        Double cost;
+        String model;
+        String plate_number;
+        try {
+
+            model = tf_truck_model.getText();
+            if ("Truck Model".equals(model) || "".equals(model)) {
+                throw new NullPointerException("Truck Model");
+            }
+
+            plate_number = tf_plate_number.getText();
+            if ("Plate Number".equals(plate_number) || "".equals(plate_number)) {
+                throw new NullPointerException("Plate Number");
+            }
+
+            cost = Double.valueOf(tf_cost.getText());
+            name = cmb_branch.getSelectedItem().toString();
+            if ("Branch".equals(name)) {
+                throw new NullPointerException("Branch");
+            }
+        } catch (NullPointerException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Input " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Truck nt = new Truck(++truck_counter);
+            Office tempb = head_office;
+            for (Branch tb : branch_list) {
+                if (tb.getName().equals(name)) {
+                    tempb = tb;
+                    break;
+                }
+            }
+            nt.setCurrent_office(tempb);
+            tempb.getTruck_list().add(nt);
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            String query = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
+            stmt.executeUpdate(query);
+            truck_list.add(nt);
+            String update = "UPDATE Lists SET list=? WHERE name='truck'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, truck_list);
+            pstmt.executeUpdate();
+
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
