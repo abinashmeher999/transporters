@@ -30,7 +30,7 @@ public class Consignment implements Serializable{
     private int id;
     private long waiting_time;
     private double volume;
-    private double distance;
+    private int distance;
     private static double charge;
     private int pieces;
     private String name_sender;
@@ -111,13 +111,11 @@ public class Consignment implements Serializable{
         this.type_delivery = type_delivery;
     }
 
-    public double getDistance() {
-     
-        //return distance;
-        return 100;
+    public int getDistance() {
+        return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(int _distance) {
         // To Do : Get from distance matrix in database
         this.distance = distance;
     }
@@ -316,15 +314,22 @@ public class Consignment implements Serializable{
         return status_delivery;
     }
 
+    public int getId() {
+        return id;        
+    }
+
     //
     // Other methods
     //
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public double computeBill() {
         return 100*volume*getDistance();        
     }
-
     /**
      */
+
 
 }

@@ -62,12 +62,12 @@ public class Database implements Serializable{
         if (!url.equals("jdbc:mysql://localhost:3306/tccs")) {
             url = Database.getBranchURL();
         }
-        Connection connection = DriverManager.getConnection(
+        return DriverManager.getConnection(
                 url,
                 user,
                 password
         );
-        return connection;
+        
     }
     //
     // Other methods

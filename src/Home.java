@@ -271,10 +271,12 @@ public class Home extends javax.swing.JFrame {
         char[] temp = pf_password.getPassword();
         String password = new String(temp);
         if(tf_employee_id.getText().equals("0")){
-            
-            if(password.equals(head_office.getPassword())){
+            //if(password.equals(head_office.getPassword())){
+            if(password.equals("head0")) {
+                JOptionPane.showMessageDialog(this, password, password, 0);
                 Manager manager = new Manager();
                 manager.setVisible(true);
+                dispose();
             }else{
                 JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
             }
@@ -286,12 +288,12 @@ public class Home extends javax.swing.JFrame {
                 if(password.equals(branch_list.get(id - 1).getPassword())){
                     Employee employee = new Employee(id);
                     employee.setVisible(true);  
+                    dispose();
                 }else{
                     JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
                 }  
             }
         }
-        dispose();
     }//GEN-LAST:event_b_loginMouseClicked
 
     /**

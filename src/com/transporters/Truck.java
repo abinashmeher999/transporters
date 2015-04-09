@@ -7,40 +7,33 @@ import java.io.Serializable;
 /**
  * Class Truck
  */
-public class Truck implements Serializable{
+public class Truck implements Serializable {
 
     //
     // Fields
     //
-    enum Status {
+    public enum Status {
 
         AVAILABLE,
         DISPATCHABLE,
         ENROUTE
     }
 
-    private static final long MAX_CAPACITY = 500;
+    public static final long MAX_CAPACITY = 500;
 
-    private int id;
+    private String plate_number;
     private Status status;
     private Office current_office;
     private Office destination_office;
     private int total_km;
     private long current_occupied_volume;
-
-    public ArrayList<Consignment> getConsignment_list() {
-        return consignment_list;
-    }
-
-    public void setConsignment_list(ArrayList<Consignment> consignment_list) {
-        this.consignment_list = consignment_list;
-    }
     private ArrayList<Consignment> consignment_list;
+
     //
     // Constructors
     //
     public Truck() {
-        id = -1;
+        plate_number = null;
         this.status = Status.AVAILABLE;
         current_office = null;
         destination_office = null;
@@ -64,18 +57,7 @@ public class Truck implements Serializable{
      * Set the value of id
      * @param _id the new value of id
      */
-    public void setId(int _id) {
-        id = _id;
-    }
-
-    /**
-     * Get the value of id
-     *
-     * @return the value of id
-     */
-    public int getId() {
-        return id;
-    }
+    
 
     /**
      * Set the value of status
@@ -100,19 +82,6 @@ public class Truck implements Serializable{
      *
      * @param _current_office the new value of current_office
      */
-    public void setCurrentOffice(Office _current_office) {
-        current_office = _current_office;
-    }
-
-    /**
-     * Get the value of current_office
-     *
-     * @return the value of current_office
-     */
-    public Office getCurrentOffice() {
-        return current_office;
-    }
-
     /**
      * Get the value of MAX_CAPACITY
      *
@@ -156,6 +125,54 @@ public class Truck implements Serializable{
      */
     public long getCurrentOccupiedVolume() {
         return current_occupied_volume;
+    }
+
+    public String getPlate_number() {
+        return plate_number;
+    }
+
+    public void setPlate_number(String plate_number) {
+        this.plate_number = plate_number;
+    }
+
+    public Office getCurrent_office() {
+        return current_office;
+    }
+
+    public void setCurrent_office(Office current_office) {
+        this.current_office = current_office;
+    }
+
+    public Office getDestination_office() {
+        return destination_office;
+    }
+
+    public void setDestination_office(Office destination_office) {
+        this.destination_office = destination_office;
+    }
+
+    public int getTotal_km() {
+        return total_km;
+    }
+
+    public void setTotal_km(int total_km) {
+        this.total_km = total_km;
+    }
+
+    public long getCurrent_occupied_volume() {
+        return current_occupied_volume;
+    }
+
+    public void setCurrent_occupied_volume(long current_occupied_volume) {
+        this.current_occupied_volume = current_occupied_volume;
+    }
+
+    public ArrayList<Consignment> getConsignment_list() {
+        return consignment_list;
+    }
+
+    public void setConsignment_list(ArrayList<Consignment> consignment_list) {
+        this.consignment_list = consignment_list;
     }
 
     /**
