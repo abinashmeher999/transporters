@@ -244,7 +244,7 @@ public class Employee extends javax.swing.JFrame {
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(if_available_trucksLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 39, Short.MAX_VALUE))
+                .addGap(0, 42, Short.MAX_VALUE))
         );
 
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
@@ -396,7 +396,7 @@ public class Employee extends javax.swing.JFrame {
                 .addComponent(b_receive_truck)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(l_truck_details)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(if_truck_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(125, 125, 125))
         );
