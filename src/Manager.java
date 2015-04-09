@@ -1056,16 +1056,15 @@ public class Manager extends javax.swing.JFrame {
             Statement stmt = head_office.getDatabase().getConnection().createStatement();
             String query = "UPDATE ID_data SET counter=" + branch_counter + " WHERE name='branch_counter'";
             stmt.executeUpdate(query);
-            query = "CREATE USER '" + username + "'@'%' IDENTIFIED BY '" + password + "'";
-            stmt.executeUpdate(query);
-            query = "GRANT ALL PRIVILEGES ON tccs . * TO '" + username + "'@'%'";
             branch_list.add(nb);
-            stmt.executeUpdate(query);
             String update = "UPDATE Lists SET list=? WHERE name='branch'";
             PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
             pstmt.setObject(1, branch_list);
             pstmt.executeUpdate();
-
+            query = "CREATE USER '" + username + "'@'%' IDENTIFIED BY '" + password + "'";
+            stmt.executeUpdate(query);
+            query = "GRANT ALL PRIVILEGES ON tccs . * TO '" + username + "'@'%'";
+            stmt.executeUpdate(query);
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
@@ -1143,8 +1142,9 @@ public class Manager extends javax.swing.JFrame {
                     break;
                 }
             }
+            System.out.println(tempb.getName());
             nt.setCurrent_office(tempb);
-            tempb.getTruck_list().add(nt);
+            tempb.addTruck(nt);
             Statement stmt = head_office.getDatabase().getConnection().createStatement();
             String query = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
             stmt.executeUpdate(query);
