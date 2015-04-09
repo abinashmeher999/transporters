@@ -404,6 +404,11 @@ public class Manager extends javax.swing.JFrame {
                 cmb_branchFocusGained(evt);
             }
         });
+        cmb_branch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_branchActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Add to fleet");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1160,6 +1165,10 @@ public class Manager extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void cmb_branchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_branchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_branchActionPerformed
 
     /**
      * @param args the command line arguments
