@@ -39,7 +39,7 @@ abstract public class Office implements Serializable {
         truck_avg_idle_time = 0;
         revenue = 0;
         avg_consignment_waiting_time = 0;
-        this.truck_list = new ArrayList<>();
+        truck_list = new ArrayList<>();
         database = new Database();
     }
 
@@ -210,7 +210,8 @@ abstract public class Office implements Serializable {
      *
      * @param new_object
      */
-    public void addAvailable_truck_list(Truck new_object) {
+    public void addTruck(Truck new_object) {
+        java.lang.System.out.println(truck_list.size());
         truck_list.add(new_object);
     }
 
@@ -219,7 +220,7 @@ abstract public class Office implements Serializable {
      *
      * @param new_object
      */
-    public void removeAvailable_truck_list(Truck new_object) {
+    public void removeTruck(Truck new_object) {
         truck_list.remove(new_object);
     }
 
