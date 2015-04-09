@@ -86,5 +86,6 @@ public class Manager extends Employee implements Serializable{
     public void addNewBranch(){
         
     }
+    private static final long serialVersionUID = 1723382028650313058L;
     
 }

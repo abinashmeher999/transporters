@@ -1,4 +1,22 @@
 
+import com.transporters.Address;
+import com.transporters.Branch;
+import com.transporters.Consignment;
+import com.transporters.Database;
+import com.transporters.HeadOffice;
+import com.transporters.Office;
+import com.transporters.Truck;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+
 import com.transporters.Branch;
 import com.transporters.Consignment;
 import com.transporters.Database;
@@ -14,18 +32,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author best1yash
  */
 public class Manager extends javax.swing.JFrame {
+
     Database db;
     HeadOffice head_office;
     List<Branch> branch_list;
@@ -36,6 +55,7 @@ public class Manager extends javax.swing.JFrame {
     int branch_counter;
     int truck_counter;
     int consignment_counter;
+
     /**
      * Creates new form Manager
      */
@@ -43,52 +63,77 @@ public class Manager extends javax.swing.JFrame {
         initComponents();
         try {
             Database.setIPAddress("localhost");
+            db = new Database();
             db.setUrl(Database.getBranchURL());
             db.setUser("root");
             db.setPassword("alsk");
-
             Statement stmt = db.getConnection().createStatement();
-            String query = "SELECT * FROM Lists;";
+            Statement stmt2 = db.getConnection().createStatement();
+            String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
-            byte[] buf;
+            List<byte[]> buf = new ArrayList<>();
             ObjectInputStream o;
 
-            rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            branch_list = (ArrayList<Branch>) o.readObject();
+            String query2 = "SELECT * FROM ID_data";
+            ResultSet rs2 = stmt2.executeQuery(query2);
 
-            rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            truck_list = (ArrayList<Truck>) o.readObject();
+            rs2.next();
+            head_counter = rs2.getInt("counter");
+            int temp = 0;
+            while (rs.next()) {
+                buf.add(rs.getBytes("list"));
+            }
+            if (head_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                head_office = (HeadOffice) o.readObject();
+            } else {
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+                pstmt.setObject(1, head_office);
+                pstmt.executeUpdate();
+                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+            }
 
-            rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            consignment_list = (ArrayList<Consignment>) o.readObject();
+            rs2.next();
+            branch_counter = rs2.getInt("counter");
+            //rs.next();
+            if (branch_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                branch_list = (ArrayList<Branch>) o.readObject();
+            } else {
+                branch_list = new ArrayList<>();
+            }
 
-            rs.next();
-            buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            head_office = (HeadOffice) o.readObject();
+            rs2.next();
+            truck_counter = rs2.getInt("counter");
+            //rs.next();
+            if (truck_counter != 0) {
 
-            query = "SELECT * ID_data;";
-            rs = stmt.executeQuery(query);
-            
-            rs.next();
-            head_counter = rs.getInt("counter");
-            
-            rs.next();
-            branch_counter = rs.getInt("counter");
-            
-            rs.next();
-            truck_counter = rs.getInt("counter");
-            
-            rs.next();
-            consignment_counter = rs.getInt("counter");
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                truck_list = (ArrayList<Truck>) o.readObject();
+            } else {
+                truck_list = new ArrayList<>();
+            }
 
-        } catch (SQLException | IOException | ClassNotFoundException ex) {
+            rs2.next();
+            consignment_counter = rs2.getInt("counter");
+            //rs.next();
+            if (consignment_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                consignment_list = (ArrayList<Consignment>) o.readObject();
+            } else {
+                consignment_list = new ArrayList<>();
+            }
+            rs.close();
+            rs2.close();
+        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+            java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -141,15 +186,15 @@ public class Manager extends javax.swing.JFrame {
         b_fire = new javax.swing.JButton();
         Address = new javax.swing.JPanel();
         l_branch_name = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_mbn = new javax.swing.JTextField();
         l_contact = new javax.swing.JLabel();
         l_address = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tf_mc = new javax.swing.JTextField();
         b_add_branch = new javax.swing.JButton();
         l_user_name = new javax.swing.JLabel();
         l_password = new javax.swing.JLabel();
-        tf_user_name = new javax.swing.JTextField();
-        tf_password = new javax.swing.JTextField();
+        tf_mun = new javax.swing.JTextField();
+        tf_mp = new javax.swing.JTextField();
         b_reset = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         l_set_ip = new javax.swing.JLabel();
@@ -158,9 +203,9 @@ public class Manager extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         tf_charge = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        b_mscvp = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        tf_ma = new javax.swing.JTextArea();
         p_queries = new javax.swing.JPanel();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -177,7 +222,7 @@ public class Manager extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cmb_cs_b = new javax.swing.JComboBox();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -328,8 +373,18 @@ public class Manager extends javax.swing.JFrame {
         jLabel4.setText("Assigned Branch");
 
         tf_truck_model.setText("Truck Model");
+        tf_truck_model.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_truck_modelFocusGained(evt);
+            }
+        });
 
         tf_plate_number.setText("Plate Number");
+        tf_plate_number.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_plate_numberFocusGained(evt);
+            }
+        });
         tf_plate_number.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_plate_numberActionPerformed(evt);
@@ -337,10 +392,25 @@ public class Manager extends javax.swing.JFrame {
         });
 
         tf_cost.setText("Cost");
+        tf_cost.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_costFocusGained(evt);
+            }
+        });
 
-        cmb_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
+        cmb_branch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmb_branchFocusGained(evt);
+            }
+        });
 
         jButton1.setText("Add to fleet");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_buy_truckLayout = new javax.swing.GroupLayout(p_buy_truck);
         p_buy_truck.setLayout(p_buy_truckLayout);
@@ -477,9 +547,9 @@ public class Manager extends javax.swing.JFrame {
 
         l_branch_name.setText("Branch Name");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tf_mbn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tf_mbnActionPerformed(evt);
             }
         });
 
@@ -488,12 +558,22 @@ public class Manager extends javax.swing.JFrame {
         l_address.setText("Address");
 
         b_add_branch.setText("Add Branch");
+        b_add_branch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_add_branchMouseClicked(evt);
+            }
+        });
 
         l_user_name.setText("User Name");
 
         l_password.setText("Password");
 
         b_reset.setText("Reset");
+        b_reset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_resetMouseClicked(evt);
+            }
+        });
 
         l_set_ip.setText("IP Address");
 
@@ -505,16 +585,26 @@ public class Manager extends javax.swing.JFrame {
         });
 
         b_set_ip.setText("Set IP Address");
+        b_set_ip.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_set_ipMouseClicked(evt);
+            }
+        });
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel5.setText("Charge/Volume");
 
-        jButton3.setText("Set Charge/Volume");
+        b_mscvp.setText("Set Charge/Volume");
+        b_mscvp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_mscvpMouseClicked(evt);
+            }
+        });
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane4.setViewportView(jTextArea3);
+        tf_ma.setColumns(20);
+        tf_ma.setRows(5);
+        jScrollPane4.setViewportView(tf_ma);
 
         javax.swing.GroupLayout AddressLayout = new javax.swing.GroupLayout(Address);
         Address.setLayout(AddressLayout);
@@ -534,9 +624,8 @@ public class Manager extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                    .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                        .addComponent(jTextField3)))
+                                    .addComponent(tf_mbn, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                    .addComponent(tf_mc))
                                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(AddressLayout.createSequentialGroup()
                                         .addGap(66, 66, 66)
@@ -545,8 +634,8 @@ public class Manager extends javax.swing.JFrame {
                                             .addComponent(l_password))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tf_user_name, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                            .addComponent(tf_password)))
+                                            .addComponent(tf_mun, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                            .addComponent(tf_mp)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddressLayout.createSequentialGroup()
                                         .addGap(213, 213, 213)
                                         .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -565,7 +654,7 @@ public class Manager extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tf_charge)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
+                                    .addComponent(b_mscvp, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -575,15 +664,15 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_branch_name)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_mbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(l_user_name)
-                    .addComponent(tf_user_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_mun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_mc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(l_contact)
                     .addComponent(l_password)
-                    .addComponent(tf_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_mp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(AddressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AddressLayout.createSequentialGroup()
                         .addGap(42, 42, 42)
@@ -612,7 +701,7 @@ public class Manager extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(tf_charge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3)))
+                                .addComponent(b_mscvp)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddressLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -734,12 +823,20 @@ public class Manager extends javax.swing.JFrame {
 
         jLabel3.setText("Branch");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_cs_b.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
+        cmb_cs_b.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmb_cs_bFocusGained(evt);
+            }
+        });
 
+        bg_company_stats.add(jRadioButton1);
         jRadioButton1.setText("Average Truck Idle Time");
 
+        bg_company_stats.add(jRadioButton2);
         jRadioButton2.setText("Average Consigment Waiting Time");
 
+        bg_company_stats.add(jRadioButton3);
         jRadioButton3.setText("Branch Consignment Handling");
 
         jTextArea2.setColumns(20);
@@ -767,7 +864,7 @@ public class Manager extends javax.swing.JFrame {
                                 .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jRadioButton3)
                                     .addComponent(jRadioButton1)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmb_cs_b, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jRadioButton2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2))))
@@ -789,7 +886,7 @@ public class Manager extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmb_cs_b, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jRadioButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -872,9 +969,9 @@ public class Manager extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_employeeActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tf_mbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_mbnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tf_mbnActionPerformed
 
     private void b_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_backMouseClicked
         Home home = new Home();
@@ -899,17 +996,170 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_set_ipFocusGained
 
     private void cmb_queryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_queryActionPerformed
-        if(cmb_query.getSelectedIndex() == 0){
+        if (cmb_query.getSelectedIndex() == 0) {
             tf_query.setText("Consignment Id");
-        }else if(cmb_query.getSelectedIndex() == 1){
+        } else if (cmb_query.getSelectedIndex() == 1) {
             tf_query.setText("Truck Id");
         }
     }//GEN-LAST:event_cmb_queryActionPerformed
 
     private void tf_queryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_queryFocusGained
         tf_query.setText("");
-        
+
     }//GEN-LAST:event_tf_queryFocusGained
+
+    private void b_set_ipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_set_ipMouseClicked
+        String ip_add = tf_set_ip.getText();
+        Database.setIPAddress(ip_add);
+        try {
+            Statement smt = head_office.getDatabase().getConnection().createStatement();
+            smt.executeUpdate("UPDATE IP SET address='" + ip_add + "'");
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_set_ipMouseClicked
+
+    private void b_resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_resetMouseClicked
+        tf_mbn.setText("");
+        tf_mc.setText("");
+        tf_ma.setText("");
+        tf_mun.setText("");
+        tf_mp.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_resetMouseClicked
+
+    private void b_mscvpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_mscvpMouseClicked
+        String charge_text = tf_charge.getText();
+        try {
+            double charge = Double.valueOf(charge_text);
+            Consignment.setCharge(charge);
+            JOptionPane.showMessageDialog(this, "Value: " + Double.toString(Consignment.getCharge()) + "", "Success", 1);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Enter a valid input for charge", "Error", 0);
+            return;
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_mscvpMouseClicked
+
+    private void b_add_branchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_add_branchMouseClicked
+        String branch_name = tf_mbn.getText();
+        String contact = tf_mc.getText();
+        String address = tf_ma.getText();
+        String username = tf_mun.getText();
+        String password = tf_mp.getText();
+        Database tempdb = new Database();
+        tempdb.setUser(username);
+        tempdb.setPassword(password);
+        try {
+            Branch nb = new Branch(++branch_counter, branch_name, new Address(contact, address), tempdb);
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            String query = "UPDATE ID_data SET counter=" + branch_counter + " WHERE name='branch_counter'";
+            stmt.executeUpdate(query);
+            query = "CREATE USER '" + username + "'@'%' IDENTIFIED BY '" + password + "'";
+            stmt.executeUpdate(query);
+            query = "GRANT ALL PRIVILEGES ON tccs . * TO '" + username + "'@'%'";
+            branch_list.add(nb);
+            stmt.executeUpdate(query);
+            String update = "UPDATE Lists SET list=? WHERE name='branch'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, branch_list);
+            pstmt.executeUpdate();
+
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_add_branchMouseClicked
+
+    private void tf_truck_modelFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_truck_modelFocusGained
+        tf_truck_model.setText(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_truck_modelFocusGained
+
+    private void tf_plate_numberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_plate_numberFocusGained
+        tf_plate_number.setText(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_plate_numberFocusGained
+
+    private void tf_costFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_costFocusGained
+        tf_cost.setText(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_costFocusGained
+
+    private void cmb_branchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmb_branchFocusGained
+        List<String> s = new ArrayList<>();
+        for (Branch branch : branch_list) {
+            s.add(branch.getName());
+        }
+        cmb_branch.setModel(new javax.swing.DefaultComboBoxModel(s.toArray()));
+        cmb_branch.showPopup();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_branchFocusGained
+
+    private void cmb_cs_bFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmb_cs_bFocusGained
+        List<String> s = new ArrayList<>();
+        for (Branch branch : branch_list) {
+            s.add(branch.getName());
+        }
+        cmb_cs_b.setModel(new javax.swing.DefaultComboBoxModel(s.toArray()));
+        cmb_cs_b.showPopup();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_cs_bFocusGained
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String name;
+        Double cost;
+        String model;
+        String plate_number;
+        try {
+
+            model = tf_truck_model.getText();
+            if ("Truck Model".equals(model) || "".equals(model)) {
+                throw new NullPointerException("Truck Model");
+            }
+
+            plate_number = tf_plate_number.getText();
+            if ("Plate Number".equals(plate_number) || "".equals(plate_number)) {
+                throw new NullPointerException("Plate Number");
+            }
+
+            cost = Double.valueOf(tf_cost.getText());
+            name = cmb_branch.getSelectedItem().toString();
+            if ("Branch".equals(name)) {
+                throw new NullPointerException("Branch");
+            }
+        } catch (NullPointerException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Input " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Truck nt = new Truck(++truck_counter);
+            Office tempb = head_office;
+            for (Branch tb : branch_list) {
+                if (tb.getName().equals(name)) {
+                    tempb = tb;
+                    break;
+                }
+            }
+            nt.setCurrent_office(tempb);
+            tempb.getTruck_list().add(nt);
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            String query = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
+            stmt.executeUpdate(query);
+            truck_list.add(nt);
+            String update = "UPDATE Lists SET list=? WHERE name='truck'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, truck_list);
+            pstmt.executeUpdate();
+
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -945,7 +1195,7 @@ public class Manager extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Address;
@@ -955,6 +1205,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JButton b_get_details;
     private javax.swing.JButton b_get_truck_usage;
     private javax.swing.JButton b_hire;
+    private javax.swing.JButton b_mscvp;
     private javax.swing.JButton b_reset;
     private javax.swing.JButton b_set_ip;
     private javax.swing.JButton b_view_applicatns;
@@ -962,12 +1213,11 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.ButtonGroup bg_company_stats;
     private javax.swing.JComboBox cmb_branch;
     private javax.swing.JComboBox cmb_branch_list;
+    private javax.swing.JComboBox cmb_cs_b;
     private javax.swing.JComboBox cmb_query;
     private javax.swing.JInternalFrame if_employee_list;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -993,9 +1243,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel l_address;
     private javax.swing.JLabel l_branch;
     private javax.swing.JLabel l_branch_name;
@@ -1023,13 +1270,16 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextField tf_employee_id;
     private javax.swing.JTextField tf_employee_name;
     private javax.swing.JTextField tf_fire_reason;
-    private javax.swing.JTextField tf_password;
+    private javax.swing.JTextArea tf_ma;
+    private javax.swing.JTextField tf_mbn;
+    private javax.swing.JTextField tf_mc;
+    private javax.swing.JTextField tf_mp;
+    private javax.swing.JTextField tf_mun;
     private javax.swing.JTextField tf_plate_number;
     private javax.swing.JTextField tf_query;
     private javax.swing.JTextField tf_set_ip;
     private javax.swing.JTextField tf_truck_model;
     private javax.swing.JTextField tf_truck_plate_num;
-    private javax.swing.JTextField tf_user_name;
     private javax.swing.JTabbedPane tp_administration;
     private javax.swing.JTabbedPane tp_manager;
     // End of variables declaration//GEN-END:variables

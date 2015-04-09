@@ -372,12 +372,16 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Truck Model"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_truck_modelFocusGained"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tf_plate_number">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Plate Number"/>
                       </Properties>
                       <Events>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_plate_numberFocusGained"/>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_plate_numberActionPerformed"/>
                       </Events>
                     </Component>
@@ -385,23 +389,29 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Cost"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_costFocusGained"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cmb_branch">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Item 1"/>
-                            <StringItem index="1" value="Item 2"/>
-                            <StringItem index="2" value="Item 3"/>
-                            <StringItem index="3" value="Item 4"/>
+                          <StringArray count="1">
+                            <StringItem index="0" value="Branch"/>
                           </StringArray>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmb_branchFocusGained"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton1">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Add to fleet"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -576,10 +586,8 @@
                                               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="jScrollPane4" pref="180" max="32767" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jTextField2" pref="180" max="32767" attributes="0"/>
-                                                      <Component id="jTextField3" max="32767" attributes="0"/>
-                                                  </Group>
+                                                  <Component id="tf_mbn" pref="180" max="32767" attributes="0"/>
+                                                  <Component id="tf_mc" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="0" attributes="0">
@@ -590,8 +598,8 @@
                                                       </Group>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                          <Component id="tf_user_name" pref="180" max="32767" attributes="0"/>
-                                                          <Component id="tf_password" max="32767" attributes="0"/>
+                                                          <Component id="tf_mun" pref="180" max="32767" attributes="0"/>
+                                                          <Component id="tf_mp" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
@@ -617,7 +625,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="tf_charge" max="32767" attributes="0"/>
-                                                  <Component id="jButton3" pref="180" max="32767" attributes="0"/>
+                                                  <Component id="b_mscvp" pref="180" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -634,16 +642,16 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="l_branch_name" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tf_mbn" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="l_user_name" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tf_user_name" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tf_mun" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tf_mc" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="l_contact" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="l_password" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tf_password" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tf_mp" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -680,7 +688,7 @@
                                                   <Component id="tf_charge" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="b_mscvp" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -701,9 +709,9 @@
                         <Property name="text" type="java.lang.String" value="Branch Name"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField2">
+                    <Component class="javax.swing.JTextField" name="tf_mbn">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_mbnActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="l_contact">
@@ -716,12 +724,15 @@
                         <Property name="text" type="java.lang.String" value="Address"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField3">
+                    <Component class="javax.swing.JTextField" name="tf_mc">
                     </Component>
                     <Component class="javax.swing.JButton" name="b_add_branch">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Add Branch"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_add_branchMouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="l_user_name">
                       <Properties>
@@ -733,14 +744,17 @@
                         <Property name="text" type="java.lang.String" value="Password"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="tf_user_name">
+                    <Component class="javax.swing.JTextField" name="tf_mun">
                     </Component>
-                    <Component class="javax.swing.JTextField" name="tf_password">
+                    <Component class="javax.swing.JTextField" name="tf_mp">
                     </Component>
                     <Component class="javax.swing.JButton" name="b_reset">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Reset"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_resetMouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JSeparator" name="jSeparator4">
                     </Component>
@@ -761,6 +775,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Set IP Address"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_set_ipMouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JSeparator" name="jSeparator5">
                       <Properties>
@@ -774,10 +791,13 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="tf_charge">
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton3">
+                    <Component class="javax.swing.JButton" name="b_mscvp">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Set Charge/Volume"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="b_mscvpMouseClicked"/>
+                      </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane4">
                       <AuxValues>
@@ -786,7 +806,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTextArea" name="jTextArea3">
+                        <Component class="javax.swing.JTextArea" name="tf_ma">
                           <Properties>
                             <Property name="columns" type="int" value="20"/>
                             <Property name="rows" type="int" value="5"/>
@@ -957,7 +977,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jRadioButton3" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jRadioButton1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBox1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <Component id="cmb_cs_b" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                                           <Component id="jRadioButton2" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -988,7 +1008,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cmb_cs_b" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
@@ -1058,30 +1078,39 @@
                 <Property name="text" type="java.lang.String" value="Branch"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
+            <Component class="javax.swing.JComboBox" name="cmb_cs_b">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="Branch"/>
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmb_cs_bFocusGained"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton1">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="bg_company_stats"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Average Truck Idle Time"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton2">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="bg_company_stats"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Average Consigment Waiting Time"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton3">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="bg_company_stats"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Branch Consignment Handling"/>
               </Properties>
             </Component>

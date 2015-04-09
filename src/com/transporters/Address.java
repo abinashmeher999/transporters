@@ -12,7 +12,6 @@ public class Address implements Serializable{
     //
     private String contact;
     private String street;
-    private String city;
 
     //
     // Constructors
@@ -20,12 +19,10 @@ public class Address implements Serializable{
     /**
      * @param _contact
      * @param _street
-     * @param _city
      */
-    public Address(String _contact, String _street, String _city) {
+    public Address(String _contact, String _street) {
         contact = _contact;
         street = _street;
-        city = _city;
     }
 
     //
@@ -50,24 +47,6 @@ public class Address implements Serializable{
      */
     public String getStreet() {
         return street;
-    }
-
-    /**
-     * Set the value of city
-     *
-     * @param newVar the new value of city
-     */
-    public void setCity(String newVar) {
-        city = newVar;
-    }
-
-    /**
-     * Get the value of city
-     *
-     * @return the value of city
-     */
-    public String getCity() {
-        return city;
     }
 
     public void setContact(String _contact) {

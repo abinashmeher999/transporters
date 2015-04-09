@@ -57,7 +57,7 @@ public class Home extends javax.swing.JFrame {
             Statement stmt2 = db.getConnection().createStatement();
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
-            byte[] buf;
+            List<byte[]> buf = new ArrayList<>();
             ObjectInputStream o;
 
             String query2 = "SELECT * FROM ID_data";
@@ -65,13 +65,16 @@ public class Home extends javax.swing.JFrame {
 
             rs2.next();
             head_counter = rs2.getInt("counter");
-            rs.next();
+            int temp = 0;
+            while(rs.next()){
+                buf.add(rs.getBytes("list"));
+            }
             if (head_counter != 0) {
-                buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 head_office = (HeadOffice) o.readObject();
             } else {
-                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS", "IITKGP"));
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
                 String update = "UPDATE Lists SET list=? WHERE name='head_office'";
                 PreparedStatement pstmt = db.getConnection().prepareStatement(update);
                 pstmt.setObject(1, head_office);
@@ -81,10 +84,10 @@ public class Home extends javax.swing.JFrame {
 
             rs2.next();
             branch_counter = rs2.getInt("counter");
-            rs.next();
+            //rs.next();
             if (branch_counter != 0) {
-                buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 branch_list = (ArrayList<Branch>) o.readObject();
             } else {
                 branch_list = new ArrayList<>();
@@ -92,11 +95,11 @@ public class Home extends javax.swing.JFrame {
 
             rs2.next();
             truck_counter = rs2.getInt("counter");
-            rs.next();
+            //rs.next();
             if (truck_counter != 0) {
 
-                buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 truck_list = (ArrayList<Truck>) o.readObject();
             } else {
                 truck_list = new ArrayList<>();
@@ -104,11 +107,11 @@ public class Home extends javax.swing.JFrame {
 
             rs2.next();
             consignment_counter = rs2.getInt("counter");
-            rs.next();
+            //rs.next();
             if (consignment_counter != 0) {
 
-                buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 consignment_list = (ArrayList<Consignment>) o.readObject();
             } else {
                 consignment_list = new ArrayList<>();
@@ -270,28 +273,26 @@ public class Home extends javax.swing.JFrame {
         //Check for id and password
         char[] temp = pf_password.getPassword();
         String password = new String(temp);
-        if(tf_employee_id.getText().equals("0")){
-            //if(password.equals(head_office.getPassword())){
-            if(password.equals("head0")) {
-                JOptionPane.showMessageDialog(this, password, password, 0);
+        if (tf_employee_id.getText().equals("0")) {
+            if (password.equals("head0")) {
                 Manager manager = new Manager();
                 manager.setVisible(true);
                 dispose();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
             }
-        }else{
+        } else {
             int id = Integer.parseInt(tf_employee_id.getText());
-            if(id > branch_counter || id < 1){
+            if (id > branch_counter || id < 1) {
                 JOptionPane.showMessageDialog(this, "Invalid id", "Error", 0);
-            }else{
-                if(password.equals(branch_list.get(id - 1).getPassword())){
+            } else {
+                if (password.equals(branch_list.get(id - 1).getPassword())) {
                     Employee employee = new Employee(id);
-                    employee.setVisible(true);  
+                    employee.setVisible(true);
                     dispose();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
-                }  
+                }
             }
         }
     }//GEN-LAST:event_b_loginMouseClicked

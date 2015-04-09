@@ -21,7 +21,9 @@ public class Database implements Serializable{
     // Constructors
     //
     public Database() {
-
+        url = "";
+        user = "";
+        password = "";
     }
 
     ;
@@ -59,7 +61,7 @@ public class Database implements Serializable{
      * @throws java.sql.SQLException
      */
     public Connection getConnection() throws SQLException {
-        if (!url.equals("jdbc:mysql://localhost:3306/tccs")) {
+        if (url.equals("")) {
             url = Database.getBranchURL();
         }
         return DriverManager.getConnection(
@@ -72,4 +74,5 @@ public class Database implements Serializable{
     //
     // Other methods
     //
+    private static final long serialVersionUID = 2418519852800895063L;
 }

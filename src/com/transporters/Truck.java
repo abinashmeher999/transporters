@@ -22,6 +22,8 @@ public class Truck implements Serializable {
     public static final long MAX_CAPACITY = 500;
 
     private String plate_number;
+    private int id;
+    private double cost;
     private Status status;
     private Office current_office;
     private Office destination_office;
@@ -32,7 +34,8 @@ public class Truck implements Serializable {
     //
     // Constructors
     //
-    public Truck() {
+    public Truck(int _id) {
+        id = _id;
         plate_number = null;
         this.status = Status.AVAILABLE;
         current_office = null;
@@ -175,9 +178,13 @@ public class Truck implements Serializable {
         this.consignment_list = consignment_list;
     }
 
-    /**
-     */
-    public void Truck() {
+    public double getCost() {
+        return cost;
     }
 
+    public void setCost(double _cost) {
+        cost = _cost;
+    }
+    
+    
 }
