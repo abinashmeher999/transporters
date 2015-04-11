@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -765,19 +766,29 @@ public class Manager extends javax.swing.JFrame {
 
         table_query.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Truck IDs", "From", "To", "Date of Dispatch"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         table_query.setEnabled(false);
         jScrollPane6.setViewportView(table_query);
 
         cmb_query.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Consignment Details", "Truck Details" }));
+        cmb_query.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_queryItemStateChanged(evt);
+            }
+        });
         cmb_query.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmb_queryActionPerformed(evt);
@@ -816,8 +827,8 @@ public class Manager extends javax.swing.JFrame {
                                     .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel2))
-                        .addGap(0, 406, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6))
+                        .addGap(0, 403, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
                 .addContainerGap())
         );
         p_queriesLayout.setVerticalGroup(
@@ -1217,6 +1228,12 @@ public class Manager extends javax.swing.JFrame {
             String query_about = cmb_query.getSelectedItem().toString();
             Statement smt = head_office.getDatabase().getConnection().createStatement();
             ObjectInputStream o;
+            DefaultTableModel model = (DefaultTableModel) table_query.getModel();
+            int rowCount;
+            rowCount = model.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
             if (query_about.equals("Consignment Details")) {
                 String query = "SELECT * FROM ID_data WHERE name='consignment_counter'";
                 ResultSet rs = smt.executeQuery(query);
@@ -1233,7 +1250,19 @@ public class Manager extends javax.swing.JFrame {
                     byte[] buf = rs.getBytes("list");
                     o = new ObjectInputStream(new ByteArrayInputStream(buf));
                     consignment_list = (ArrayList<Consignment>) o.readObject();
-                    JOptionPane.showMessageDialog(this, consignment_list, "Message", JOptionPane.INFORMATION_MESSAGE);
+                    for (Consignment consignment : consignment_list) {
+                        if (consignment.getConsignment_id() == ID) {
+                            String truck_ids = "";
+                            List<Truck> consignment_truck_list = consignment.getCarrier_trucks();
+                            for (Truck truck : consignment_truck_list) {
+                                truck_ids += Integer.toString(truck.getId()) + "\n";
+                            }
+                            model.addRow(new Object[]{truck_ids,
+                                consignment.getFrom_branch().getName(),
+                                consignment.getTo_branch().getName(),
+                                consignment.getEntry_date()});
+                        }
+                    }
                 }
             } else {
                 if (query_about.equals("Truck Details")) {
@@ -1252,7 +1281,28 @@ public class Manager extends javax.swing.JFrame {
                         byte[] buf = rs.getBytes("list");
                         o = new ObjectInputStream(new ByteArrayInputStream(buf));
                         truck_list = (ArrayList<Truck>) o.readObject();
-                        JOptionPane.showMessageDialog(this, truck_list, "Message", JOptionPane.INFORMATION_MESSAGE);
+                        //JOptionPane.showMessageDialog(this, truck_list, "Message", JOptionPane.INFORMATION_MESSAGE);
+                        for (Truck truck : truck_list) {
+                            if (truck.getId() == ID) {
+                                String consignment_ids = "";
+                                List<Consignment> truck_consignment_list = truck.getConsignment_list();
+                                for (Consignment consignment : truck_consignment_list) {
+                                    consignment_ids += Integer.toString(consignment.getConsignment_id()) + "\n";
+                                }
+                                String dest_name = "";
+                                try{
+                                    
+                                    dest_name = truck.getDestination_office().getName();
+                                }catch(NullPointerException ex){
+                                   
+                                }
+                                model.addRow(new Object[]{truck.getPlate_number(),
+                                    consignment_ids,
+                                    truck.getCurrent_office().getName(),
+                                    dest_name,
+                                    truck.getStatus().toString()});
+                            }
+                        }
                     }
                 }
             }
@@ -1267,6 +1317,21 @@ public class Manager extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_b_get_detailsMouseClicked
+
+    private void cmb_queryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_queryItemStateChanged
+        DefaultTableModel model = (DefaultTableModel) table_query.getModel();
+
+        if (cmb_query.getSelectedItem().toString().equals("Consignment Details")) {
+            model = new DefaultTableModel(new Object[]{"Truck IDs", "From", "To", "Date of Dispatch"}, 1);
+            table_query.setModel(model);
+        } else {
+            if (cmb_query.getSelectedItem().toString().equals("Truck Details")) {
+                model = new DefaultTableModel(new Object[]{"Plate number", "Consignment ID(s)", "From", "To", "Status"}, 1);
+                table_query.setModel(model);
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_queryItemStateChanged
 
     /**
      * @param args the command line arguments

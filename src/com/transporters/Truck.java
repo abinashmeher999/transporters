@@ -185,6 +185,10 @@ public class Truck implements Serializable {
     public void setCost(double _cost) {
         cost = _cost;
     }
+
+    public int getId() {
+        return id;
+    }
     
-    
+    private static final long serialVersionUID = 4097235281089254672L;
 }
