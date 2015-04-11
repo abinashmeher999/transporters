@@ -222,15 +222,15 @@ public class Manager extends javax.swing.JFrame {
         tf_truck_plate_num = new javax.swing.JTextField();
         b_get_truck_usage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ta_truck_usage = new javax.swing.JTextArea();
-        l_branch_stats = new javax.swing.JLabel();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
         cmb_cs_b = new javax.swing.JComboBox();
-        rb_truck_idle_time = new javax.swing.JRadioButton();
-        rb_consignment_wait_time = new javax.swing.JRadioButton();
-        rb_branch_handling = new javax.swing.JRadioButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        b_query = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         b_back = new javax.swing.JButton();
 
@@ -435,11 +435,6 @@ public class Manager extends javax.swing.JFrame {
         cmb_branch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cmb_branchFocusGained(evt);
-            }
-        });
-        cmb_branch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmb_branchActionPerformed(evt);
             }
         });
 
@@ -854,7 +849,7 @@ public class Manager extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        l_branch_stats.setText("Branch");
+        jLabel3.setText("Branch");
 
         cmb_cs_b.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
         cmb_cs_b.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -863,21 +858,21 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        bg_company_stats.add(rb_truck_idle_time);
-        rb_truck_idle_time.setText("Average Truck Idle Time");
+        bg_company_stats.add(jRadioButton1);
+        jRadioButton1.setText("Average Truck Idle Time");
 
-        bg_company_stats.add(rb_consignment_wait_time);
-        rb_consignment_wait_time.setText("Average Consigment Waiting Time");
+        bg_company_stats.add(jRadioButton2);
+        jRadioButton2.setText("Average Consigment Waiting Time");
 
-        bg_company_stats.add(rb_branch_handling);
-        rb_branch_handling.setText("Branch Consignment Handling");
+        bg_company_stats.add(jRadioButton3);
+        jRadioButton3.setText("Branch Consignment Handling");
 
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        b_query.setText("Query");
+        jButton2.setText("Query");
 
         javax.swing.GroupLayout p_company_statisticsLayout = new javax.swing.GroupLayout(p_company_statistics);
         p_company_statistics.setLayout(p_company_statisticsLayout);
@@ -888,18 +883,18 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_company_statisticsLayout.createSequentialGroup()
-                        .addComponent(l_branch_stats)
+                        .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(p_company_statisticsLayout.createSequentialGroup()
-                                .addComponent(b_query, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(p_company_statisticsLayout.createSequentialGroup()
                                 .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rb_branch_handling)
-                                    .addComponent(rb_truck_idle_time)
+                                    .addComponent(jRadioButton3)
+                                    .addComponent(jRadioButton1)
                                     .addComponent(cmb_cs_b, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rb_consignment_wait_time))
+                                    .addComponent(jRadioButton2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2))))
                     .addGroup(p_company_statisticsLayout.createSequentialGroup()
@@ -919,19 +914,19 @@ public class Manager extends javax.swing.JFrame {
                     .addGroup(p_company_statisticsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(l_branch_stats)
+                            .addComponent(jLabel3)
                             .addComponent(cmb_cs_b, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(rb_truck_idle_time)
+                        .addComponent(jRadioButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rb_consignment_wait_time)
+                        .addComponent(jRadioButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rb_branch_handling))
+                        .addComponent(jRadioButton3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_company_statisticsLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_query)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1318,7 +1313,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JButton b_get_truck_usage;
     private javax.swing.JButton b_hire;
     private javax.swing.JButton b_mscvp;
-    private javax.swing.JButton b_query;
     private javax.swing.JButton b_reset;
     private javax.swing.JButton b_set_ip;
     private javax.swing.JButton b_view_applicatns;
@@ -1335,14 +1329,18 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1355,7 +1353,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JLabel l_address;
     private javax.swing.JLabel l_branch;
     private javax.swing.JLabel l_branch_name;
-    private javax.swing.JLabel l_branch_stats;
     private javax.swing.JLabel l_contact;
     private javax.swing.JLabel l_cost;
     private javax.swing.JLabel l_employee_address;
