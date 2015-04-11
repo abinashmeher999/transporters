@@ -153,6 +153,8 @@ public class Home extends javax.swing.JFrame {
         l_name.setForeground(new java.awt.Color(255, 255, 255));
         l_name.setText("Transformer");
 
+        b_login.setBackground(new java.awt.Color(141, 235, 137));
+        b_login.setForeground(new java.awt.Color(22, 93, 20));
         b_login.setText("Login");
         b_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -195,9 +197,6 @@ public class Home extends javax.swing.JFrame {
             .addGroup(p_homeLayout.createSequentialGroup()
                 .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_homeLayout.createSequentialGroup()
-                        .addGap(347, 347, 347)
-                        .addComponent(b_login))
-                    .addGroup(p_homeLayout.createSequentialGroup()
                         .addGap(174, 174, 174)
                         .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(l_employee_id)
@@ -211,7 +210,10 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(l_name))
                     .addGroup(p_homeLayout.createSequentialGroup()
                         .addGap(259, 259, 259)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(p_homeLayout.createSequentialGroup()
+                        .addGap(347, 347, 347)
+                        .addComponent(b_login, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         p_homeLayout.setVerticalGroup(
