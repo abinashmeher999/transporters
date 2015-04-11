@@ -23,6 +23,7 @@ public class Truck implements Serializable {
 
     private String plate_number;
     private int id;
+    private String model;
     private double cost;
     private Status status;
     private Office current_office;
@@ -189,6 +190,15 @@ public class Truck implements Serializable {
     public int getId() {
         return id;
     }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+    
     
     private static final long serialVersionUID = 4097235281089254672L;
 }

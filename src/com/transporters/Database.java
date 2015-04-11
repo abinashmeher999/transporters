@@ -71,6 +71,11 @@ public class Database implements Serializable{
         );
         
     }
+
+    public static String getIP_ADDRESS() {
+        return IP_ADDRESS;
+    }
+    
     //
     // Other methods
     //

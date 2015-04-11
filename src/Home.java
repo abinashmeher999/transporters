@@ -55,6 +55,7 @@ public class Home extends javax.swing.JFrame {
             db.setPassword("alsk");
             Statement stmt = db.getConnection().createStatement();
             Statement stmt2 = db.getConnection().createStatement();
+            Statement stmt3 = db.getConnection().createStatement();
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
@@ -62,6 +63,12 @@ public class Home extends javax.swing.JFrame {
 
             String query2 = "SELECT * FROM ID_data";
             ResultSet rs2 = stmt2.executeQuery(query2);
+            
+            String query3 = "SELECT * FROM IP";
+            ResultSet rs3 = stmt3.executeQuery(query3);
+            
+            rs3.next();
+            Database.setIPAddress(rs3.getString("address"));
 
             rs2.next();
             head_counter = rs2.getInt("counter");

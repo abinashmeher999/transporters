@@ -36,6 +36,7 @@ abstract public class Office implements Serializable {
         volume_received = 0;
         volume_dispatched = 0;
         cumulative_truck_count = 0;
+        cumulative_consignment_count = 0;
         truck_avg_idle_time = 0;
         revenue = 0;
         avg_consignment_waiting_time = 0;

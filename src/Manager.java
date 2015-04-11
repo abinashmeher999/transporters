@@ -71,6 +71,7 @@ public class Manager extends javax.swing.JFrame {
             db.setPassword("alsk");
             Statement stmt = db.getConnection().createStatement();
             Statement stmt2 = db.getConnection().createStatement();
+            Statement stmt3 = db.getConnection().createStatement();
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
@@ -78,6 +79,12 @@ public class Manager extends javax.swing.JFrame {
 
             String query2 = "SELECT * FROM ID_data";
             ResultSet rs2 = stmt2.executeQuery(query2);
+            
+            String query3 = "SELECT * FROM IP";
+            ResultSet rs3 = stmt3.executeQuery(query3);
+            
+            rs3.next();
+            Database.setIPAddress(rs3.getString("address"));
 
             rs2.next();
             head_counter = rs2.getInt("counter");
@@ -160,13 +167,15 @@ public class Manager extends javax.swing.JFrame {
         l_employee_address = new javax.swing.JLabel();
         l_branch = new javax.swing.JLabel();
         tf_employee_name = new javax.swing.JTextField();
-        tf_employee_address = new javax.swing.JTextField();
+        tf_username = new javax.swing.JTextField();
         cmb_branch_list = new javax.swing.JComboBox();
         b_hire = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox();
         jButton3 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        tf_password = new javax.swing.JTextField();
         p_buy_truck = new javax.swing.JPanel();
         l_model = new javax.swing.JLabel();
         l_plate_number = new javax.swing.JLabel();
@@ -223,15 +232,15 @@ public class Manager extends javax.swing.JFrame {
         tf_truck_plate_num = new javax.swing.JTextField();
         b_get_truck_usage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        cs_ta_tpn = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         cmb_cs_b = new javax.swing.JComboBox();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rb_atit = new javax.swing.JRadioButton();
+        rb_acwt = new javax.swing.JRadioButton();
+        rb_bch = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
+        cs_ta_b = new javax.swing.JTextArea();
+        cs_query = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         b_back = new javax.swing.JButton();
 
@@ -240,6 +249,11 @@ public class Manager extends javax.swing.JFrame {
         p_administration.setOpaque(false);
 
         tp_administration.setTabPlacement(javax.swing.JTabbedPane.RIGHT);
+        tp_administration.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tp_administrationFocusGained(evt);
+            }
+        });
 
         p_hire.setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -252,7 +266,7 @@ public class Manager extends javax.swing.JFrame {
 
         l_employee_name.setText("Name");
 
-        l_employee_address.setText("Addresss");
+        l_employee_address.setText("Username");
 
         l_branch.setText("Branch");
 
@@ -268,13 +282,13 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        tf_employee_address.setText("Employee Address");
-        tf_employee_address.addFocusListener(new java.awt.event.FocusAdapter() {
+        tf_username.setText("Username");
+        tf_username.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                tf_employee_addressFocusGained(evt);
+                tf_usernameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_employee_addressFocusLost(evt);
+                tf_usernameFocusLost(evt);
             }
         });
 
@@ -285,7 +299,7 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        b_hire.setText("Hire");
+        b_hire.setText("Grant Access");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -333,6 +347,18 @@ public class Manager extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(253, 243, 243));
         jButton3.setText("Remove user");
 
+        jLabel6.setText("Password");
+
+        tf_password.setText("Password");
+        tf_password.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_passwordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_passwordFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout p_hireLayout = new javax.swing.GroupLayout(p_hire);
         p_hire.setLayout(p_hireLayout);
         p_hireLayout.setHorizontalGroup(
@@ -342,31 +368,32 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
-                    .addGroup(p_hireLayout.createSequentialGroup()
-                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(l_employee_name)
-                            .addComponent(l_employee_address))
-                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(p_hireLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(tf_employee_name, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(98, 98, 98)
-                                .addComponent(l_branch))
-                            .addGroup(p_hireLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_employee_address, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmb_branch_list, 0, 180, Short.MAX_VALUE)
-                            .addComponent(b_hire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 59, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_hireLayout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(b_view_applicatns))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_hireLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(p_hireLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(l_employee_address)
+                            .addComponent(jLabel6)
+                            .addComponent(l_employee_name, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(p_hireLayout.createSequentialGroup()
+                                .addComponent(tf_employee_name, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(88, 88, 88)
+                                .addComponent(l_branch))
+                            .addComponent(tf_password, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_username, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmb_branch_list, 0, 180, Short.MAX_VALUE)
+                            .addComponent(b_hire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 55, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         p_hireLayout.setVerticalGroup(
@@ -389,11 +416,16 @@ public class Manager extends javax.swing.JFrame {
                     .addComponent(l_branch)
                     .addComponent(cmb_branch_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(l_employee_address)
-                    .addComponent(b_hire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tf_employee_address))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(l_employee_address)
+                        .addComponent(tf_username))
+                    .addComponent(b_hire))
+                .addGap(15, 15, 15)
+                .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(tf_password))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         tp_administration.addTab("Grant Access", p_hire);
@@ -579,6 +611,17 @@ public class Manager extends javax.swing.JFrame {
 
         tp_administration.addTab("Remove Employee", p_fire);
 
+        Address.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                AddressFocusGained(evt);
+            }
+        });
+        Address.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                AddressComponentShown(evt);
+            }
+        });
+
         l_branch_name.setText("Branch Name");
 
         tf_mbn.addActionListener(new java.awt.event.ActionListener() {
@@ -611,7 +654,6 @@ public class Manager extends javax.swing.JFrame {
 
         l_set_ip.setText("IP Address");
 
-        tf_set_ip.setText("198.16.1.1");
         tf_set_ip.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tf_set_ipFocusGained(evt);
@@ -628,6 +670,20 @@ public class Manager extends javax.swing.JFrame {
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel5.setText("Charge/Volume");
+
+        tf_charge.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_chargeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_chargeFocusLost(evt);
+            }
+        });
+        tf_charge.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tf_chargeMouseClicked(evt);
+            }
+        });
 
         b_mscvp.setText("Set Charge/Volume");
         b_mscvp.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -854,11 +910,16 @@ public class Manager extends javax.swing.JFrame {
         l_truck_plate_number.setText("Truck Plate Number");
 
         b_get_truck_usage.setText("Get Truck Usage");
+        b_get_truck_usage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_get_truck_usageMouseClicked(evt);
+            }
+        });
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        cs_ta_tpn.setEditable(false);
+        cs_ta_tpn.setColumns(20);
+        cs_ta_tpn.setRows(5);
+        jScrollPane1.setViewportView(cs_ta_tpn);
 
         jLabel3.setText("Branch");
 
@@ -869,21 +930,26 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        bg_company_stats.add(jRadioButton1);
-        jRadioButton1.setText("Average Truck Idle Time");
+        bg_company_stats.add(rb_atit);
+        rb_atit.setText("Average Truck Idle Time");
 
-        bg_company_stats.add(jRadioButton2);
-        jRadioButton2.setText("Average Consigment Waiting Time");
+        bg_company_stats.add(rb_acwt);
+        rb_acwt.setText("Average Consigment Waiting Time");
 
-        bg_company_stats.add(jRadioButton3);
-        jRadioButton3.setText("Branch Consignment Handling");
+        bg_company_stats.add(rb_bch);
+        rb_bch.setText("Branch Consignment Handling");
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        cs_ta_b.setEditable(false);
+        cs_ta_b.setColumns(20);
+        cs_ta_b.setRows(5);
+        jScrollPane2.setViewportView(cs_ta_b);
 
-        jButton2.setText("Query");
+        cs_query.setText("Query");
+        cs_query.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cs_queryMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_company_statisticsLayout = new javax.swing.GroupLayout(p_company_statistics);
         p_company_statistics.setLayout(p_company_statisticsLayout);
@@ -898,14 +964,14 @@ public class Manager extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(p_company_statisticsLayout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(cs_query, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 588, Short.MAX_VALUE))
                             .addGroup(p_company_statisticsLayout.createSequentialGroup()
                                 .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton1)
+                                    .addComponent(rb_bch)
+                                    .addComponent(rb_atit)
                                     .addComponent(cmb_cs_b, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jRadioButton2))
+                                    .addComponent(rb_acwt))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2))))
                     .addGroup(p_company_statisticsLayout.createSequentialGroup()
@@ -928,16 +994,16 @@ public class Manager extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(cmb_cs_b, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton1)
+                        .addComponent(rb_atit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(rb_acwt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton3))
+                        .addComponent(rb_bch))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_company_statisticsLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(cs_query)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1023,13 +1089,13 @@ public class Manager extends javax.swing.JFrame {
         tf_employee_name.setText("");
     }//GEN-LAST:event_tf_employee_nameFocusGained
 
-    private void tf_employee_addressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_employee_addressFocusLost
+    private void tf_usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_usernameFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_employee_addressFocusLost
+    }//GEN-LAST:event_tf_usernameFocusLost
 
-    private void tf_employee_addressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_employee_addressFocusGained
-        tf_employee_address.setText("");
-    }//GEN-LAST:event_tf_employee_addressFocusGained
+    private void tf_usernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_usernameFocusGained
+        tf_username.setText("");
+    }//GEN-LAST:event_tf_usernameFocusGained
 
     private void tf_set_ipFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_set_ipFocusGained
         tf_set_ip.setText("");
@@ -1057,6 +1123,7 @@ public class Manager extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        tf_set_ip.setText("IP: "+Database.getIP_ADDRESS());
         // TODO add your handling code here:
     }//GEN-LAST:event_b_set_ipMouseClicked
 
@@ -1074,11 +1141,12 @@ public class Manager extends javax.swing.JFrame {
         try {
             double charge = Double.valueOf(charge_text);
             Consignment.setCharge(charge);
-            JOptionPane.showMessageDialog(this, "Value: " + Double.toString(Consignment.getCharge()) + "", "Success", 1);
+            //JOptionPane.showMessageDialog(this, "Value: " + Double.toString(Consignment.getCharge()) + "", "Success", 1);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Enter a valid input for charge", "Error", 0);
             return;
         }
+        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge()));
         // TODO add your handling code here:
     }//GEN-LAST:event_b_mscvpMouseClicked
 
@@ -1182,8 +1250,11 @@ public class Manager extends javax.swing.JFrame {
                     break;
                 }
             }
-            System.out.println(tempb.getName());
+            //System.out.println(tempb.getName());
             nt.setCurrent_office(tempb);
+            nt.setModel(model);
+            nt.setPlate_number(plate_number);
+            nt.setCost(cost);
             tempb.addTruck(nt);
             Statement stmt = head_office.getDatabase().getConnection().createStatement();
             String query = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
@@ -1290,11 +1361,11 @@ public class Manager extends javax.swing.JFrame {
                                     consignment_ids += Integer.toString(consignment.getConsignment_id()) + "\n";
                                 }
                                 String dest_name = "";
-                                try{
-                                    
+                                try {
+
                                     dest_name = truck.getDestination_office().getName();
-                                }catch(NullPointerException ex){
-                                   
+                                } catch (NullPointerException ex) {
+
                                 }
                                 model.addRow(new Object[]{truck.getPlate_number(),
                                     consignment_ids,
@@ -1302,6 +1373,7 @@ public class Manager extends javax.swing.JFrame {
                                     dest_name,
                                     truck.getStatus().toString()});
                             }
+                            break;
                         }
                     }
                 }
@@ -1332,6 +1404,123 @@ public class Manager extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_queryItemStateChanged
+
+    private void cs_queryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cs_queryMouseClicked
+        String branch_name = cmb_cs_b.getSelectedItem().toString();
+        Branch selected_branch = null;
+        if (branch_name.equals("Branch")) {
+            JOptionPane.showMessageDialog(this, "Select a valid branch", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean atit, acwt, bch;
+        atit = rb_atit.isSelected();
+        acwt = rb_acwt.isSelected();
+        bch = rb_bch.isSelected();
+        cs_ta_b.setText("");
+        for (Branch branch : branch_list) {
+            if (branch.getName().equals(branch_name)) {
+                selected_branch = branch;
+                break;
+            }
+        }
+        try {
+            if (atit) {
+                String result = "Average Truck Idle Time :\n";
+                result += Long.toString(selected_branch.getTruck_avg_idle_time() / (1000 * 60 * 60));
+                result += " Hrs";
+                cs_ta_b.setText(result);
+            } else {
+                if (acwt) {
+                    String result = "Average Consignment Wating Time :\n";
+                    result += Long.toString(selected_branch.getAvgConsignmentWaitingTime() / (1000 * 60 * 60));
+                    result += " Hrs";
+                    cs_ta_b.setText(result);
+                } else {
+                    if (bch) {
+                        String result = "The branch has handled ";
+                        result += Long.toString(selected_branch.getCumulative_consignment_count());
+                        result += " consignments and ";
+                        result += Long.toString(selected_branch.getCumulative_truck_count());
+                        result += " trucks so far.";
+                        cs_ta_b.setText(result);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Please specify what to query.", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        } catch (NullPointerException ex) {
+            cs_ta_b.setText("This data doesn't exist for this particular Branch");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cs_queryMouseClicked
+
+    private void b_get_truck_usageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_get_truck_usageMouseClicked
+        cs_ta_tpn.setText("");
+        String pn = tf_truck_plate_num.getText();
+        if (pn.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please input a plate number", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Truck selected_truck = null;
+        try {
+            for (Truck truck : truck_list) {
+                if (truck.getPlate_number().equals(pn)) {
+                    selected_truck = truck;
+                    break;
+                }
+            }
+            if (selected_truck == null) {
+                JOptionPane.showMessageDialog(this, "No such truck found", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String result = "The truck with plate number " + selected_truck.getPlate_number() + " and ID " + selected_truck.getId() + " has run ";
+            result += Integer.toString(selected_truck.getTotalKM());
+            result += " kms.";
+            cs_ta_tpn.setText(result);
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(this, "No truck found with the plate number", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_get_truck_usageMouseClicked
+
+    private void tp_administrationFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tp_administrationFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tp_administrationFocusGained
+
+    private void AddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_AddressFocusGained
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddressFocusGained
+
+    private void AddressComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_AddressComponentShown
+        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge()));
+        tf_set_ip.setText("IP: "+Database.getIP_ADDRESS());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddressComponentShown
+
+    private void tf_chargeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_chargeMouseClicked
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_chargeMouseClicked
+
+    private void tf_chargeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_chargeFocusGained
+        tf_charge.setText(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_chargeFocusGained
+
+    private void tf_chargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_chargeFocusLost
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_chargeFocusLost
+
+    private void tf_passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_passwordFocusGained
+        tf_password.setText(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_passwordFocusGained
+
+    private void tf_passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_passwordFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_passwordFocusLost
 
     /**
      * @param args the command line arguments
@@ -1387,9 +1576,11 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JComboBox cmb_branch_list;
     private javax.swing.JComboBox cmb_cs_b;
     private javax.swing.JComboBox cmb_query;
+    private javax.swing.JButton cs_query;
+    private javax.swing.JTextArea cs_ta_b;
+    private javax.swing.JTextArea cs_ta_tpn;
     private javax.swing.JInternalFrame if_employee_list;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -1397,9 +1588,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1413,8 +1602,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel l_address;
     private javax.swing.JLabel l_branch;
     private javax.swing.JLabel l_branch_name;
@@ -1436,10 +1623,12 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JPanel p_fire;
     private javax.swing.JPanel p_hire;
     private javax.swing.JPanel p_queries;
+    private javax.swing.JRadioButton rb_acwt;
+    private javax.swing.JRadioButton rb_atit;
+    private javax.swing.JRadioButton rb_bch;
     private javax.swing.JTable table_query;
     private javax.swing.JTextField tf_charge;
     private javax.swing.JTextField tf_cost;
-    private javax.swing.JTextField tf_employee_address;
     private javax.swing.JTextField tf_employee_id;
     private javax.swing.JTextField tf_employee_name;
     private javax.swing.JTextField tf_fire_reason;
@@ -1448,11 +1637,13 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextField tf_mc;
     private javax.swing.JTextField tf_mp;
     private javax.swing.JTextField tf_mun;
+    private javax.swing.JTextField tf_password;
     private javax.swing.JTextField tf_plate_number;
     private javax.swing.JTextField tf_query_id;
     private javax.swing.JTextField tf_set_ip;
     private javax.swing.JTextField tf_truck_model;
     private javax.swing.JTextField tf_truck_plate_num;
+    private javax.swing.JTextField tf_username;
     private javax.swing.JTabbedPane tp_administration;
     private javax.swing.JTabbedPane tp_manager;
     // End of variables declaration//GEN-END:variables
