@@ -31,7 +31,8 @@ public class Consignment implements Serializable{
     private long waiting_time;
     private double volume;
     private int distance;
-    private static double charge;
+    private static double charge_per_km;
+    private double delivery_charge;
     private int pieces;
     private String name_sender;
     private String name_receiver;
@@ -163,13 +164,7 @@ public Branch getTo_branch() {
         // To Do : Get from distance matrix in database
         this.distance = distance;
     }
-    public static double getCharge() {
-        return charge;
-    }
-
-    public static void setCharge(double charge) {
-        Consignment.charge = charge;
-    }
+    
     /**
      * Set the value of consignment_id
      * @param _consignment_id the new value of consignment_id
@@ -314,9 +309,20 @@ public Branch getTo_branch() {
         return status_delivery;
     }
 
-    
-    public double computeBill() {
-        return 100*getVolume()*getDistance();        
+    public static double getCharge_per_km() {
+        return charge_per_km;
+    }
+
+    public static void setCharge_per_km(double charge_per_km) {
+        Consignment.charge_per_km = charge_per_km;
+    }
+
+    public double getDelivery_charge() {
+        return delivery_charge;
+    }
+
+    public void setDelivery_charge(double delivery_charge) {
+        this.delivery_charge = delivery_charge;
     }
     
     private static final long serialVersionUID = 8927227389351703299L;

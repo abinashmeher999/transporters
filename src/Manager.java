@@ -1140,13 +1140,14 @@ public class Manager extends javax.swing.JFrame {
         String charge_text = tf_charge.getText();
         try {
             double charge = Double.valueOf(charge_text);
-            Consignment.setCharge(charge);
+            Consignment.setCharge_per_km(charge);
             //JOptionPane.showMessageDialog(this, "Value: " + Double.toString(Consignment.getCharge()) + "", "Success", 1);
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Enter a valid input for charge", "Error", 0);
             return;
         }
-        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge()));
+        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge_per_km()));
         // TODO add your handling code here:
     }//GEN-LAST:event_b_mscvpMouseClicked
 
@@ -1493,7 +1494,7 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_AddressFocusGained
 
     private void AddressComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_AddressComponentShown
-        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge()));
+        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge_per_km()));
         tf_set_ip.setText("IP: "+Database.getIP_ADDRESS());
         // TODO add your handling code here:
     }//GEN-LAST:event_AddressComponentShown
