@@ -271,6 +271,13 @@ abstract public class Office implements Serializable {
     }
     
 
+    public void allotNext_available_truck(Office curr_branch, Office to_branch){
+        for(Truck truck_list_item : curr_branch.getTruck_list()){
+            if(truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)){
+                truck_list_item.setDestination_office(to_branch);
+            }
+        }
+    }
     private static final long serialVersionUID = 5539303527072866995L;
 
 }
