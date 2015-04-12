@@ -7,6 +7,7 @@ import com.transporters.Database;
 import com.transporters.HeadOffice;
 import com.transporters.Office;
 import com.transporters.Truck;
+import com.transporters.Login;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -52,7 +53,7 @@ public class Manager extends javax.swing.JFrame {
     List<Branch> branch_list;
     List<Truck> truck_list;
     List<Consignment> consignment_list;
-
+    List<Login> login_list;
     int head_counter;
     int branch_counter;
     int truck_counter;
@@ -172,6 +173,7 @@ public class Manager extends javax.swing.JFrame {
 
             String query3 = "SELECT * FROM IP";
             ResultSet rs3 = stmt3.executeQuery(query3);
+
             rs3.next();
             Database.setIPAddress(rs3.getString("address"));
 
@@ -394,6 +396,11 @@ public class Manager extends javax.swing.JFrame {
         });
 
         b_hire.setText("Grant Access");
+        b_hire.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_hireActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1625,6 +1632,7 @@ public class Manager extends javax.swing.JFrame {
         tf_charge.setText("Current charge: " + Double.toString(Consignment.getCharge_per_km()));
         tf_set_ip.setText("IP: " + Database.getIP_ADDRESS());
 
+
     }//GEN-LAST:event_AddressComponentShown
 
     private void tf_chargeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_chargeMouseClicked
@@ -1740,6 +1748,46 @@ public class Manager extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_p_queriesComponentShown
+
+    private void b_hireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_hireActionPerformed
+
+        try {
+            Login login = new Login();
+
+            Branch login_branch = null;
+            String branch_name = cmb_branch_list.getSelectedItem().toString();
+            if (branch_name == null) {
+                throw Exception("Please select branch");
+            }
+            for (Branch branch_list_item : branch_list) {
+                if (branch_list_item.getName().equals(branch_name)) {
+                    login_branch = branch_list_item;
+                }
+            }
+            String name = null;
+            name = tf_employee_name.getText();
+            if (name.equals("")) {
+                throw Exception("Enter employee name");
+            }
+            String login_id = null;
+            login_id = tf_username.getText();
+            if (login_id.equals("")) {
+                throw Exception("Enter username");
+            }
+            String password = null;
+            password = tf_password.getText();
+            if (password.equals("")) {
+                throw Exception("Enter password");
+            }
+            login.setBranch(login_branch);
+            login.setName(name);
+            login.setPassword(password);
+            login.setLogin_id(login_id);
+            login_list.add(login);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
+        }
+    }//GEN-LAST:event_b_hireActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1866,4 +1914,8 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tp_administration;
     private javax.swing.JTabbedPane tp_manager;
     // End of variables declaration//GEN-END:variables
+
+    private Exception Exception(String please_select_branch) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -38,6 +38,7 @@ public class Home extends javax.swing.JFrame {
     List<Branch> branch_list;
     List<Truck> truck_list;
     List<Consignment> consignment_list;
+    List<Login> login_list;
 
     int head_counter;
     int branch_counter;
@@ -303,43 +304,68 @@ public class Home extends javax.swing.JFrame {
         try {
             char[] temp = pf_password.getPassword();
             String password = new String(temp);
-            if (tf_employee_id.getText().equals("") || tf_employee_id.getText().equals(null)) {
+            String login_id = tf_employee_id.getText();
+            if (login_id.equals("") || login_id.equals(null)) {
                 throw new Exception("Enter Login id");
             }
             if (password.equals("") || password.equals(null)) {
                 throw new Exception("Enter Password");
             }
-            if (tf_employee_id.getText().equals("0")) {
-                if (password.equals("head0")) {
+            if (login_id.equals("Manager")) {
+                if (password.equals("youshallnotpass")) {
                     Manager manager = new Manager();
                     manager.setVisible(true);
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Password doesn't match", "Error", 0);
+                    throw Exception("Password doesn't match");
                 }
             } else {
-                int id = Integer.parseInt(tf_employee_id.getText());
-                Branch branch = null;
-                if(branch_list.isEmpty()){
+                int branch_id = -1;
+                Login login = null;
+                for (Login login_list_item : login_list) {
+                    if (login_list_item.getLogin_id().equals(login_id)) {
+                        login = login_list_item;
+                    }
+                }
+                if (login == null) {
                     throw Exception("Invalid id");
                 }
                 for (Branch branch_list_item : branch_list) {
-                    if (branch_list_item.getId() == id) {
-                        branch = branch_list_item;
+                    if (login.getBranch().equals(branch_list_item)) {
+                        branch_id = branch_list_item.getId();
                     }
                 }
-                if (branch == null) {
-                    //throw new Exception("Invalid Id");
-                    throw Exception("Invalid id");
-
+                if(branch_id == -1){
+                    throw Exception("Employee branch invalid");
                 }
-                if (password.equals(branch.getPassword())) {
-                    Employee employee = new Employee(id);
+                if (login.getPassword().equals(password)) {
+                    Employee employee = new Employee(branch_id);
                     employee.setVisible(true);
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Password doesn't match", "Error", 0);
+                    throw Exception("Password doesn't match");
                 }
+
+//                if(branch_list.isEmpty()){
+//                    throw Exception("Invalid id");
+//                }
+//                for (Branch branch_list_item : branch_list) {
+//                    if (branch_list_item.getId() == id) {
+//                        branch = branch_list_item;
+//                    }
+//                }
+//                if (branch == null) {
+//                    //throw new Exception("Invalid Id");
+//                    throw Exception("Invalid id");
+//
+//                }
+//                if (password.equals(branch.getPassword())) {
+//                    Employee employee = new Employee(id);
+//                    employee.setVisible(true);
+//                    dispose();
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Password doesn't match", "Error", 0);
+//                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
