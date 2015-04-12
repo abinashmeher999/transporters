@@ -43,6 +43,7 @@ abstract public class Office implements Serializable {
         avg_consignment_waiting_time = 0;
         truck_list = new ArrayList<>();
         database = new Database();
+        this.waiting_consignment_list = new ArrayList<>();
     }
 
     ;

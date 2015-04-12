@@ -66,6 +66,7 @@ public class Consignment implements Serializable{
         this.pieces = 1;
         this.carrier_trucks = new ArrayList<Truck>();
         this.entry_date = Calendar.getInstance();
+        this.waiting_time_start = null;
     }
     public Consignment(int id) {
         this.consignment_id = id;
@@ -82,6 +83,7 @@ public class Consignment implements Serializable{
         this.pieces = 1;
         this.carrier_trucks = new ArrayList<Truck>();
         this.entry_date = Calendar.getInstance();
+        this.waiting_time_start = null;
     }
   
     //
