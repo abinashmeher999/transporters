@@ -55,6 +55,7 @@ public class Home extends javax.swing.JFrame {
             db.setPassword("alsk");
             Statement stmt = db.getConnection().createStatement();
             Statement stmt2 = db.getConnection().createStatement();
+            Statement stmt3 = db.getConnection().createStatement();
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
@@ -62,6 +63,12 @@ public class Home extends javax.swing.JFrame {
 
             String query2 = "SELECT * FROM ID_data";
             ResultSet rs2 = stmt2.executeQuery(query2);
+            
+            String query3 = "SELECT * FROM IP";
+            ResultSet rs3 = stmt3.executeQuery(query3);
+            
+            rs3.next();
+            Database.setIPAddress(rs3.getString("address"));
 
             rs2.next();
             head_counter = rs2.getInt("counter");
@@ -153,6 +160,8 @@ public class Home extends javax.swing.JFrame {
         l_name.setForeground(new java.awt.Color(255, 255, 255));
         l_name.setText("Transformer");
 
+        b_login.setBackground(new java.awt.Color(141, 235, 137));
+        b_login.setForeground(new java.awt.Color(22, 93, 20));
         b_login.setText("Login");
         b_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -195,9 +204,6 @@ public class Home extends javax.swing.JFrame {
             .addGroup(p_homeLayout.createSequentialGroup()
                 .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_homeLayout.createSequentialGroup()
-                        .addGap(347, 347, 347)
-                        .addComponent(b_login))
-                    .addGroup(p_homeLayout.createSequentialGroup()
                         .addGap(174, 174, 174)
                         .addGroup(p_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(l_employee_id)
@@ -211,7 +217,10 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(l_name))
                     .addGroup(p_homeLayout.createSequentialGroup()
                         .addGap(259, 259, 259)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(p_homeLayout.createSequentialGroup()
+                        .addGap(347, 347, 347)
+                        .addComponent(b_login, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         p_homeLayout.setVerticalGroup(
