@@ -24,6 +24,10 @@ import javax.swing.JOptionPane;
  */
 public class Home extends javax.swing.JFrame {
 
+    private Exception Exception(String invalid_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     enum Session {
 
         EMPLOYEE,
@@ -65,9 +69,10 @@ public class Home extends javax.swing.JFrame {
 
             String query2 = "SELECT * FROM ID_data";
             ResultSet rs2 = stmt2.executeQuery(query2);
-            
+
             String query3 = "SELECT * FROM IP";
             ResultSet rs3 = stmt3.executeQuery(query3);
+
             rs3.next();
             Database.setIPAddress(rs3.getString("address"));
             
@@ -79,7 +84,7 @@ public class Home extends javax.swing.JFrame {
             rs2.next();
             head_counter = rs2.getInt("counter");
             int temp = 0;
-            while(rs.next()){
+            while (rs.next()) {
                 buf.add(rs.getBytes("list"));
             }
             if (head_counter != 0) {
@@ -172,6 +177,11 @@ public class Home extends javax.swing.JFrame {
         b_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 b_loginMouseClicked(evt);
+            }
+        });
+        b_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_loginActionPerformed(evt);
             }
         });
 
@@ -285,32 +295,56 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_pf_passwordFocusGained
 
     private void b_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_loginMouseClicked
+
+    }//GEN-LAST:event_b_loginMouseClicked
+
+    private void b_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_loginActionPerformed
         //Check for id and password
-        char[] temp = pf_password.getPassword();
-        String password = new String(temp);
-        if (tf_employee_id.getText().equals("0")) {
-            if (password.equals("head0")) {
-                Manager manager = new Manager();
-                manager.setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
+        try {
+            char[] temp = pf_password.getPassword();
+            String password = new String(temp);
+            if (tf_employee_id.getText().equals("") || tf_employee_id.getText().equals(null)) {
+                throw new Exception("Enter Login id");
             }
-        } else {
-            int id = Integer.parseInt(tf_employee_id.getText());
-            if (id > branch_counter || id < 1) {
-                JOptionPane.showMessageDialog(this, "Invalid id", "Error", 0);
+            if (password.equals("") || password.equals(null)) {
+                throw new Exception("Enter Password");
+            }
+            if (tf_employee_id.getText().equals("0")) {
+                if (password.equals("head0")) {
+                    Manager manager = new Manager();
+                    manager.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Password doesn't match", "Error", 0);
+                }
             } else {
-                if (password.equals(branch_list.get(id - 1).getPassword())) {
+                int id = Integer.parseInt(tf_employee_id.getText());
+                Branch branch = null;
+                if(branch_list.isEmpty()){
+                    throw Exception("Invalid id");
+                }
+                for (Branch branch_list_item : branch_list) {
+                    if (branch_list_item.getId() == id) {
+                        branch = branch_list_item;
+                    }
+                }
+                if (branch == null) {
+                    //throw new Exception("Invalid Id");
+                    throw Exception("Invalid id");
+
+                }
+                if (password.equals(branch.getPassword())) {
                     Employee employee = new Employee(id);
                     employee.setVisible(true);
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Invalid password", "Error", 0);
+                    JOptionPane.showMessageDialog(this, "Password doesn't match", "Error", 0);
                 }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         }
-    }//GEN-LAST:event_b_loginMouseClicked
+    }//GEN-LAST:event_b_loginActionPerformed
 
     /**
      * @param args the command line arguments

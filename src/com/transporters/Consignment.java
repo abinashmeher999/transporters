@@ -29,7 +29,7 @@ public class Consignment implements Serializable{
     
     private int consignment_id;
     private long waiting_time;
-    private double volume;
+    private long volume;
     private int distance;
     private static double charge_per_km;
     private double delivery_charge;
@@ -37,6 +37,7 @@ public class Consignment implements Serializable{
     private String name_sender;
     private String name_receiver;
     private String name_billing;
+    private Calendar waiting_time_start;
     private String address_sender;
     private String address_receiver;
     private String address_billing;
@@ -206,7 +207,7 @@ public Branch getTo_branch() {
      *
      * @param _volume the new value of volume
      */
-    public void setVolume(double _volume) {
+    public void setVolume(long _volume) {
         volume = _volume;
     }
 
@@ -215,7 +216,7 @@ public Branch getTo_branch() {
      *
      * @return the value of volume
      */
-    public double getVolume() {
+    public long getVolume() {
         return volume;
     }
 
@@ -323,6 +324,14 @@ public Branch getTo_branch() {
 
     public void setDelivery_charge(double delivery_charge) {
         this.delivery_charge = delivery_charge;
+    }
+
+    public Calendar getWaiting_time_start() {
+        return waiting_time_start;
+    }
+
+    public void setWaiting_time_start(Calendar waiting_time_start) {
+        this.waiting_time_start = waiting_time_start;
     }
     
     private static final long serialVersionUID = 8927227389351703299L;

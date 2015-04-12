@@ -25,6 +25,7 @@ abstract public class Office implements Serializable {
     private Database database;
     private String password;
     private List<Truck> truck_list;
+    private List<Consignment> waiting_consignment_list;
 
     //
     // Constructors
@@ -259,6 +260,15 @@ abstract public class Office implements Serializable {
     public void setCumulative_consignment_count(long cumulative_consignment_count) {
         this.cumulative_consignment_count = cumulative_consignment_count;
     }
+
+    public List<Consignment> getWaiting_consignment_list() {
+        return waiting_consignment_list;
+    }
+
+    public void setWaiting_consignment_list(List<Consignment> waiting_consignment_list) {
+        this.waiting_consignment_list = waiting_consignment_list;
+    }
+    
 
     private static final long serialVersionUID = 5539303527072866995L;
 
