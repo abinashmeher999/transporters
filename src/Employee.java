@@ -227,9 +227,16 @@ public class Employee extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane3.setViewportView(table_dispatchable_trucks);
@@ -244,7 +251,7 @@ public class Employee extends javax.swing.JFrame {
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(if_available_trucksLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addGap(0, 75, Short.MAX_VALUE))
         );
 
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
@@ -261,6 +268,7 @@ public class Employee extends javax.swing.JFrame {
             }
         });
 
+        ta_dispatch_details.setEditable(false);
         ta_dispatch_details.setColumns(20);
         ta_dispatch_details.setRows(5);
         jScrollPane1.setViewportView(ta_dispatch_details);
@@ -337,7 +345,15 @@ public class Employee extends javax.swing.JFrame {
             new String [] {
                 "Consignement Id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(table_consignment_id);
 
         javax.swing.GroupLayout if_truck_detailsLayout = new javax.swing.GroupLayout(if_truck_details.getContentPane());
@@ -424,7 +440,12 @@ public class Employee extends javax.swing.JFrame {
             }
         });
 
-        cmb_to_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_to_branch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
+        cmb_to_branch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmb_to_branchFocusGained(evt);
+            }
+        });
 
         l_to_branch.setText("To Branch");
 
@@ -628,6 +649,7 @@ public class Employee extends javax.swing.JFrame {
 
         tp_new_consignment.addTab("Billing Address", p_billing);
 
+        ta_billing_details.setEditable(false);
         ta_billing_details.setColumns(20);
         ta_billing_details.setRows(5);
         sp_billing_details.setViewportView(ta_billing_details);
@@ -942,6 +964,16 @@ public class Employee extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
         }
     }//GEN-LAST:event_b_generate_billActionPerformed
+
+    private void cmb_to_branchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmb_to_branchFocusGained
+        List<String> s = new ArrayList<>();
+        for (Branch branch : branch_list) {
+            s.add(branch.getName());
+        }
+        cmb_to_branch.setModel(new javax.swing.DefaultComboBoxModel(s.toArray()));
+        cmb_to_branch.showPopup();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_to_branchFocusGained
 
     /**
      * @param args the command line arguments
