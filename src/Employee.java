@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 public class Employee extends javax.swing.JFrame {
 
     int branch_id;
+    Branch current_branch;
     Database db;
     HeadOffice head_office;
     List<Branch> branch_list;
@@ -46,6 +47,133 @@ public class Employee extends javax.swing.JFrame {
     int truck_counter;
     int consignment_counter;
 
+    public void readDatabase() {
+        try {
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt3 = db.getConnection().createStatement();
+            Statement stmt4 = db.getConnection().createStatement();
+
+            String query = "SELECT * from Lists";
+            String query2 = "SELECT * from ID_data";
+
+            ResultSet rs1 = stmt.executeQuery(query);
+            ResultSet rs2 = stmt2.executeQuery(query2);
+
+            String query3 = "SELECT * FROM IP";
+            ResultSet rs3 = stmt3.executeQuery(query3);
+            rs3.next();
+            Database.setIPAddress(rs3.getString("address"));
+
+            String query4 = "SELECT * FROM Charge";
+            ResultSet rs4 = stmt4.executeQuery(query4);
+            rs4.next();
+            Consignment.setCharge_per_km(rs4.getDouble("value"));
+
+            List<byte[]> buf = new ArrayList<>();
+            ObjectInputStream o;
+
+            rs2.next();
+            head_counter = rs2.getInt("counter");
+            int temp = 0;
+            while (rs1.next()) {
+                buf.add(rs1.getBytes("list"));
+            }
+            if (head_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                head_office = (HeadOffice) o.readObject();
+            } else {
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+                pstmt.setObject(1, head_office);
+                pstmt.executeUpdate();
+                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+            }
+
+            rs2.next();
+            branch_counter = rs2.getInt("counter");
+            //rs.next();
+            if (branch_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                branch_list = (ArrayList<Branch>) o.readObject();
+            } else {
+                branch_list = new ArrayList<>();
+            }
+
+            rs2.next();
+            truck_counter = rs2.getInt("counter");
+            //rs.next();
+            if (truck_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                truck_list = (ArrayList<Truck>) o.readObject();
+            } else {
+                truck_list = new ArrayList<>();
+            }
+
+            rs2.next();
+            consignment_counter = rs2.getInt("counter");
+            //rs.next();
+            if (consignment_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                consignment_list = (ArrayList<Consignment>) o.readObject();
+            } else {
+                consignment_list = new ArrayList<>();
+            }
+            rs1.close();
+            rs2.close();
+            rs3.close();
+            rs4.close();
+        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+            //java.lang.System.out.println("What");
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void writeToDatabase(){
+        try{
+            Statement stmt1 = current_branch.getDatabase().getConnection().createStatement();
+            
+            String query1 = "UPDATE ID_data SET counter="+head_counter+" WHERE name='head_counter'";
+            stmt1.executeUpdate(query1);
+            query1 = "UPDATE ID_data SET counter="+branch_counter+" WHERE name='branch_counter'";
+            stmt1.executeUpdate(query1);
+            query1 = "UPDATE ID_data SET counter="+truck_counter+" WHERE name='truck_counter'";
+            stmt1.executeUpdate(query1);
+            query1 = "UPDATE ID_data SET counter="+consignment_counter+" WHERE name='consignment_counter'";
+            stmt1.executeUpdate(query1);
+            
+            String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+            PreparedStatement pstmt = current_branch.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, head_office);
+            pstmt.executeUpdate();
+            
+            String update2 = "UPDATE Lists SET list=? WHERE name='branch'";
+            PreparedStatement pstmt2 = current_branch.getDatabase().getConnection().prepareStatement(update);
+            pstmt2.setObject(1, branch_list);
+            pstmt2.executeUpdate();
+            
+            String update3 = "UPDATE Lists SET list=? WHERE name='truck'";
+            PreparedStatement pstmt3 = current_branch.getDatabase().getConnection().prepareStatement(update);
+            pstmt3.setObject(1, truck_list);
+            pstmt3.executeUpdate();
+            
+            String update4 = "UPDATE Lists SET list=? WHERE name='consignment'";
+            PreparedStatement pstmt4 = current_branch.getDatabase().getConnection().prepareStatement(update);
+            pstmt4.setObject(1, consignment_list);
+            pstmt4.executeUpdate();
+            
+        }catch(SQLException ex){
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public int getBranch_id() {
         return branch_id;
     }
@@ -130,6 +258,13 @@ public class Employee extends javax.swing.JFrame {
         } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
             java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(Branch branch:branch_list){
+            if (branch.getId()==branch_id){
+                current_branch = branch;
+                break;
+            }
         }
     }
 

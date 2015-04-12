@@ -58,6 +58,95 @@ public class Manager extends javax.swing.JFrame {
     int truck_counter;
     int consignment_counter;
 
+    public void readDatabase() {
+        try {
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt3 = db.getConnection().createStatement();
+            Statement stmt4 = db.getConnection().createStatement();
+
+            String query = "SELECT * from Lists";
+            String query2 = "SELECT * from ID_data";
+
+            ResultSet rs1 = stmt.executeQuery(query);
+            ResultSet rs2 = stmt2.executeQuery(query2);
+
+            String query3 = "SELECT * FROM IP";
+            ResultSet rs3 = stmt3.executeQuery(query3);
+            rs3.next();
+            Database.setIPAddress(rs3.getString("address"));
+
+            String query4 = "SELECT * FROM Charge";
+            ResultSet rs4 = stmt4.executeQuery(query4);
+            rs4.next();
+            Consignment.setCharge_per_km(rs4.getDouble("value"));
+
+            List<byte[]> buf = new ArrayList<>();
+            ObjectInputStream o;
+
+            rs2.next();
+            head_counter = rs2.getInt("counter");
+            int temp = 0;
+            while (rs1.next()) {
+                buf.add(rs1.getBytes("list"));
+            }
+            if (head_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                head_office = (HeadOffice) o.readObject();
+            } else {
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+                pstmt.setObject(1, head_office);
+                pstmt.executeUpdate();
+                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+            }
+
+            rs2.next();
+            branch_counter = rs2.getInt("counter");
+            //rs.next();
+            if (branch_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                branch_list = (ArrayList<Branch>) o.readObject();
+            } else {
+                branch_list = new ArrayList<>();
+            }
+
+            rs2.next();
+            truck_counter = rs2.getInt("counter");
+            //rs.next();
+            if (truck_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                truck_list = (ArrayList<Truck>) o.readObject();
+            } else {
+                truck_list = new ArrayList<>();
+            }
+
+            rs2.next();
+            consignment_counter = rs2.getInt("counter");
+            //rs.next();
+            if (consignment_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                consignment_list = (ArrayList<Consignment>) o.readObject();
+            } else {
+                consignment_list = new ArrayList<>();
+            }
+            rs1.close();
+            rs2.close();
+            rs3.close();
+            rs4.close();
+        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+            java.lang.System.out.println("What");
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * Creates new form Manager
      */
@@ -72,6 +161,7 @@ public class Manager extends javax.swing.JFrame {
             Statement stmt = db.getConnection().createStatement();
             Statement stmt2 = db.getConnection().createStatement();
             Statement stmt3 = db.getConnection().createStatement();
+            Statement stmt4 = db.getConnection().createStatement();
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
@@ -79,12 +169,16 @@ public class Manager extends javax.swing.JFrame {
 
             String query2 = "SELECT * FROM ID_data";
             ResultSet rs2 = stmt2.executeQuery(query2);
-            
+
             String query3 = "SELECT * FROM IP";
             ResultSet rs3 = stmt3.executeQuery(query3);
-            
             rs3.next();
             Database.setIPAddress(rs3.getString("address"));
+
+            String query4 = "SELECT * FROM Charge";
+            ResultSet rs4 = stmt4.executeQuery(query4);
+            rs4.next();
+            Consignment.setCharge_per_km(rs4.getDouble("value"));
 
             rs2.next();
             head_counter = rs2.getInt("counter");
@@ -819,6 +913,11 @@ public class Manager extends javax.swing.JFrame {
         tp_manager.addTab("Administration", p_administration);
 
         p_queries.setOpaque(false);
+        p_queries.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                p_queriesComponentShown(evt);
+            }
+        });
 
         table_query.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1123,7 +1222,7 @@ public class Manager extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tf_set_ip.setText("IP: "+Database.getIP_ADDRESS());
+        tf_set_ip.setText("IP: " + Database.getIP_ADDRESS());
         // TODO add your handling code here:
     }//GEN-LAST:event_b_set_ipMouseClicked
 
@@ -1138,8 +1237,17 @@ public class Manager extends javax.swing.JFrame {
 
     private void b_mscvpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_mscvpMouseClicked
         String charge_text = tf_charge.getText();
+        double charge;
         try {
-            double charge = Double.valueOf(charge_text);
+            charge = Double.valueOf(charge_text);
+            try {
+                Statement stmt = head_office.getDatabase().getConnection().createStatement();
+                String query = "UPDATE Charge SET value=" + charge;
+                stmt.executeUpdate(query);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "There was some problem in updating to the database. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Consignment.setCharge_per_km(charge);
             //JOptionPane.showMessageDialog(this, "Value: " + Double.toString(Consignment.getCharge()) + "", "Success", 1);
 
@@ -1147,7 +1255,8 @@ public class Manager extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter a valid input for charge", "Error", 0);
             return;
         }
-        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge_per_km()));
+
+        tf_charge.setText("Current charge: " + Double.toString(Consignment.getCharge_per_km()));
         // TODO add your handling code here:
     }//GEN-LAST:event_b_mscvpMouseClicked
 
@@ -1489,18 +1598,37 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_tp_administrationFocusGained
 
     private void AddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_AddressFocusGained
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_AddressFocusGained
 
     private void AddressComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_AddressComponentShown
-        tf_charge.setText("Current charge: "+Double.toString(Consignment.getCharge_per_km()));
-        tf_set_ip.setText("IP: "+Database.getIP_ADDRESS());
-        // TODO add your handling code here:
+
+        try {
+            Statement stmt1 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+
+            String query1 = "SELECT * FROM IP";
+            String query2 = "SELECT * FROM Charge";
+
+            ResultSet rs1 = stmt1.executeQuery(query1);
+            rs1.next();
+            Database.setIPAddress(rs1.getString("address"));
+
+            ResultSet rs2 = stmt2.executeQuery(query2);
+            rs2.next();
+            Consignment.setCharge_per_km(rs2.getDouble("value"));
+        } catch (SQLException ex) {
+
+        }
+
+        tf_charge.setText("Current charge: " + Double.toString(Consignment.getCharge_per_km()));
+        tf_set_ip.setText("IP: " + Database.getIP_ADDRESS());
+
     }//GEN-LAST:event_AddressComponentShown
 
     private void tf_chargeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_chargeMouseClicked
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_chargeMouseClicked
 
@@ -1510,7 +1638,7 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_chargeFocusGained
 
     private void tf_chargeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_chargeFocusLost
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_chargeFocusLost
 
@@ -1522,6 +1650,96 @@ public class Manager extends javax.swing.JFrame {
     private void tf_passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_passwordFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_passwordFocusLost
+
+    private void p_queriesComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_p_queriesComponentShown
+        try {
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt3 = db.getConnection().createStatement();
+            Statement stmt4 = db.getConnection().createStatement();
+
+            String query = "SELECT * from Lists";
+            String query2 = "SELECT * from ID_data";
+
+            ResultSet rs1 = stmt.executeQuery(query);
+            ResultSet rs2 = stmt2.executeQuery(query2);
+
+            String query3 = "SELECT * FROM IP";
+            ResultSet rs3 = stmt3.executeQuery(query3);
+            rs3.next();
+            Database.setIPAddress(rs3.getString("address"));
+
+            String query4 = "SELECT * FROM Charge";
+            ResultSet rs4 = stmt4.executeQuery(query4);
+            rs4.next();
+            Consignment.setCharge_per_km(rs4.getDouble("value"));
+
+            List<byte[]> buf = new ArrayList<>();
+            ObjectInputStream o;
+
+            rs2.next();
+            head_counter = rs2.getInt("counter");
+            int temp = 0;
+            while (rs1.next()) {
+                buf.add(rs1.getBytes("list"));
+            }
+            if (head_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                head_office = (HeadOffice) o.readObject();
+            } else {
+                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+                pstmt.setObject(1, head_office);
+                pstmt.executeUpdate();
+                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+            }
+
+            rs2.next();
+            branch_counter = rs2.getInt("counter");
+            //rs.next();
+            if (branch_counter != 0) {
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                branch_list = (ArrayList<Branch>) o.readObject();
+            } else {
+                branch_list = new ArrayList<>();
+            }
+
+            rs2.next();
+            truck_counter = rs2.getInt("counter");
+            //rs.next();
+            if (truck_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                truck_list = (ArrayList<Truck>) o.readObject();
+            } else {
+                truck_list = new ArrayList<>();
+            }
+
+            rs2.next();
+            consignment_counter = rs2.getInt("counter");
+            //rs.next();
+            if (consignment_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                consignment_list = (ArrayList<Consignment>) o.readObject();
+            } else {
+                consignment_list = new ArrayList<>();
+            }
+            rs1.close();
+            rs2.close();
+            rs3.close();
+            rs4.close();
+        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+            java.lang.System.out.println("What");
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_p_queriesComponentShown
 
     /**
      * @param args the command line arguments
