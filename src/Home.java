@@ -24,9 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class Home extends javax.swing.JFrame {
 
-    private Exception Exception(String invalid_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     enum Session {
 
