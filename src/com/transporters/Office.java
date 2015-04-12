@@ -20,7 +20,7 @@ abstract public class Office implements Serializable {
     private long cumulative_truck_count;
     private long cumulative_consignment_count;
     private long truck_avg_idle_time;
-    private long revenue;
+    private double revenue;
     private long avg_consignment_waiting_time;
     private Database database;
     private String password;
@@ -157,7 +157,7 @@ abstract public class Office implements Serializable {
      *
      * @param _revenue the new value of revenue
      */
-    public void setRevenue(long _revenue) {
+    public void setRevenue(double _revenue) {
         revenue = _revenue;
     }
 
@@ -166,7 +166,7 @@ abstract public class Office implements Serializable {
      *
      * @return the value of revenue
      */
-    public long getRevenue() {
+    public double getRevenue() {
         return revenue;
     }
 

@@ -3,6 +3,7 @@ package com.transporters;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Class Truck
@@ -31,6 +32,7 @@ public class Truck implements Serializable {
     private int total_km;
     private long current_occupied_volume;
     private ArrayList<Consignment> consignment_list;
+    private Calendar idle_time_start;
 
     //
     // Constructors
@@ -197,6 +199,16 @@ public class Truck implements Serializable {
 
     public void setModel(String model) {
         this.model = model;
+    }
+    
+    public Calendar getIdle_time_start() {
+        return idle_time_start;
+    }
+
+    
+
+    public void setIdle_time_start(Calendar idle_time_start) {
+        this.idle_time_start = idle_time_start;
     }
     
     

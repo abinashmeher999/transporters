@@ -49,7 +49,7 @@ public class System {
         bill += "Entry date and time : " + ft.format(consignment.getEntry_date().DATE) + "\n";
         bill += "Volume : " + consignment.getVolume() + "\n";
         bill += "Pieces : " + consignment.getPieces() + "\n";
-        bill += "Charge : INR " + consignment.computeBill() + "\n";
+        bill += "Charge : INR " + consignment.getDelivery_charge()+ "\n";
         return bill;
     }
 

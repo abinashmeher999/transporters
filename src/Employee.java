@@ -163,7 +163,7 @@ public class Employee extends javax.swing.JFrame {
         tf_receive_truck_plate_num = new javax.swing.JTextField();
         if_truck_details = new javax.swing.JInternalFrame();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_consignment_id = new javax.swing.JTable();
         l_truck_details = new javax.swing.JLabel();
         b_receive_truck = new javax.swing.JButton();
         p_new_consignment = new javax.swing.JPanel();
@@ -244,7 +244,7 @@ public class Employee extends javax.swing.JFrame {
             if_available_trucksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(if_available_trucksLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addGap(0, 51, Short.MAX_VALUE))
         );
 
         l_dispatch_truck_plate_num.setText("Truck Plate Number");
@@ -330,7 +330,7 @@ public class Employee extends javax.swing.JFrame {
 
         if_truck_details.setVisible(true);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table_consignment_id.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -338,7 +338,7 @@ public class Employee extends javax.swing.JFrame {
                 "Consignement Id"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(table_consignment_id);
 
         javax.swing.GroupLayout if_truck_detailsLayout = new javax.swing.GroupLayout(if_truck_details.getContentPane());
         if_truck_details.getContentPane().setLayout(if_truck_detailsLayout);
@@ -638,6 +638,11 @@ public class Employee extends javax.swing.JFrame {
                 b_generate_billMouseClicked(evt);
             }
         });
+        b_generate_bill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_generate_billActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_new_consignmentLayout = new javax.swing.GroupLayout(p_new_consignment);
         p_new_consignment.setLayout(p_new_consignmentLayout);
@@ -750,35 +755,7 @@ public class Employee extends javax.swing.JFrame {
     }//GEN-LAST:event_b_bill_to_receiverMouseClicked
 
     private void b_generate_billMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_generate_billMouseClicked
-        try {
-            //To do: Abinash
-            Consignment consignment = new Consignment();
-            consignment.setConsignment_id(++(consignment_counter));
-            consignment.setName_sender(tf_sender_name.getText());
-            consignment.setName_receiver(tf_receiver_name.getText());
-            consignment.setName_billing(tf_billing_name.getText());
-            consignment.setAddress_sender(tf_sender_address.getText());
-            consignment.setAddress_receiver(tf_receiver_address.getText());
-            consignment.setAddress_billing(tf_billing_address.getText());
-            if (rb_express_delievery.isSelected()) {
-                consignment.setType_delivery(Consignment.DeliveryType.EXPRESS);
-            } else {
-                consignment.setType_delivery(Consignment.DeliveryType.REGULAR);
-            }
-            consignment.setVolume(Double.parseDouble(tf_volume.getText()));
-            consignment.setPieces(Integer.parseInt(tf_pieces.getText()));
-            com.transporters.Branch branch = null;
-            for (int i = 0; i < branch_list.size(); i++) {
 
-            }
-            consignment.setTo_branch(branch);
-            String bill = null;
-            bill = com.transporters.System.printBill(consignment);
-            ta_billing_details.setText(bill);
-            JOptionPane.showMessageDialog(this, "Consignment Added", "Success", 1);
-        } catch (NumberFormatException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
-        }
     }//GEN-LAST:event_b_generate_billMouseClicked
 
     private void tf_volumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_volumeActionPerformed
@@ -787,26 +764,59 @@ public class Employee extends javax.swing.JFrame {
 
     private void b_receive_truckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_receive_truckMouseClicked
         // TODO Check for plate number here;
-        try {
-            String plate_num = null;
 
+    }//GEN-LAST:event_b_receive_truckMouseClicked
+
+    private void b_receive_truckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_receive_truckActionPerformed
+        DefaultTableModel tb = (DefaultTableModel) table_consignment_id.getModel();
+        tb.setRowCount(0);
+        boolean flag = false;
+        Branch curr_branch = null;
+        try {
+            for (Branch branch : branch_list) {
+                if (branch.getId() == branch_id) {
+                    curr_branch = branch;
+                }
+            }
+            if (curr_branch == null) {
+                throw new Exception("No branch with this branch id");
+            }
+
+            String plate_num = null;
             if (tf_receive_truck_plate_num.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Provide Plate number", "Error", 0);
             } else {
-                // To do : @Abinash Check for plate number in sql and print in table.
+                for (Truck truck : truck_list) {
+                    if (plate_num.equals(truck.getPlate_number())) {
+                        flag = true;
+                        if (truck.getCurrent_office().equals(curr_branch)) {
+                            if (truck.getStatus() == Truck.Status.ENROUTE) {
+                                for (Consignment consignment : truck.getConsignment_list()) {
+                                    Object[] rowData = new Object[]{consignment.getConsignment_id()};
+                                    tb.addRow(rowData);
+                                    consignment.setStatus_delivery(Consignment.Status.DELIVERED);
+                                    truck.setStatus(Truck.Status.AVAILABLE);
+                                    truck.setIdle_time_start(Calendar.getInstance());
+                                    curr_branch.setRevenue(consignment.getDelivery_charge());
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Truck already unloaded", "Unavailable", 0);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Truck not present at this branch", "Unavailable", 0);
+                        }
+                    }
+                }
+                if (!flag) {
+                    JOptionPane.showMessageDialog(this, "No such truck exist in database.", "Error", 0);
+                }
             }
         } catch (Exception e) {
-    }//GEN-LAST:event_b_receive_truckMouseClicked
-    }
-    private void b_receive_truckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_receive_truckActionPerformed
-        // TODO add your handling code here:
+
+        }
     }//GEN-LAST:event_b_receive_truckActionPerformed
 
     private void b_dispatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_dispatchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_b_dispatchActionPerformed
-
-    private void b_dispatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_dispatchMouseClicked
         try {
             String plate_num = null;
             plate_num = tf_dispatch.getText();
@@ -859,6 +869,10 @@ public class Employee extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+    }//GEN-LAST:event_b_dispatchActionPerformed
+
+    private void b_dispatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_dispatchMouseClicked
+
     }//GEN-LAST:event_b_dispatchMouseClicked
 
     private void b_show_dispatchable_trucksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_show_dispatchable_trucksMouseClicked
@@ -881,6 +895,53 @@ public class Employee extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_b_show_dispatchable_trucksActionPerformed
+
+    private void b_generate_billActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_generate_billActionPerformed
+        try {
+            //To do: Abinash
+            Consignment consignment = new Consignment();
+            consignment.setConsignment_id(++(consignment_counter));
+            consignment.setName_sender(tf_sender_name.getText());
+            consignment.setName_receiver(tf_receiver_name.getText());
+            consignment.setName_billing(tf_billing_name.getText());
+            consignment.setAddress_sender(tf_sender_address.getText());
+            consignment.setAddress_receiver(tf_receiver_address.getText());
+            consignment.setAddress_billing(tf_billing_address.getText());
+            if (rb_express_delievery.isSelected()) {
+                consignment.setType_delivery(Consignment.DeliveryType.EXPRESS);
+            } else {
+                consignment.setType_delivery(Consignment.DeliveryType.REGULAR);
+            }
+            consignment.setVolume(Double.parseDouble(tf_volume.getText()));
+            consignment.setPieces(Integer.parseInt(tf_pieces.getText()));
+            Branch curr_branch = null;
+            Branch to_branch = null;
+            String to_branch_name = null;
+            to_branch_name = cmb_to_branch.getSelectedItem().toString();
+            to_branch_name = cmb_to_branch.getSelectedItem().toString();
+            for(Branch branch : branch_list) {
+                if(branch_id == branch.getId()){
+                    curr_branch = branch;
+                }
+                if(to_branch_name == branch.getName()){
+                    to_branch = branch;
+                }
+            }
+            consignment.setFrom_branch(curr_branch);
+            consignment.setTo_branch(to_branch);
+            int distance;
+            distance = Math.abs(curr_branch.getId() - to_branch.getId())*100;
+            double delivery_charge = distance * consignment.getVolume()*consignment.getCharge_per_km();
+            consignment.setDelivery_charge(delivery_charge);
+            consignment.setDistance(distance);
+            String bill = null;
+            bill = com.transporters.System.printBill(consignment);
+            ta_billing_details.setText(bill);
+            JOptionPane.showMessageDialog(this, "Consignment Added", "Success", 1);
+        } catch (NumberFormatException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
+        }
+    }//GEN-LAST:event_b_generate_billActionPerformed
 
     /**
      * @param args the command line arguments
@@ -931,7 +992,6 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel l_billing_address;
     private javax.swing.JLabel l_billing_contact;
     private javax.swing.JLabel l_billing_name;
@@ -960,6 +1020,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane sp_billing_details;
     private javax.swing.JTextArea ta_billing_details;
     private javax.swing.JTextArea ta_dispatch_details;
+    private javax.swing.JTable table_consignment_id;
     private javax.swing.JTable table_dispatchable_trucks;
     private javax.swing.JTextField tf_billing_address;
     private javax.swing.JTextField tf_billing_contact;
