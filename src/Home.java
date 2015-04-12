@@ -317,7 +317,7 @@ public class Home extends javax.swing.JFrame {
                     manager.setVisible(true);
                     dispose();
                 } else {
-                    throw Exception("Password doesn't match");
+                    throw new Exception("Password doesn't match");
                 }
             } else {
                 int branch_id = -1;
@@ -328,7 +328,7 @@ public class Home extends javax.swing.JFrame {
                     }
                 }
                 if (login == null) {
-                    throw Exception("Invalid id");
+                    throw new Exception("Invalid id");
                 }
                 for (Branch branch_list_item : branch_list) {
                     if (login.getBranch().equals(branch_list_item)) {
@@ -336,36 +336,17 @@ public class Home extends javax.swing.JFrame {
                     }
                 }
                 if(branch_id == -1){
-                    throw Exception("Employee branch invalid");
+                    throw new Exception("Employee branch invalid");
                 }
                 if (login.getPassword().equals(password)) {
                     Employee employee = new Employee(branch_id);
                     employee.setVisible(true);
                     dispose();
                 } else {
-                    throw Exception("Password doesn't match");
+                    throw new Exception("Password doesn't match");
                 }
 
-//                if(branch_list.isEmpty()){
-//                    throw Exception("Invalid id");
-//                }
-//                for (Branch branch_list_item : branch_list) {
-//                    if (branch_list_item.getId() == id) {
-//                        branch = branch_list_item;
-//                    }
-//                }
-//                if (branch == null) {
-//                    //throw new Exception("Invalid Id");
-//                    throw Exception("Invalid id");
-//
-//                }
-//                if (password.equals(branch.getPassword())) {
-//                    Employee employee = new Employee(id);
-//                    employee.setVisible(true);
-//                    dispose();
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Password doesn't match", "Error", 0);
-//                }
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);

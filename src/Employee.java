@@ -1082,7 +1082,7 @@ public class Employee extends javax.swing.JFrame {
             }
             consignment.setVolume(Long.parseLong(tf_volume.getText()));
             if(consignment.getVolume() > Truck.MAX_CAPACITY){
-                throw Exception("Consignment volume beyond max maximum limits");
+                throw new Exception("Consignment volume beyond max maximum limits");
             }
             consignment.setPieces(Integer.parseInt(tf_pieces.getText()));
             Branch curr_branch = null;
@@ -1256,7 +1256,5 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tp_new_consignment;
     // End of variables declaration//GEN-END:variables
 
-    private Exception Exception(String consignment_volume_beyond_max_maximum_lim) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }
