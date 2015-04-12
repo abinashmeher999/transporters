@@ -56,6 +56,8 @@ public class Home extends javax.swing.JFrame {
             Statement stmt = db.getConnection().createStatement();
             Statement stmt2 = db.getConnection().createStatement();
             Statement stmt3 = db.getConnection().createStatement();
+            Statement stmt4  = db.getConnection().createStatement();
+            
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
@@ -66,9 +68,13 @@ public class Home extends javax.swing.JFrame {
             
             String query3 = "SELECT * FROM IP";
             ResultSet rs3 = stmt3.executeQuery(query3);
-            
             rs3.next();
             Database.setIPAddress(rs3.getString("address"));
+            
+            String query4  = "SELECT * FROM Charge";
+            ResultSet rs4 = stmt4.executeQuery(query4);
+            rs4.next();
+            Consignment.setCharge_per_km(rs4.getDouble("value"));
 
             rs2.next();
             head_counter = rs2.getInt("counter");
