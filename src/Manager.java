@@ -335,6 +335,8 @@ public class Manager extends javax.swing.JFrame {
         b_get_details = new javax.swing.JButton();
         tf_query_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        b_view_consignments = new javax.swing.JButton();
+        b_view_trucks = new javax.swing.JButton();
         p_company_statistics = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         l_truck_plate_number = new javax.swing.JLabel();
@@ -998,6 +1000,15 @@ public class Manager extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabel2.setText("Details");
 
+        b_view_consignments.setText("View all Consignments");
+        b_view_consignments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_view_consignmentsActionPerformed(evt);
+            }
+        });
+
+        b_view_trucks.setText("View all trucks");
+
         javax.swing.GroupLayout p_queriesLayout = new javax.swing.GroupLayout(p_queries);
         p_queries.setLayout(p_queriesLayout);
         p_queriesLayout.setHorizontalGroup(
@@ -1006,16 +1017,20 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_queriesLayout.createSequentialGroup()
+                        .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
                         .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(p_queriesLayout.createSequentialGroup()
-                                .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel2))
+                            .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 403, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addGroup(p_queriesLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(b_view_consignments, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_queriesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(b_view_trucks, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         p_queriesLayout.setVerticalGroup(
@@ -1027,10 +1042,14 @@ public class Manager extends javax.swing.JFrame {
                     .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(b_get_details)
-                .addGap(64, 64, 64)
-                .addComponent(jLabel2)
+                .addGap(20, 20, 20)
+                .addComponent(b_view_trucks)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(b_view_consignments))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addGap(33, 33, 33))
         );
 
@@ -1225,7 +1244,7 @@ public class Manager extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsActionPerformed
 
@@ -1549,7 +1568,7 @@ public class Manager extends javax.swing.JFrame {
                                     truck.getStatus().toString()});
                                 break;
                             }
-                            
+
                         }
                     }
                 }
@@ -1816,7 +1835,7 @@ public class Manager extends javax.swing.JFrame {
             Branch login_branch = null;
             String branch_name = cmb_branch_list.getSelectedItem().toString();
             if (branch_name.equals("")) {
-                throw Exception("Please select branch");
+                throw new Exception("Please select branch");
             }
             for (Branch branch_list_item : branch_list) {
                 if (branch_list_item.getName().equals(branch_name)) {
@@ -1826,17 +1845,17 @@ public class Manager extends javax.swing.JFrame {
             String name = null;
             name = tf_employee_name.getText();
             if (name.equals("")) {
-                throw Exception("Enter employee name");
+                throw new Exception("Enter employee name");
             }
             String login_id = null;
             login_id = tf_username.getText();
             if (login_id.equals("")) {
-                throw Exception("Enter username");
+                throw new Exception("Enter username");
             }
             String password = null;
             password = tf_password.getText();
             if (password.equals("")) {
-                throw Exception("Enter password");
+                throw new Exception("Enter password");
             }
             login.setBranch(login_branch);
             login.setName(name);
@@ -1851,8 +1870,8 @@ public class Manager extends javax.swing.JFrame {
             PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
             pstmt.setObject(1, login_list);
             pstmt.executeUpdate();
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(this,"Database could not be updated","Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database could not be updated", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_b_hireActionPerformed
 
@@ -1921,9 +1940,9 @@ public class Manager extends javax.swing.JFrame {
             PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
             pstmt.setObject(1, login_list);
             pstmt.executeUpdate();
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(this,"Database could not be updated","Error", JOptionPane.ERROR_MESSAGE);
-            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database could not be updated", "Error", JOptionPane.ERROR_MESSAGE);
+
         }
 
         // TODO add your handling code here:
@@ -1932,6 +1951,19 @@ public class Manager extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void b_view_consignmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_consignmentsActionPerformed
+        readDatabase();
+        DefaultTableModel tb = (DefaultTableModel) table_query.getModel();
+        tb.setRowCount(0);
+        tb = new DefaultTableModel(new Object[]{"Consignment ID(s)", "Destination", "Source", "Status"}, 1);
+        table_query.setModel(tb);
+        tb.setRowCount(0);
+        for (Consignment consignment : consignment_list) {
+            Object[] rowData = new Object[]{consignment.getConsignment_id(), consignment.getTo_branch().getName(), consignment.getFrom_branch().getName(),consignment.getStatus_delivery().toString()};
+            tb.addRow(rowData);
+        }
+    }//GEN-LAST:event_b_view_consignmentsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1982,7 +2014,9 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JButton b_reset;
     private javax.swing.JButton b_set_ip;
     private javax.swing.JButton b_view_applicatns;
+    private javax.swing.JButton b_view_consignments;
     private javax.swing.JButton b_view_employee;
+    private javax.swing.JButton b_view_trucks;
     private javax.swing.ButtonGroup bg_company_stats;
     private javax.swing.JComboBox cmb_admin_access;
     private javax.swing.JComboBox cmb_branch;
@@ -2059,7 +2093,4 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tp_manager;
     // End of variables declaration//GEN-END:variables
 
-    private Exception Exception(String please_select_branch) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
