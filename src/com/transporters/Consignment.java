@@ -42,7 +42,7 @@ public class Consignment implements Serializable{
     private String address_receiver;
     private String address_billing;
     private Status status_delivery;
-    private List<Truck> carrier_trucks;
+    private ArrayList<Truck> carrier_trucks;
     private DeliveryType type_delivery;
     private Calendar entry_date;
     private Branch to_branch;
@@ -142,11 +142,11 @@ public Branch getTo_branch() {
         this.address_billing = address_billing;
     }
 
-    public List<Truck> getCarrier_trucks() {
+    public ArrayList<Truck> getCarrier_trucks() {
         return carrier_trucks;
     }
 
-    public void setCarrier_trucks(List<Truck> carrier_trucks) {
+    public void setCarrier_trucks(ArrayList<Truck> carrier_trucks) {
         this.carrier_trucks = carrier_trucks;
     }
 

@@ -58,6 +58,8 @@ public class Manager extends javax.swing.JFrame {
     int branch_counter;
     int truck_counter;
     int consignment_counter;
+    private Object rs2;
+    private int login_counter;
 
     public void readDatabase() {
         try {
@@ -234,6 +236,16 @@ public class Manager extends javax.swing.JFrame {
                 consignment_list = (ArrayList<Consignment>) o.readObject();
             } else {
                 consignment_list = new ArrayList<>();
+            }
+            login_counter = rs2.getInt("counter");
+            //rs.next();
+            if (login_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                login_list = (ArrayList<Login>) o.readObject();
+            } else {
+                login_list = new ArrayList<>();
             }
             rs.close();
             rs2.close();
@@ -1163,6 +1175,7 @@ public class Manager extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tf_employee_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_employee_nameActionPerformed
@@ -1170,6 +1183,36 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_employee_nameActionPerformed
 
     private void b_view_applicatnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_applicatnsActionPerformed
+        try {
+            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+            String query = "SELECT counter FROM ID_data WHERE name='login_counter'";
+            ResultSet rs2 = stmt.executeQuery(query);
+            rs2.next();
+            login_counter = rs2.getInt("counter");
+
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+            String query2 = "SELECT list FROM Lists WHERE name='login'";
+            ResultSet rs1 = stmt2.executeQuery(query);
+            rs1.next();
+            ObjectInputStream o;
+            byte[] buf;
+            if (login_counter != 0) {
+
+                buf = rs1.getBytes("list");
+
+                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+                login_list = (ArrayList<Login>) o.readObject();
+            } else {
+                login_list = new ArrayList<>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsActionPerformed
 
