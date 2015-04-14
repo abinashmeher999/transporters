@@ -245,6 +245,7 @@ public class Manager extends javax.swing.JFrame {
                 o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 login_list = (ArrayList<Login>) o.readObject();
             } else {
+
                 login_list = new ArrayList<>();
             }
             rs.close();
@@ -595,6 +596,11 @@ public class Manager extends javax.swing.JFrame {
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -1344,6 +1350,7 @@ public class Manager extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        b_resetMouseClicked(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_b_add_branchMouseClicked
 
@@ -1419,6 +1426,7 @@ public class Manager extends javax.swing.JFrame {
             }
             //System.out.println(tempb.getName());
             nt.setCurrent_office(tempb);
+            tempb.getTruck_list().add(nt);
             nt.setModel(model);
             nt.setPlate_number(plate_number);
             nt.setCost(cost);
@@ -1539,8 +1547,9 @@ public class Manager extends javax.swing.JFrame {
                                     truck.getCurrent_office().getName(),
                                     dest_name,
                                     truck.getStatus().toString()});
+                                break;
                             }
-                            break;
+                            
                         }
                     }
                 }
@@ -1793,7 +1802,7 @@ public class Manager extends javax.swing.JFrame {
             rs3.close();
             rs4.close();
         } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
-            java.lang.System.out.println("What");
+            //java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
@@ -1806,7 +1815,7 @@ public class Manager extends javax.swing.JFrame {
 
             Branch login_branch = null;
             String branch_name = cmb_branch_list.getSelectedItem().toString();
-            if (branch_name == null) {
+            if (branch_name.equals("")) {
                 throw Exception("Please select branch");
             }
             for (Branch branch_list_item : branch_list) {
@@ -1836,6 +1845,14 @@ public class Manager extends javax.swing.JFrame {
             login_list.add(login);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
+        }
+        try {
+            String update = "UPDATE Lists SET list=? WHERE name='login'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, login_list);
+            pstmt.executeUpdate();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(this,"Database could not be updated","Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_b_hireActionPerformed
 
@@ -1877,11 +1894,13 @@ public class Manager extends javax.swing.JFrame {
             }
         } catch (NullPointerException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Trouble getting connection to database.\n Please check and try again", "Error", JOptionPane.ERROR_MESSAGE);
-            //Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Trouble reading data", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsMouseClicked
@@ -1904,10 +1923,15 @@ public class Manager extends javax.swing.JFrame {
             pstmt.executeUpdate();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(this,"Database could not be updated","Error", JOptionPane.ERROR_MESSAGE);
+            
         }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

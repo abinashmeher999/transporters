@@ -5,11 +5,13 @@
  */
 package com.transporters;
 
+import java.io.Serializable;
+
 /**
  *
  * @author best1yash
  */
-public class Login {
+public class Login implements Serializable{
     private String name;
     private Branch branch;
     private String login_id;
@@ -53,4 +55,5 @@ public class Login {
         password = null;
         login_id = null;
     }
+    private static final long serialVersionUID = 1L;
 }

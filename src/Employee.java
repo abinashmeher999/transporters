@@ -139,34 +139,37 @@ public class Employee extends javax.swing.JFrame {
 
     public void writeToDatabase() {
         try {
-            Statement stmt1 = current_branch.getDatabase().getConnection().createStatement();
+            Statement stmt1 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt3 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt4 = head_office.getDatabase().getConnection().createStatement();
 
             String query1 = "UPDATE ID_data SET counter=" + head_counter + " WHERE name='head_counter'";
             stmt1.executeUpdate(query1);
-            query1 = "UPDATE ID_data SET counter=" + branch_counter + " WHERE name='branch_counter'";
-            stmt1.executeUpdate(query1);
-            query1 = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
-            stmt1.executeUpdate(query1);
-            query1 = "UPDATE ID_data SET counter=" + consignment_counter + " WHERE name='consignment_counter'";
-            stmt1.executeUpdate(query1);
+            String query2 = "UPDATE ID_data SET counter=" + branch_counter + " WHERE name='branch_counter'";
+            stmt2.executeUpdate(query2);
+            String query3 = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
+            stmt3.executeUpdate(query3);
+            String query4 = "UPDATE ID_data SET counter=" + consignment_counter + " WHERE name='consignment_counter'";
+            stmt4.executeUpdate(query4);
 
             String update = "UPDATE Lists SET list=? WHERE name='head_office'";
-            PreparedStatement pstmt = current_branch.getDatabase().getConnection().prepareStatement(update);
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
             pstmt.setObject(1, head_office);
             pstmt.executeUpdate();
 
             String update2 = "UPDATE Lists SET list=? WHERE name='branch'";
-            PreparedStatement pstmt2 = current_branch.getDatabase().getConnection().prepareStatement(update);
+            PreparedStatement pstmt2 = head_office.getDatabase().getConnection().prepareStatement(update2);
             pstmt2.setObject(1, branch_list);
             pstmt2.executeUpdate();
 
             String update3 = "UPDATE Lists SET list=? WHERE name='truck'";
-            PreparedStatement pstmt3 = current_branch.getDatabase().getConnection().prepareStatement(update);
+            PreparedStatement pstmt3 = head_office.getDatabase().getConnection().prepareStatement(update3);
             pstmt3.setObject(1, truck_list);
             pstmt3.executeUpdate();
 
             String update4 = "UPDATE Lists SET list=? WHERE name='consignment'";
-            PreparedStatement pstmt4 = current_branch.getDatabase().getConnection().prepareStatement(update);
+            PreparedStatement pstmt4 = head_office.getDatabase().getConnection().prepareStatement(update4);
             pstmt4.setObject(1, consignment_list);
             pstmt4.executeUpdate();
 
@@ -730,6 +733,11 @@ public class Employee extends javax.swing.JFrame {
                 b_bill_to_receiverMouseClicked(evt);
             }
         });
+        b_bill_to_receiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_bill_to_receiverActionPerformed(evt);
+            }
+        });
 
         l_billing_address.setText("Address");
 
@@ -805,7 +813,7 @@ public class Employee extends javax.swing.JFrame {
                 .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                    .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                     .addGroup(p_new_consignmentLayout.createSequentialGroup()
                         .addComponent(b_generate_bill)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -834,6 +842,11 @@ public class Employee extends javax.swing.JFrame {
         });
 
         b_refresh.setText("Refresh");
+        b_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_refreshMouseClicked(evt);
+            }
+        });
         b_refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_refreshActionPerformed(evt);
@@ -855,12 +868,12 @@ public class Employee extends javax.swing.JFrame {
         p_employeeLayout.setVerticalGroup(
             p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_employeeLayout.createSequentialGroup()
-                .addContainerGap(150, Short.MAX_VALUE)
+                .addContainerGap(151, Short.MAX_VALUE)
                 .addComponent(tp_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(b_back)
-                    .addComponent(b_refresh))
+                    .addComponent(b_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -898,25 +911,7 @@ public class Employee extends javax.swing.JFrame {
     }//GEN-LAST:event_rb_express_delieveryActionPerformed
 
     private void b_bill_to_receiverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_bill_to_receiverMouseClicked
-        try {
-            if (tf_receiver_name.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(this, "Enter receiver's name", "Error", 0);
-            } else {
-                tf_billing_name.setText(tf_receiver_name.getText().trim());
-            }
-            if (tf_receiver_address.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(this, "Enter receiver's address", "Error", 0);
-            } else {
-                tf_billing_address.setText(tf_receiver_address.getText().trim());
-            }
-            if (tf_receiver_contact.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(this, "Enter receiver's contact", "Error", 0);
-            } else {
-                tf_billing_contact.setText(tf_receiver_contact.getText().trim());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error in receiver's details", "Error", 0);
-        }
+
     }//GEN-LAST:event_b_bill_to_receiverMouseClicked
 
     private void b_generate_billMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_generate_billMouseClicked
@@ -963,6 +958,7 @@ public class Employee extends javax.swing.JFrame {
                                 consignment.setStatus_delivery(Consignment.Status.DELIVERED);
                                 consignments.add(consignment);
                                 current_branch.setRevenue(consignment.getDelivery_charge());
+
                             }
                             truck.setStatus(Truck.Status.AVAILABLE);
                             truck.setIdle_time_start(Calendar.getInstance());
@@ -1065,6 +1061,7 @@ public class Employee extends javax.swing.JFrame {
     }//GEN-LAST:event_b_show_dispatchable_trucksMouseClicked
 
     private void b_show_dispatchable_trucksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_show_dispatchable_trucksActionPerformed
+
         try {
             readDatabase();
             boolean dispatchable_truck_present = false;
@@ -1074,6 +1071,7 @@ public class Employee extends javax.swing.JFrame {
                 throw new Exception("No truck currently at this branch");
             }
             for (Truck truck : current_branch.getTruck_list()) {
+
                 if (truck.getStatus() == Truck.Status.DISPATCHABLE) {
                     dispatchable_truck_present = true;
                     String plate_num = "";
@@ -1098,6 +1096,7 @@ public class Employee extends javax.swing.JFrame {
         try {
             Consignment consignment = new Consignment();
             consignment.setConsignment_id(++(consignment_counter));
+
             String read_data = "";
 
             read_data = tf_sender_name.getText();
@@ -1165,10 +1164,15 @@ public class Employee extends javax.swing.JFrame {
             String to_branch_name = null;
             to_branch_name = cmb_to_branch.getSelectedItem().toString();
             for (Branch branch : branch_list) {
-                if (to_branch_name == branch.getName()) {
-                    to_branch = branch;
-                }
+
+                
+            if (to_branch_name.equals(branch.getName())) {
+
+                to_branch = branch;
             }
+            }
+            
+            curr_branch.setVolume_dispatched(curr_branch.getVolume_dispatched() + consignment.getVolume());
             consignment.setFrom_branch(curr_branch);
             consignment.setTo_branch(to_branch);
             int distance;
@@ -1176,6 +1180,7 @@ public class Employee extends javax.swing.JFrame {
             double delivery_charge = distance * consignment.getVolume() * consignment.getCharge_per_km();
             consignment.setDelivery_charge(delivery_charge);
             consignment.setDistance(distance);
+
             Truck assigned_truck = null;
             Truck truck_list_item = null;
             ArrayList<Truck> truck_list = curr_branch.getTruck_list();
@@ -1226,15 +1231,19 @@ public class Employee extends javax.swing.JFrame {
             String bill = null;
             bill = com.transporters.System.printBill(consignment);
             ta_billing_details.setText(bill);
+            consignment_list.add(consignment);
             JOptionPane.showMessageDialog(this, "Consignment Added", "Success", 1);
+
         } catch (NumberFormatException | HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         } finally {
+
             branch_list.remove(current_branch);
             current_branch = curr_branch;
             branch_list.add(current_branch);
+
             writeToDatabase();
         }
     }//GEN-LAST:event_b_generate_billActionPerformed
@@ -1272,7 +1281,7 @@ public class Employee extends javax.swing.JFrame {
         }
         for (Truck truck_list_item : truck_list) {
             if (truck_list_item.getCurrent_office().equals(branch)) {
-                if (truck_list_item.getCurrent_occupied_volume() < Truck.MAX_CAPACITY && Truck.MAX_CAPACITY - truck_list_item.getCurrent_occupied_volume() < 50) {
+                if (truck_list_item.getCurrent_occupied_volume() > 450) {
                     truck_list_item.setStatus(Truck.Status.DISPATCHABLE);
                     branch.allotNext_available_truck(branch, truck_list_item.getDestination_office());
                 }
@@ -1305,6 +1314,32 @@ public class Employee extends javax.swing.JFrame {
         refresh_write();
 
     }//GEN-LAST:event_b_refreshActionPerformed
+
+    private void b_bill_to_receiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_bill_to_receiverActionPerformed
+        try {
+            if (tf_receiver_name.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(this, "Enter receiver's name", "Error", 0);
+            } else {
+                tf_billing_name.setText(tf_receiver_name.getText().trim());
+            }
+            if (tf_receiver_address.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(this, "Enter receiver's address", "Error", 0);
+            } else {
+                tf_billing_address.setText(tf_receiver_address.getText().trim());
+            }
+            if (tf_receiver_contact.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(this, "Enter receiver's contact", "Error", 0);
+            } else {
+                tf_billing_contact.setText(tf_receiver_contact.getText().trim());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error in receiver's details", "Error", 0);
+        }
+    }//GEN-LAST:event_b_bill_to_receiverActionPerformed
+
+    private void b_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_refreshMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_refreshMouseClicked
 
     /**
      * @param args the command line arguments
