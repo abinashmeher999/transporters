@@ -33,7 +33,7 @@ public class Truck implements Serializable {
     private long current_occupied_volume;
     private ArrayList<Consignment> consignment_list;
     private Calendar idle_time_start;
-
+    private long truck_idle_time;
     //
     // Constructors
     //
@@ -209,6 +209,14 @@ public class Truck implements Serializable {
 
     public void setIdle_time_start(Calendar idle_time_start) {
         this.idle_time_start = idle_time_start;
+    }
+
+    public long getTruck_idle_time() {
+        return truck_idle_time;
+    }
+
+    public void setTruck_idle_time(long truck_idle_time) {
+        this.truck_idle_time = truck_idle_time;
     }
     
     

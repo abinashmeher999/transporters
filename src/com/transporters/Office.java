@@ -24,8 +24,8 @@ abstract public class Office implements Serializable {
     private long avg_consignment_waiting_time;
     private Database database;
     private String password;
-    private List<Truck> truck_list;
-    private List<Consignment> waiting_consignment_list;
+    private ArrayList<Truck> truck_list;
+    private ArrayList<Consignment> waiting_consignment_list;
 
     //
     // Constructors
@@ -195,7 +195,7 @@ abstract public class Office implements Serializable {
      *
      * @param _new_truck_list the new value of truck_list
      */
-    public void setTruck_list(List<Truck> _new_truck_list) {
+    public void setTruck_list(ArrayList<Truck> _new_truck_list) {
         truck_list = _new_truck_list;
     }
 
@@ -204,7 +204,7 @@ abstract public class Office implements Serializable {
      *
      * @return the value of truck_list
      */
-    public List<Truck> getTruck_list() {
+    public ArrayList<Truck> getTruck_list() {
         return truck_list;
     }
 
@@ -262,11 +262,11 @@ abstract public class Office implements Serializable {
         this.cumulative_consignment_count = cumulative_consignment_count;
     }
 
-    public List<Consignment> getWaiting_consignment_list() {
+    public ArrayList<Consignment> getWaiting_consignment_list() {
         return waiting_consignment_list;
     }
 
-    public void setWaiting_consignment_list(List<Consignment> waiting_consignment_list) {
+    public void setWaiting_consignment_list(ArrayList<Consignment> waiting_consignment_list) {
         this.waiting_consignment_list = waiting_consignment_list;
     }
     

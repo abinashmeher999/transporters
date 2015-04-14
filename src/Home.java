@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
  * @author best1yash
  */
 public class Home extends javax.swing.JFrame {
+    private int login_counter;
 
     
 
@@ -132,6 +133,17 @@ public class Home extends javax.swing.JFrame {
                 consignment_list = (ArrayList<Consignment>) o.readObject();
             } else {
                 consignment_list = new ArrayList<>();
+            }
+            rs2.next();
+            login_counter = rs2.getInt("counter");
+            //rs.next();
+            if (login_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                login_list = (ArrayList<Login>) o.readObject();
+            } else {
+                login_list = new ArrayList<>();
             }
             rs.close();
             rs2.close();
@@ -279,6 +291,7 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(l_home_background, gridBagConstraints);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tf_employee_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_employee_idActionPerformed
@@ -309,8 +322,8 @@ public class Home extends javax.swing.JFrame {
             if (password.equals("") || password.equals(null)) {
                 throw new Exception("Enter Password");
             }
-            if (login_id.equals("Manager")) {
-                if (password.equals("youshallnotpass")) {
+            if (login_id.equals("man")) {
+                if (password.equals("man")) {
                     Manager manager = new Manager();
                     manager.setVisible(true);
                     dispose();
