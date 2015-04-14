@@ -245,6 +245,7 @@ public class Manager extends javax.swing.JFrame {
                 o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 login_list = (ArrayList<Login>) o.readObject();
             } else {
+
                 login_list = new ArrayList<>();
             }
             rs.close();
@@ -279,8 +280,8 @@ public class Manager extends javax.swing.JFrame {
         cmb_branch_list = new javax.swing.JComboBox();
         b_hire = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox();
+        admin_access_table = new javax.swing.JTable();
+        cmb_admin_access = new javax.swing.JComboBox();
         jButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tf_password = new javax.swing.JTextField();
@@ -334,6 +335,8 @@ public class Manager extends javax.swing.JFrame {
         b_get_details = new javax.swing.JButton();
         tf_query_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        b_view_consignments = new javax.swing.JButton();
+        b_view_trucks = new javax.swing.JButton();
         p_company_statistics = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         l_truck_plate_number = new javax.swing.JLabel();
@@ -366,6 +369,11 @@ public class Manager extends javax.swing.JFrame {
         p_hire.setPreferredSize(new java.awt.Dimension(800, 600));
 
         b_view_applicatns.setText("View access");
+        b_view_applicatns.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_view_applicatnsMouseClicked(evt);
+            }
+        });
         b_view_applicatns.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_view_applicatnsActionPerformed(evt);
@@ -414,12 +422,9 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        admin_access_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Name", "Username", "Password"
@@ -429,7 +434,7 @@ public class Manager extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -440,25 +445,30 @@ public class Manager extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        admin_access_table.getTableHeader().setResizingAllowed(false);
+        admin_access_table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(admin_access_table);
+        if (admin_access_table.getColumnModel().getColumnCount() > 0) {
+            admin_access_table.getColumnModel().getColumn(0).setResizable(false);
+            admin_access_table.getColumnModel().getColumn(1).setResizable(false);
+            admin_access_table.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
-        jComboBox1.addFocusListener(new java.awt.event.FocusAdapter() {
+        cmb_admin_access.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branch" }));
+        cmb_admin_access.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jComboBox1FocusGained(evt);
+                cmb_admin_accessFocusGained(evt);
             }
         });
 
         jButton3.setBackground(new java.awt.Color(225, 22, 30));
         jButton3.setForeground(new java.awt.Color(253, 243, 243));
         jButton3.setText("Remove user");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
 
         jLabel6.setText("Password");
 
@@ -482,7 +492,7 @@ public class Manager extends javax.swing.JFrame {
                 .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_hireLayout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmb_admin_access, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(b_view_applicatns))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_hireLayout.createSequentialGroup()
@@ -515,7 +525,7 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_view_applicatns)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_admin_access, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -588,6 +598,11 @@ public class Manager extends javax.swing.JFrame {
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -985,6 +1000,15 @@ public class Manager extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabel2.setText("Details");
 
+        b_view_consignments.setText("View all Consignments");
+        b_view_consignments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_view_consignmentsActionPerformed(evt);
+            }
+        });
+
+        b_view_trucks.setText("View all trucks");
+
         javax.swing.GroupLayout p_queriesLayout = new javax.swing.GroupLayout(p_queries);
         p_queries.setLayout(p_queriesLayout);
         p_queriesLayout.setHorizontalGroup(
@@ -993,16 +1017,20 @@ public class Manager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p_queriesLayout.createSequentialGroup()
+                        .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
                         .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(p_queriesLayout.createSequentialGroup()
-                                .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel2))
+                            .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 403, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addGroup(p_queriesLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(b_view_consignments, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_queriesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(b_view_trucks, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         p_queriesLayout.setVerticalGroup(
@@ -1014,10 +1042,14 @@ public class Manager extends javax.swing.JFrame {
                     .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(b_get_details)
-                .addGap(64, 64, 64)
-                .addComponent(jLabel2)
+                .addGap(20, 20, 20)
+                .addComponent(b_view_trucks)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(b_view_consignments))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addGap(33, 33, 33))
         );
 
@@ -1212,7 +1244,7 @@ public class Manager extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsActionPerformed
 
@@ -1337,6 +1369,7 @@ public class Manager extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        b_resetMouseClicked(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_b_add_branchMouseClicked
 
@@ -1412,6 +1445,7 @@ public class Manager extends javax.swing.JFrame {
             }
             //System.out.println(tempb.getName());
             nt.setCurrent_office(tempb);
+            tempb.getTruck_list().add(nt);
             nt.setModel(model);
             nt.setPlate_number(plate_number);
             nt.setCost(cost);
@@ -1432,15 +1466,15 @@ public class Manager extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void jComboBox1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusGained
+    private void cmb_admin_accessFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmb_admin_accessFocusGained
         List<String> s = new ArrayList<>();
         for (Branch branch : branch_list) {
             s.add(branch.getName());
         }
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(s.toArray()));
-        jComboBox1.showPopup();
+        cmb_admin_access.setModel(new javax.swing.DefaultComboBoxModel(s.toArray()));
+        cmb_admin_access.showPopup();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1FocusGained
+    }//GEN-LAST:event_cmb_admin_accessFocusGained
 
     private void cmb_branch_listFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmb_branch_listFocusGained
         List<String> s = new ArrayList<>();
@@ -1532,8 +1566,9 @@ public class Manager extends javax.swing.JFrame {
                                     truck.getCurrent_office().getName(),
                                     dest_name,
                                     truck.getStatus().toString()});
+                                break;
                             }
-                            break;
+
                         }
                     }
                 }
@@ -1786,7 +1821,7 @@ public class Manager extends javax.swing.JFrame {
             rs3.close();
             rs4.close();
         } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
-            java.lang.System.out.println("What");
+            //java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
@@ -1799,8 +1834,8 @@ public class Manager extends javax.swing.JFrame {
 
             Branch login_branch = null;
             String branch_name = cmb_branch_list.getSelectedItem().toString();
-            if (branch_name == null) {
-                throw Exception("Please select branch");
+            if (branch_name.equals("")) {
+                throw new Exception("Please select branch");
             }
             for (Branch branch_list_item : branch_list) {
                 if (branch_list_item.getName().equals(branch_name)) {
@@ -1810,17 +1845,17 @@ public class Manager extends javax.swing.JFrame {
             String name = null;
             name = tf_employee_name.getText();
             if (name.equals("")) {
-                throw Exception("Enter employee name");
+                throw new Exception("Enter employee name");
             }
             String login_id = null;
             login_id = tf_username.getText();
             if (login_id.equals("")) {
-                throw Exception("Enter username");
+                throw new Exception("Enter username");
             }
             String password = null;
             password = tf_password.getText();
             if (password.equals("")) {
-                throw Exception("Enter password");
+                throw new Exception("Enter password");
             }
             login.setBranch(login_branch);
             login.setName(name);
@@ -1830,7 +1865,105 @@ public class Manager extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         }
+        try {
+            String update = "UPDATE Lists SET list=? WHERE name='login'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, login_list);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database could not be updated", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_b_hireActionPerformed
+
+    private void b_view_applicatnsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_view_applicatnsMouseClicked
+        try {
+            String branch_name = cmb_admin_access.getSelectedItem().toString();
+            Branch selected_branch = null;
+            DefaultTableModel model = (DefaultTableModel) admin_access_table.getModel();
+            int rowCount;
+            rowCount = model.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+            if (branch_name.equals("Branch")) {
+                JOptionPane.showMessageDialog(this, "Select a valid branch", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else {
+                for (Branch branch : branch_list) {
+                    if (branch.getName().equals(branch_name)) {
+                        selected_branch = branch;
+                        break;
+                    }
+                }
+            }
+            Statement smt = selected_branch.getDatabase().getConnection().createStatement();
+            ObjectInputStream o;
+            String query = "SELECT * FROM Lists WHERE name='login'";
+            ResultSet rs = smt.executeQuery(query);
+            rs.next();
+            byte[] buf = rs.getBytes("list");
+            o = new ObjectInputStream(new ByteArrayInputStream(buf));
+            try {
+                login_list = (ArrayList<Login>) o.readObject();
+            } catch (IOException | ClassNotFoundException ex) {
+                login_list = new ArrayList<>();
+            }
+            for (Login login : login_list) {
+                model.addRow(new Object[]{login.getName(), login.getLogin_id(), login.getPassword()});
+            }
+        } catch (NullPointerException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Trouble getting connection to database.\n Please check and try again", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Trouble reading data", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_view_applicatnsMouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        DefaultTableModel model = (DefaultTableModel) admin_access_table.getModel();
+        int index = admin_access_table.getSelectedRow();
+        String id = model.getValueAt(index, 1).toString();
+        String name = model.getValueAt(index, 0).toString();
+        for (Login login : login_list) {
+            if (login.getLogin_id().equals(id) && login.getName().equals(name)) {
+                login_list.remove(login);
+                break;
+            }
+        }
+        try {
+            String update = "UPDATE Lists SET list=? WHERE name='login'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, login_list);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database could not be updated", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void b_view_consignmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_consignmentsActionPerformed
+        readDatabase();
+        DefaultTableModel tb = (DefaultTableModel) table_query.getModel();
+        tb.setRowCount(0);
+        tb = new DefaultTableModel(new Object[]{"Consignment ID(s)", "Destination", "Source", "Status"}, 1);
+        table_query.setModel(tb);
+        tb.setRowCount(0);
+        for (Consignment consignment : consignment_list) {
+            Object[] rowData = new Object[]{consignment.getConsignment_id(), consignment.getTo_branch().getName(), consignment.getFrom_branch().getName(),consignment.getStatus_delivery().toString()};
+            tb.addRow(rowData);
+        }
+    }//GEN-LAST:event_b_view_consignmentsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1870,6 +2003,7 @@ public class Manager extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Address;
+    private javax.swing.JTable admin_access_table;
     private javax.swing.JButton b_add_branch;
     private javax.swing.JButton b_back;
     private javax.swing.JButton b_fire;
@@ -1880,8 +2014,11 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JButton b_reset;
     private javax.swing.JButton b_set_ip;
     private javax.swing.JButton b_view_applicatns;
+    private javax.swing.JButton b_view_consignments;
     private javax.swing.JButton b_view_employee;
+    private javax.swing.JButton b_view_trucks;
     private javax.swing.ButtonGroup bg_company_stats;
+    private javax.swing.JComboBox cmb_admin_access;
     private javax.swing.JComboBox cmb_branch;
     private javax.swing.JComboBox cmb_branch_list;
     private javax.swing.JComboBox cmb_cs_b;
@@ -1892,7 +2029,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JInternalFrame if_employee_list;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1910,7 +2046,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable3;
     private javax.swing.JLabel l_address;
     private javax.swing.JLabel l_branch;
@@ -1958,7 +2093,4 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tp_manager;
     // End of variables declaration//GEN-END:variables
 
-    private Exception Exception(String please_select_branch) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

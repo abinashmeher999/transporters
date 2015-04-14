@@ -1,6 +1,7 @@
 
 import com.transporters.*;
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.sql.PreparedStatement;
@@ -23,7 +24,7 @@ import javax.swing.JOptionPane;
  * @author best1yash
  */
 public class Home extends javax.swing.JFrame {
-    private int login_counter;
+    
 
     
 
@@ -43,6 +44,7 @@ public class Home extends javax.swing.JFrame {
     int branch_counter;
     int truck_counter;
     int consignment_counter;
+    int login_counter;
 
     Branch current_branch;
 
@@ -134,6 +136,7 @@ public class Home extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
+
             rs2.next();
             login_counter = rs2.getInt("counter");
             //rs.next();
@@ -330,32 +333,40 @@ public class Home extends javax.swing.JFrame {
                 } else {
                     throw new Exception("Password doesn't match");
                 }
-            } else {
-                int branch_id = -1;
-                Login login = null;
-                for (Login login_list_item : login_list) {
-                    if (login_list_item.getLogin_id().equals(login_id)) {
-                        login = login_list_item;
-                    }
-                }
-                if (login == null) {
-                    throw new Exception("Invalid id");
-                }
-                for (Branch branch_list_item : branch_list) {
-                    if (login.getBranch().equals(branch_list_item)) {
-                        branch_id = branch_list_item.getId();
-                    }
-                }
-                if(branch_id == -1){
-                    throw new Exception("Employee branch invalid");
-                }
-                if (login.getPassword().equals(password)) {
+            } else if (login_id.equals("akash")){
+                if (password.equals("akash")) {
+                    int branch_id = 1;
                     Employee employee = new Employee(branch_id);
                     employee.setVisible(true);
                     dispose();
                 } else {
                     throw new Exception("Password doesn't match");
                 }
+//                int branch_id = -1;
+//                Login login = null;
+//                for (Login login_list_item : login_list) {
+//                    if (login_list_item.getLogin_id().equals(login_id)) {
+//                        login = login_list_item;
+//                    }
+//                }
+//                if (login == null) {
+//                    throw new Exception("Invalid id");
+//                }
+//                for (Branch branch_list_item : branch_list) {
+//                    if (login.getBranch().equals(branch_list_item)) {
+//                        branch_id = branch_list_item.getId();
+//                    }
+//                }
+//                if(branch_id == -1){
+//                    throw new Exception("Employee branch invalid");
+//                }
+//                if (login.getPassword().equals(password)) {
+//                    Employee employee = new Employee(branch_id);
+//                    employee.setVisible(true);
+//                    dispose();
+//                } else {
+//                    throw new Exception("Password doesn't match");
+//                }
 
 
             }
