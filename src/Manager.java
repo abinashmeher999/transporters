@@ -141,17 +141,17 @@ public class Manager extends javax.swing.JFrame {
                 consignment_list = new ArrayList<>();
             }
 
-            rs2.next();
-            login_counter = rs2.getInt("counter");
-            //rs.next();
-            if (login_counter != 0) {
-
-                //buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-                login_list = new ArrayList<>();
-            }
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
 
             rs1.close();
             rs2.close();
