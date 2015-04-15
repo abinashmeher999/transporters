@@ -140,6 +140,19 @@ public class Manager extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
+
+            rs2.next();
+            login_counter = rs2.getInt("counter");
+            //rs.next();
+            if (login_counter != 0) {
+
+                //buf = rs.getBytes("list");
+                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+                login_list = (ArrayList<Login>) o.readObject();
+            } else {
+                login_list = new ArrayList<>();
+            }
+
             rs1.close();
             rs2.close();
             rs3.close();
@@ -238,18 +251,18 @@ public class Manager extends javax.swing.JFrame {
                 consignment_list = new ArrayList<>();
             }
 
-            rs2.next();
-            login_counter = rs2.getInt("counter");
-            //rs.next();
-            if (login_counter != 0) {
-
-                //buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-
-                login_list = new ArrayList<>();
-            }
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//
+//                login_list = new ArrayList<>();
+//            }
             rs.close();
             rs2.close();
         } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
@@ -1381,10 +1394,30 @@ public class Manager extends javax.swing.JFrame {
 
     private void b_add_branchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_add_branchMouseClicked
         String branch_name = tf_mbn.getText();
+        if(branch_name.equals("")){
+            JOptionPane.showMessageDialog(this,"Branch Name cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String contact = tf_mc.getText();
+        if(contact.equals("")){
+            JOptionPane.showMessageDialog(this,"Contact cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String address = tf_ma.getText();
+        if(address.equals("")){
+            JOptionPane.showMessageDialog(this,"Address cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String username = tf_mun.getText();
+        if(username.equals("")){
+            JOptionPane.showMessageDialog(this,"Username cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String password = tf_mp.getText();
+        if(password.equals("")){
+            JOptionPane.showMessageDialog(this,"Password cannot empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Database tempdb = new Database();
         tempdb.setUser(username);
         tempdb.setPassword(password);
@@ -1468,7 +1501,7 @@ public class Manager extends javax.swing.JFrame {
             if ("Branch".equals(branch_name)) {
                 throw new NullPointerException("Branch");
             }
-            
+
         } catch (NullPointerException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid Input " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -1495,7 +1528,7 @@ public class Manager extends javax.swing.JFrame {
 
             for (Truck truck : branch.getTruck_list()) {
                 String destination = "None";
-                
+
                 Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName(), truck.getStatus().toString()};
                 tb.addRow(rowData);
             }
@@ -1869,17 +1902,17 @@ public class Manager extends javax.swing.JFrame {
                 consignment_list = new ArrayList<>();
             }
 
-            rs2.next();
-            login_counter = rs2.getInt("counter");
-            //rs.next();
-            if (login_counter > 0) {
-
-                //buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-                login_list = new ArrayList<>();
-            }
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter > 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
             rs1.close();
             rs2.close();
             rs3.close();
@@ -1966,30 +1999,30 @@ public class Manager extends javax.swing.JFrame {
                 }
             }
             //JOptionPane.showMessageDialog(this, selected_branch.getName(), "info", JOptionPane.INFORMATION_MESSAGE);
-            Statement stmt = head_office.getDatabase().getConnection().createStatement();
-            String query = "SELECT * FROM ID_data WHERE name='login_counter'";
-
-            ResultSet rs1 = stmt.executeQuery(query);
-
-            rs1.next();
-            login_counter = rs1.getInt("counter");
-
-            if (login_counter > 0) {
-                ObjectInputStream o;
-                
-                Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
-                String query2 = "SELECT * FROM Lists WHERE name='login'";
-                ResultSet rs2 = stmt2.executeQuery(query);
-                //rs2.next();
-
-                byte[] buf = rs2.getBytes("list");
-
-                o = new ObjectInputStream(new ByteArrayInputStream(buf));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-                login_list = new ArrayList<>();
-            }
-            if (login_list.size() == 0) {
+//            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+//            String query = "SELECT * FROM ID_data WHERE name='login_counter'";
+//
+//            ResultSet rs1 = stmt.executeQuery(query);
+//
+//            rs1.next();
+//            login_counter = rs1.getInt("counter");
+//
+//            if (login_counter > 0) {
+//                ObjectInputStream o;
+//                
+//                Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+//                String query2 = "SELECT * FROM Lists WHERE name='login'";
+//                ResultSet rs2 = stmt2.executeQuery(query);
+//                //rs2.next();
+//
+//                byte[] buf = rs2.getBytes("list");
+//
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
+            if (login_list.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "List Empty", "Info", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 for (Login login : login_list) {
@@ -1999,12 +2032,6 @@ public class Manager extends javax.swing.JFrame {
                     }
                 }
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2114,7 +2141,6 @@ public class Manager extends javax.swing.JFrame {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     /**
      * @param args the command line arguments
