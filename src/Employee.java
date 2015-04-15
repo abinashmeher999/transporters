@@ -1000,36 +1000,37 @@ public class Employee extends javax.swing.JFrame {
             DefaultTableModel tb = (DefaultTableModel) table_consignment_id.getModel();
             tb.setRowCount(0);
             boolean flag = false;
-
             String plate_num = null;
             if (tf_receive_truck_plate_num.getText().equals("")) {
                 throw new Exception("Enter truck plate number");
             } else {
-                ArrayList<Truck> trucks = current_branch.getTruck_list();
-                for (Iterator<Truck> truck_iter = trucks.iterator(); truck_iter.hasNext();) {
+                ArrayList<Truck> trucks = new ArrayList<Truck>(truck_list);
+                for (ListIterator<Truck> truck_iter = trucks.listIterator(); truck_iter.hasNext();) {
                     Truck truck = truck_iter.next();
-                    if (plate_num.equals(truck.getPlate_number())) {
+                    if (plate_num.equals(truck.getPlate_number()) && truck.getDestination_office().getName().equals(curr_branch.getName())) {
                         flag = true;
                         if (truck.getStatus() == Truck.Status.ENROUTE) {
                             tb = new DefaultTableModel(new Object[]{"Consignment ID(s)"}, 1);
                             table_consignment_id.setModel(tb);
                             tb.setRowCount(0);
                             ArrayList<Consignment> consignments = truck.getConsignment_list();
-                            for (Iterator<Consignment> consignment_iter = consignments.iterator(); consignment_iter.hasNext();) {
+                            for (ListIterator<Consignment> consignment_iter = consignments.listIterator(); consignment_iter.hasNext();) {
                                 Consignment consignment = consignment_iter.next();
-                                consignment_iter.remove();
                                 Object[] rowData = new Object[]{consignment.getConsignment_id()};
                                 tb.addRow(rowData);
                                 consignment.setStatus_delivery(Consignment.Status.DELIVERED);
                                 consignments.add(consignment);
+                                consignment_iter.set(consignment);
                                 curr_branch.setRevenue(consignment.getDelivery_charge());
-
                             }
                             truck.setStatus(Truck.Status.AVAILABLE);
                             truck.setIdle_time_start(Calendar.getInstance());
-                            truck_iter.remove();
-                            trucks.add(truck);
-                            curr_branch.setTruck_list(trucks);
+                            truck.setCurrent_office(curr_branch);
+                            truck.setDestination_office(null);
+                            truck_iter.set(truck);
+                            ArrayList<Truck> current_branch_truck_list = curr_branch.getTruck_list();
+                            current_branch_truck_list.add(truck);
+                            curr_branch.setTruck_list(current_branch_truck_list);
                             break;
                         } else {
                             throw new Exception("Truck already unloaded for consignments at this destination");
@@ -1067,7 +1068,7 @@ public class Employee extends javax.swing.JFrame {
                 throw new Exception("Provide plate number");
             } else {
                 ArrayList<Truck> trucks = curr_branch.getTruck_list();
-                for (Iterator<Truck> truck_iter = trucks.iterator(); truck_iter.hasNext();) {
+                for (ListIterator<Truck> truck_iter = trucks.listIterator(); truck_iter.hasNext();) {
                     Truck truck = truck_iter.next();
                     if (plate_num.equals(truck.getPlate_number())) {
                         truck_found = true;
@@ -1075,8 +1076,7 @@ public class Employee extends javax.swing.JFrame {
                             int option = JOptionPane.showConfirmDialog(this, "Confirm Dispatch", "Dispatch", 1);
                             if (option == 0) {
                                 int distance = (Math.abs(curr_branch.getId() - truck.getDestination_office().getId())) * 100;
-                                truck.setCurrent_office(truck.getDestination_office());
-                                truck.setDestination_office(null);
+
                                 truck.setStatus(Truck.Status.ENROUTE);
                                 truck.setTotalKM(truck.getTotalKM() + distance);
 
@@ -1097,12 +1097,19 @@ public class Employee extends javax.swing.JFrame {
                                 curr_branch.setAvgConsignmentWaitingTime((curr_branch.getAvg_consignment_waiting_time() * consignment_count + branch_waiting_time) / (consignment_count + consignments.size()));
                                 curr_branch.setCumulative_consignment_count(consignment_count + consignments.size());
                                 truck_iter.remove();
-                                trucks.add(truck);
                                 curr_branch.setTruck_list(trucks);
+                                Truck truck_2 = null;
+                                for (ListIterator<Truck> truck_iterator_2 = truck_list.listIterator(); truck_iterator_2.hasNext();) {
+                                    truck_2 = truck_iterator_2.next();
+                                    if (truck_2.getPlate_number() == truck.getPlate_number()) {
+                                        truck_iterator_2.set(truck);
+                                    }
+                                }
                                 String details = null;
                                 details = com.transporters.System.printDispatchDetails(truck);
                                 ta_dispatch_details.setText(details);
                                 JOptionPane.showMessageDialog(this, "Truck " + plate_num + "dispatched.", "Dispatch Successful", 1);
+                                break;
                             }
                         } else {
                             throw new Exception("Truck not dispatchable yet");
@@ -1276,7 +1283,7 @@ public class Employee extends javax.swing.JFrame {
                     if (truck_list_item.getDestination_office() == null && truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
                         assigned_truck = truck_list_item;
                         assigned_truck.setDestination_office(consignment.getTo_branch());
-                        
+
                         break;
                     }
                 }
@@ -1308,7 +1315,6 @@ public class Employee extends javax.swing.JFrame {
                         break;
                     }
                 }
-                trucks.add(assigned_truck);
                 curr_branch.setTruck_list(trucks);
                 JOptionPane.showMessageDialog(this, "Truck assigned" + assigned_truck.getPlate_number(), "Consignment Loaded", 1);
             } else {
@@ -1335,7 +1341,7 @@ public class Employee extends javax.swing.JFrame {
                     break;
                 }
             }
-            
+
             writeToDatabase();
         }
     }//GEN-LAST:event_b_generate_billActionPerformed
@@ -1358,31 +1364,24 @@ public class Employee extends javax.swing.JFrame {
         readDatabase();
         DefaultTableModel model = (DefaultTableModel) table_consignment_id.getModel();
 
-        model = new DefaultTableModel(new Object[]{"Truck Id"}, 1);
+        model = new DefaultTableModel(new Object[]{"Truck Id", "From Branch"}, 1);
         table_consignment_id.setModel(model);
         model.setRowCount(0);
         l_waiting_trucks_or_consignment_id.setText("Waiting Trucks");
-
+        Truck truck = null;
+        for (ListIterator<Truck> truck_iter = truck_list.listIterator(); truck_iter.hasNext();) {
+            truck = truck_iter.next();
+            if (truck.getDestination_office().getName().equals(current_branch.getName()) && truck.getStatus().equals(Truck.Status.ENROUTE)) {
+                Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName()};
+                model.addRow(rowData);
+            }
+        }
     }//GEN-LAST:event_b_waiting_trucks_listActionPerformed
     private void refresh_write() {
-        Branch branch = null;
-        for (Branch branch_list_item : branch_list) {
-            if (branch_list_item.getId() == branch_id) {
-                branch = branch_list_item;
-            }
-        }
-        for (Truck truck_list_item : truck_list) {
-            if (truck_list_item.getCurrent_office().equals(branch)) {
-                if (truck_list_item.getCurrent_occupied_volume() > 450) {
-                    truck_list_item.setStatus(Truck.Status.DISPATCHABLE);
-                    branch.allotNext_available_truck(branch, truck_list_item.getDestination_office());
-                }
-            }
-        }
-
-        for (Consignment waiting_consignment_list_item : branch.getWaiting_consignment_list()) {
+        
+        for (Consignment waiting_consignment_list_item : current_branch.getWaiting_consignment_list()) {
             Truck assigned_truck = null;
-            for (Truck truck_list_item : branch.getTruck_list()) {
+            for (Truck truck_list_item : current_branch.getTruck_list()) {
                 if (truck_list_item.getDestination_office().equals(waiting_consignment_list_item.getTo_branch())) {
                     if (truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
                         if (truck_list_item.getCurrent_occupied_volume() + waiting_consignment_list_item.getVolume() < Truck.MAX_CAPACITY) {
@@ -1400,8 +1399,7 @@ public class Employee extends javax.swing.JFrame {
         writeToDatabase();
     }
     private void b_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_refreshActionPerformed
-        //@Abinash : Read from database
-        //@Abinash : Write to databse
+        
         readDatabase();
         refresh_write();
 
@@ -1446,7 +1444,7 @@ public class Employee extends javax.swing.JFrame {
                 if (!(truck.getDestination_office() == null)) {
                     destination = truck.getDestination_office().getName();
                 }
-                Object[] rowData = new Object[]{truck.getPlate_number(), destination, truck.getStatus().toString()};
+                Object[] rowData = new Object[]{truck.getPlate_number(), destination, truck.getStatus().toString(), truck.getCurrent_occupied_volume()};
                 tb.addRow(rowData);
 
             }

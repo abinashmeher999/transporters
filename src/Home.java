@@ -24,9 +24,6 @@ import javax.swing.JOptionPane;
  * @author best1yash
  */
 public class Home extends javax.swing.JFrame {
-    
-
-    
 
     enum Session {
 
@@ -62,8 +59,8 @@ public class Home extends javax.swing.JFrame {
             Statement stmt = db.getConnection().createStatement();
             Statement stmt2 = db.getConnection().createStatement();
             Statement stmt3 = db.getConnection().createStatement();
-            Statement stmt4  = db.getConnection().createStatement();
-            
+            Statement stmt4 = db.getConnection().createStatement();
+
             String query = "SELECT * FROM Lists";
             ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
@@ -77,8 +74,8 @@ public class Home extends javax.swing.JFrame {
 
             rs3.next();
             Database.setIPAddress(rs3.getString("address"));
-            
-            String query4  = "SELECT * FROM Charge";
+
+            String query4 = "SELECT * FROM Charge";
             ResultSet rs4 = stmt4.executeQuery(query4);
             rs4.next();
             Consignment.setCharge_per_km(rs4.getDouble("value"));
@@ -325,8 +322,8 @@ public class Home extends javax.swing.JFrame {
             if (password.equals("") || password.equals(null)) {
                 throw new Exception("Enter Password");
             }
-            if (login_id.equals("man")) {
-                if (password.equals("man")) {
+            if (login_id.equals("manager")) {
+                if (password.equals("manager")) {
                     Manager manager = new Manager();
                     manager.setVisible(true);
                     dispose();
@@ -334,13 +331,25 @@ public class Home extends javax.swing.JFrame {
                     throw new Exception("Password doesn't match");
                 }
             } else {
-                if (password.equals("akash")) {
+                int login_num;
+                try {
+                    login_num = Integer.valueOf(login_id);
+                } catch (NumberFormatException ex) {
+                    throw new Exception("Invalid login id");
+
+                }
+
+                if (login_num > 0 && login_num < branch_counter) {
+                    if (password.equals("akash")) {
 //                    int branch_id = 2;
-                    Employee employee = new Employee(Integer.valueOf(login_id));
-                    employee.setVisible(true);
-                    dispose();
+                        Employee employee = new Employee(Integer.valueOf(login_id));
+                        employee.setVisible(true);
+                        dispose();
+                    } else {
+                        throw new Exception("Password doesn't match");
+                    }
                 } else {
-                    throw new Exception("Password doesn't match");
+                    throw new Exception("Invalid login id");
                 }
 //                int branch_id = -1;
 //                Login login = null;
@@ -368,9 +377,9 @@ public class Home extends javax.swing.JFrame {
 //                    throw new Exception("Password doesn't match");
 //                }
 
-
             }
         } catch (Exception e) {
+            //if (e.getMessage().equals("Invalid login id"))
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         }
     }//GEN-LAST:event_b_loginActionPerformed

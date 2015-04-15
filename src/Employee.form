@@ -286,13 +286,13 @@
                               <Component id="b_waiting_trucks_list" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="l_waiting_trucks_or_consignment_id" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="634" max="32767" attributes="0"/>
+                          <EmptySpace pref="273" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
                               <Component id="jScrollPane2" min="-2" pref="248" max="-2" attributes="0"/>
-                              <EmptySpace pref="376" max="32767" attributes="0"/>
+                              <EmptySpace pref="15" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -417,7 +417,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="b_view_branch_trucks" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="482" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="121" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
