@@ -132,17 +132,17 @@ public class Employee extends javax.swing.JFrame {
                 consignment_list = new ArrayList<>();
             }
             
-            rs2.next();
-            login_counter = rs2.getInt("counter");
-            //rs.next();
-            if (login_counter > 0) {
-
-                //buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-                login_list = new ArrayList<>();
-            }
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter > 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
             rs1.close();
             rs2.close();
             rs3.close();
@@ -192,10 +192,10 @@ public class Employee extends javax.swing.JFrame {
             pstmt4.setObject(1, consignment_list);
             pstmt4.executeUpdate();
             
-            String update5 = "UPDATE Lists SET list=? WHERE name='login'";
-            PreparedStatement pstmt5 = head_office.getDatabase().getConnection().prepareStatement(update5);
-            pstmt5.setObject(1, login_list);
-            pstmt5.executeUpdate();
+//            String update5 = "UPDATE Lists SET list=? WHERE name='login'";
+//            PreparedStatement pstmt5 = head_office.getDatabase().getConnection().prepareStatement(update5);
+//            pstmt5.setObject(1, login_list);
+//            pstmt5.executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
