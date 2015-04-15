@@ -59,7 +59,6 @@ public class Manager extends javax.swing.JFrame {
     int branch_counter;
     int truck_counter;
     int consignment_counter;
-    private Object rs2;
     private int login_counter;
 
     public void readDatabase() {
@@ -141,6 +140,19 @@ public class Manager extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
+
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
+
             rs1.close();
             rs2.close();
             rs3.close();
@@ -238,17 +250,19 @@ public class Manager extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
-            login_counter = rs2.getInt("counter");
-            //rs.next();
-            if (login_counter != 0) {
 
-                //buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-
-                login_list = new ArrayList<>();
-            }
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//
+//                login_list = new ArrayList<>();
+//            }
             rs.close();
             rs2.close();
         } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
@@ -1251,36 +1265,36 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_employee_nameActionPerformed
 
     private void b_view_applicatnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_applicatnsActionPerformed
-        try {
-            Statement stmt = head_office.getDatabase().getConnection().createStatement();
-            String query = "SELECT counter FROM ID_data WHERE name='login_counter'";
-            ResultSet rs2 = stmt.executeQuery(query);
-            rs2.next();
-            login_counter = rs2.getInt("counter");
-
-            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
-            String query2 = "SELECT list FROM Lists WHERE name='login'";
-            ResultSet rs1 = stmt2.executeQuery(query);
-            rs1.next();
-            ObjectInputStream o;
-            byte[] buf;
-            if (login_counter != 0) {
-
-                buf = rs1.getBytes("list");
-
-                o = new ObjectInputStream(new ByteArrayInputStream(buf));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-                login_list = new ArrayList<>();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+//        try {
+//            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+//            String query = "SELECT counter FROM ID_data WHERE name='login_counter'";
+//            ResultSet rs2 = stmt.executeQuery(query);
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//
+//            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+//            String query2 = "SELECT list FROM Lists WHERE name='login'";
+//            ResultSet rs1 = stmt2.executeQuery(query);
+//            rs1.next();
+//            ObjectInputStream o;
+//            byte[] buf;
+//            if (login_counter != 0) {
+//
+//                buf = rs1.getBytes("list");
+//
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        return;
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsActionPerformed
 
@@ -1380,10 +1394,30 @@ public class Manager extends javax.swing.JFrame {
 
     private void b_add_branchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_add_branchMouseClicked
         String branch_name = tf_mbn.getText();
+        if(branch_name.equals("")){
+            JOptionPane.showMessageDialog(this,"Branch Name cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String contact = tf_mc.getText();
+        if(contact.equals("")){
+            JOptionPane.showMessageDialog(this,"Contact cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String address = tf_ma.getText();
+        if(address.equals("")){
+            JOptionPane.showMessageDialog(this,"Address cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String username = tf_mun.getText();
+        if(username.equals("")){
+            JOptionPane.showMessageDialog(this,"Username cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String password = tf_mp.getText();
+        if(password.equals("")){
+            JOptionPane.showMessageDialog(this,"Password cannot empty","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Database tempdb = new Database();
         tempdb.setUser(username);
         tempdb.setPassword(password);
@@ -1467,7 +1501,7 @@ public class Manager extends javax.swing.JFrame {
             if ("Branch".equals(branch_name)) {
                 throw new NullPointerException("Branch");
             }
-            
+
         } catch (NullPointerException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid Input " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -1494,7 +1528,7 @@ public class Manager extends javax.swing.JFrame {
 
             for (Truck truck : branch.getTruck_list()) {
                 String destination = "None";
-                
+
                 Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName(), truck.getStatus().toString()};
                 tb.addRow(rowData);
             }
@@ -1867,6 +1901,18 @@ public class Manager extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
+
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter > 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
             rs1.close();
             rs2.close();
             rs3.close();
@@ -1912,15 +1958,19 @@ public class Manager extends javax.swing.JFrame {
             login.setName(name);
             login.setPassword(password);
             login.setLogin_id(login_id);
+            login_counter++;
             login_list.add(login);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         }
         try {
-            String update = "UPDATE Lists SET list=? WHERE name='login'";
-            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
-            pstmt.setObject(1, login_list);
-            pstmt.executeUpdate();
+            Statement stmt5 = head_office.getDatabase().getConnection().createStatement();
+            String query5 = "UPDATE ID_data SET counter=" + login_counter + " WHERE name='login_counter'";
+            stmt5.executeUpdate(query5);
+            String update5 = "UPDATE Lists SET list=? WHERE name='login'";
+            PreparedStatement pstmt5 = head_office.getDatabase().getConnection().prepareStatement(update5);
+            pstmt5.setObject(1, login_list);
+            pstmt5.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Database could not be updated", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -1948,31 +1998,44 @@ public class Manager extends javax.swing.JFrame {
                     }
                 }
             }
-            Statement smt = selected_branch.getDatabase().getConnection().createStatement();
-            ObjectInputStream o;
-            String query = "SELECT * FROM Lists WHERE name='login'";
-            ResultSet rs = smt.executeQuery(query);
-            rs.next();
-            byte[] buf = rs.getBytes("list");
-            o = new ObjectInputStream(new ByteArrayInputStream(buf));
-            try {
-                login_list = (ArrayList<Login>) o.readObject();
-            } catch (IOException | ClassNotFoundException ex) {
-                login_list = new ArrayList<>();
+            //JOptionPane.showMessageDialog(this, selected_branch.getName(), "info", JOptionPane.INFORMATION_MESSAGE);
+//            Statement stmt = head_office.getDatabase().getConnection().createStatement();
+//            String query = "SELECT * FROM ID_data WHERE name='login_counter'";
+//
+//            ResultSet rs1 = stmt.executeQuery(query);
+//
+//            rs1.next();
+//            login_counter = rs1.getInt("counter");
+//
+//            if (login_counter > 0) {
+//                ObjectInputStream o;
+//                
+//                Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+//                String query2 = "SELECT * FROM Lists WHERE name='login'";
+//                ResultSet rs2 = stmt2.executeQuery(query);
+//                //rs2.next();
+//
+//                byte[] buf = rs2.getBytes("list");
+//
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
+            if (login_list.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "List Empty", "Info", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                for (Login login : login_list) {
+                    if (login.getBranchName().equals(selected_branch.getName())) {
+                        model.addRow(new Object[]{login.getName(), login.getLogin_id(), login.getPassword()});
+
+                    }
+                }
             }
-            for (Login login : login_list) {
-                model.addRow(new Object[]{login.getName(), login.getLogin_id(), login.getPassword()});
-            }
-        } catch (NullPointerException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Trouble getting connection to database.\n Please check and try again", "Error", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Trouble reading data", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsMouseClicked
 

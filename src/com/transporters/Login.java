@@ -55,5 +55,9 @@ public class Login implements Serializable{
         password = null;
         login_id = null;
     }
+    
+    public String getBranchName(){
+        return branch.getName();
+    }
     private static final long serialVersionUID = 1L;
 }

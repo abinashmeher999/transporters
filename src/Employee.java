@@ -4,6 +4,7 @@ import com.transporters.Branch;
 import com.transporters.Consignment;
 import com.transporters.Database;
 import com.transporters.HeadOffice;
+import com.transporters.Login;
 import com.transporters.Office;
 import com.transporters.Truck;
 import java.awt.HeadlessException;
@@ -43,11 +44,13 @@ public class Employee extends javax.swing.JFrame {
     List<Branch> branch_list;
     List<Truck> truck_list;
     List<Consignment> consignment_list;
+    List<Login> login_list;
 
     int head_counter;
     int branch_counter;
     int truck_counter;
     int consignment_counter;
+    int login_counter;
 
     public void readDatabase() {
         try {
@@ -128,6 +131,18 @@ public class Employee extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
+            
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter > 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
             rs1.close();
             rs2.close();
             rs3.close();
@@ -144,6 +159,7 @@ public class Employee extends javax.swing.JFrame {
             Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
             Statement stmt3 = head_office.getDatabase().getConnection().createStatement();
             Statement stmt4 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt5 = head_office.getDatabase().getConnection().createStatement();
 
             String query1 = "UPDATE ID_data SET counter=" + head_counter + " WHERE name='head_counter'";
             stmt1.executeUpdate(query1);
@@ -153,6 +169,8 @@ public class Employee extends javax.swing.JFrame {
             stmt3.executeUpdate(query3);
             String query4 = "UPDATE ID_data SET counter=" + consignment_counter + " WHERE name='consignment_counter'";
             stmt4.executeUpdate(query4);
+            String query5 = "UPDATE ID_data SET counter=" + login_counter + " WHERE name='login_counter'";
+            stmt5.executeUpdate(query5);
 
             String update = "UPDATE Lists SET list=? WHERE name='head_office'";
             PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
@@ -173,6 +191,11 @@ public class Employee extends javax.swing.JFrame {
             PreparedStatement pstmt4 = head_office.getDatabase().getConnection().prepareStatement(update4);
             pstmt4.setObject(1, consignment_list);
             pstmt4.executeUpdate();
+            
+//            String update5 = "UPDATE Lists SET list=? WHERE name='login'";
+//            PreparedStatement pstmt5 = head_office.getDatabase().getConnection().prepareStatement(update5);
+//            pstmt5.setObject(1, login_list);
+//            pstmt5.executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
