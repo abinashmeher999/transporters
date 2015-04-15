@@ -214,7 +214,6 @@ abstract public class Office implements Serializable {
      * @param new_object
      */
     public void addTruck(Truck new_object) {
-        java.lang.System.out.println(truck_list.size());
         truck_list.add(new_object);
     }
 

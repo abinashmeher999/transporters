@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -282,7 +283,7 @@ public class Manager extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         admin_access_table = new javax.swing.JTable();
         cmb_admin_access = new javax.swing.JComboBox();
-        jButton3 = new javax.swing.JButton();
+        b_remove_access = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tf_password = new javax.swing.JTextField();
         p_buy_truck = new javax.swing.JPanel();
@@ -294,7 +295,9 @@ public class Manager extends javax.swing.JFrame {
         tf_plate_number = new javax.swing.JTextField();
         tf_cost = new javax.swing.JTextField();
         cmb_branch = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        b_add_to_fleet = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        table_truck_at_branch = new javax.swing.JTable();
         p_fire = new javax.swing.JPanel();
         b_view_employee = new javax.swing.JButton();
         if_employee_list = new javax.swing.JInternalFrame();
@@ -461,12 +464,12 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(225, 22, 30));
-        jButton3.setForeground(new java.awt.Color(253, 243, 243));
-        jButton3.setText("Remove user");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        b_remove_access.setBackground(new java.awt.Color(225, 22, 30));
+        b_remove_access.setForeground(new java.awt.Color(253, 243, 243));
+        b_remove_access.setText("Remove user");
+        b_remove_access.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                b_remove_accessMouseClicked(evt);
             }
         });
 
@@ -493,11 +496,11 @@ public class Manager extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_hireLayout.createSequentialGroup()
                         .addComponent(cmb_admin_access, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 434, Short.MAX_VALUE)
                         .addComponent(b_view_applicatns))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_hireLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(b_remove_access, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(p_hireLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(p_hireLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -529,7 +532,7 @@ public class Manager extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(b_remove_access)
                 .addGap(34, 34, 34)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -594,17 +597,35 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Add to fleet");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        b_add_to_fleet.setText("Add to fleet");
+        b_add_to_fleet.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                b_add_to_fleetMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        b_add_to_fleet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                b_add_to_fleetActionPerformed(evt);
             }
         });
+
+        table_truck_at_branch.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Truck Plate NUmber", "Current Office", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(table_truck_at_branch);
 
         javax.swing.GroupLayout p_buy_truckLayout = new javax.swing.GroupLayout(p_buy_truck);
         p_buy_truck.setLayout(p_buy_truckLayout);
@@ -613,19 +634,23 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(p_buy_truckLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(l_model)
-                    .addComponent(l_plate_number)
-                    .addComponent(l_cost)
-                    .addComponent(jLabel4))
-                .addGap(36, 36, 36)
-                .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tf_truck_model, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                        .addComponent(tf_plate_number)
-                        .addComponent(tf_cost)
-                        .addComponent(cmb_branch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+                    .addGroup(p_buy_truckLayout.createSequentialGroup()
+                        .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(l_model)
+                            .addComponent(l_plate_number)
+                            .addComponent(l_cost)
+                            .addComponent(jLabel4))
+                        .addGap(36, 36, 36)
+                        .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(b_add_to_fleet)
+                            .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tf_truck_model, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(tf_plate_number)
+                                .addComponent(tf_cost)
+                                .addComponent(cmb_branch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         p_buy_truckLayout.setVerticalGroup(
             p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -646,9 +671,11 @@ public class Manager extends javax.swing.JFrame {
                 .addGroup(p_buy_truckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cmb_branch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_add_to_fleet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         tp_administration.addTab("Buy Trucks", p_buy_truck);
@@ -766,6 +793,11 @@ public class Manager extends javax.swing.JFrame {
         b_add_branch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 b_add_branchMouseClicked(evt);
+            }
+        });
+        b_add_branch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_add_branchActionPerformed(evt);
             }
         });
 
@@ -955,7 +987,7 @@ public class Manager extends javax.swing.JFrame {
 
         table_query.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Truck IDs", "From", "To", "Date of Dispatch"
@@ -1008,6 +1040,11 @@ public class Manager extends javax.swing.JFrame {
         });
 
         b_view_trucks.setText("View all trucks");
+        b_view_trucks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_view_trucksActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p_queriesLayout = new javax.swing.GroupLayout(p_queries);
         p_queries.setLayout(p_queriesLayout);
@@ -1016,21 +1053,20 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(p_queriesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
                     .addGroup(p_queriesLayout.createSequentialGroup()
                         .addComponent(cmb_query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tf_query_id, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(b_get_details, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 403, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-                    .addGroup(p_queriesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_queriesLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(b_view_consignments, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_queriesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(b_view_trucks, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(p_queriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(b_view_trucks, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(b_view_consignments, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         p_queriesLayout.setVerticalGroup(
@@ -1115,7 +1151,7 @@ public class Manager extends javax.swing.JFrame {
                         .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(p_company_statisticsLayout.createSequentialGroup()
                                 .addComponent(cs_query, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 588, Short.MAX_VALUE))
+                                .addGap(0, 582, Short.MAX_VALUE))
                             .addGroup(p_company_statisticsLayout.createSequentialGroup()
                                 .addGroup(p_company_statisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(rb_bch)
@@ -1131,7 +1167,7 @@ public class Manager extends javax.swing.JFrame {
                             .addComponent(b_get_truck_usage)
                             .addComponent(tf_truck_plate_num, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         p_company_statisticsLayout.setVerticalGroup(
@@ -1408,8 +1444,9 @@ public class Manager extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_cs_bFocusGained
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        String name;
+    private void b_add_to_fleetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_add_to_fleetMouseClicked
+        readDatabase();
+        String branch_name;
         Double cost;
         String model;
         String plate_number;
@@ -1426,30 +1463,41 @@ public class Manager extends javax.swing.JFrame {
             }
 
             cost = Double.valueOf(tf_cost.getText());
-            name = cmb_branch.getSelectedItem().toString();
-            if ("Branch".equals(name)) {
+            branch_name = cmb_branch.getSelectedItem().toString();
+            if ("Branch".equals(branch_name)) {
                 throw new NullPointerException("Branch");
             }
+            
         } catch (NullPointerException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid Input " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
             Truck nt = new Truck(++truck_counter);
-            Office tempb = head_office;
-            for (Branch tb : branch_list) {
-                if (tb.getName().equals(name)) {
-                    tempb = tb;
-                    break;
-                }
-            }
-            //System.out.println(tempb.getName());
-            nt.setCurrent_office(tempb);
-            tempb.getTruck_list().add(nt);
             nt.setModel(model);
             nt.setPlate_number(plate_number);
             nt.setCost(cost);
-            tempb.addTruck(nt);
+            Branch branch = null;
+            for (ListIterator<Branch> branch_iter = branch_list.listIterator(); branch_iter.hasNext();) {
+                branch = branch_iter.next();
+                if (branch.getName().equals(branch_name)) {
+                    nt.setCurrent_office(branch);
+                    ArrayList<Truck> trucks = branch.getTruck_list();
+                    trucks.add(nt);
+                    branch.setTruck_list(trucks);
+                    branch_iter.set(branch);
+                    break;
+                }
+            }
+            DefaultTableModel tb = (DefaultTableModel) table_truck_at_branch.getModel();
+            tb.setRowCount(0);
+
+            for (Truck truck : branch.getTruck_list()) {
+                String destination = "None";
+                
+                Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName(), truck.getStatus().toString()};
+                tb.addRow(rowData);
+            }
             Statement stmt = head_office.getDatabase().getConnection().createStatement();
             String query = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
             stmt.executeUpdate(query);
@@ -1458,13 +1506,16 @@ public class Manager extends javax.swing.JFrame {
             PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
             pstmt.setObject(1, truck_list);
             pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Truck" + nt.getPlate_number() + "successfully added", "Truck added", 1);
 
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            writeToDatabase();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_b_add_to_fleetMouseClicked
 
     private void cmb_admin_accessFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmb_admin_accessFocusGained
         List<String> s = new ArrayList<>();
@@ -1876,6 +1927,7 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_b_hireActionPerformed
 
     private void b_view_applicatnsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_view_applicatnsMouseClicked
+        readDatabase();
         try {
             String branch_name = cmb_admin_access.getSelectedItem().toString();
             Branch selected_branch = null;
@@ -1924,7 +1976,8 @@ public class Manager extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_b_view_applicatnsMouseClicked
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    private void b_remove_accessMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_remove_accessMouseClicked
+        readDatabase();
         DefaultTableModel model = (DefaultTableModel) admin_access_table.getModel();
         int index = admin_access_table.getSelectedRow();
         String id = model.getValueAt(index, 1).toString();
@@ -1946,11 +1999,11 @@ public class Manager extends javax.swing.JFrame {
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_b_remove_accessMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void b_add_to_fleetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_add_to_fleetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_b_add_to_fleetActionPerformed
 
     private void b_view_consignmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_consignmentsActionPerformed
         readDatabase();
@@ -1960,10 +2013,71 @@ public class Manager extends javax.swing.JFrame {
         table_query.setModel(tb);
         tb.setRowCount(0);
         for (Consignment consignment : consignment_list) {
-            Object[] rowData = new Object[]{consignment.getConsignment_id(), consignment.getTo_branch().getName(), consignment.getFrom_branch().getName(),consignment.getStatus_delivery().toString()};
+            Object[] rowData = new Object[]{consignment.getConsignment_id(), consignment.getTo_branch().getName(), consignment.getFrom_branch().getName(), consignment.getStatus_delivery().toString()};
             tb.addRow(rowData);
         }
     }//GEN-LAST:event_b_view_consignmentsActionPerformed
+
+    private void b_add_branchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_add_branchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_add_branchActionPerformed
+
+    private void b_view_trucksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_trucksActionPerformed
+        readDatabase();
+        DefaultTableModel tb = (DefaultTableModel) table_query.getModel();
+        tb.setRowCount(0);
+        tb = new DefaultTableModel(new Object[]{"Truck Plate number(s)", "Current office", "Destination office", "Status"}, 1);
+        table_query.setModel(tb);
+        tb.setRowCount(0);
+        for (Truck truck : truck_list) {
+            String destination = "None";
+            if (!(truck.getDestination_office() == null)) {
+                destination = truck.getDestination_office().getName();
+            }
+            Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName(), destination, truck.getStatus().toString()};
+            tb.addRow(rowData);
+        }
+    }//GEN-LAST:event_b_view_trucksActionPerformed
+    public void writeToDatabase() {
+        try {
+            Statement stmt1 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt2 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt3 = head_office.getDatabase().getConnection().createStatement();
+            Statement stmt4 = head_office.getDatabase().getConnection().createStatement();
+
+            String query1 = "UPDATE ID_data SET counter=" + head_counter + " WHERE name='head_counter'";
+            stmt1.executeUpdate(query1);
+            String query2 = "UPDATE ID_data SET counter=" + branch_counter + " WHERE name='branch_counter'";
+            stmt2.executeUpdate(query2);
+            String query3 = "UPDATE ID_data SET counter=" + truck_counter + " WHERE name='truck_counter'";
+            stmt3.executeUpdate(query3);
+            String query4 = "UPDATE ID_data SET counter=" + consignment_counter + " WHERE name='consignment_counter'";
+            stmt4.executeUpdate(query4);
+
+            String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+            PreparedStatement pstmt = head_office.getDatabase().getConnection().prepareStatement(update);
+            pstmt.setObject(1, head_office);
+            pstmt.executeUpdate();
+
+            String update2 = "UPDATE Lists SET list=? WHERE name='branch'";
+            PreparedStatement pstmt2 = head_office.getDatabase().getConnection().prepareStatement(update2);
+            pstmt2.setObject(1, branch_list);
+            pstmt2.executeUpdate();
+
+            String update3 = "UPDATE Lists SET list=? WHERE name='truck'";
+            PreparedStatement pstmt3 = head_office.getDatabase().getConnection().prepareStatement(update3);
+            pstmt3.setObject(1, truck_list);
+            pstmt3.executeUpdate();
+
+            String update4 = "UPDATE Lists SET list=? WHERE name='consignment'";
+            PreparedStatement pstmt4 = head_office.getDatabase().getConnection().prepareStatement(update4);
+            pstmt4.setObject(1, consignment_list);
+            pstmt4.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -2005,12 +2119,14 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JPanel Address;
     private javax.swing.JTable admin_access_table;
     private javax.swing.JButton b_add_branch;
+    private javax.swing.JButton b_add_to_fleet;
     private javax.swing.JButton b_back;
     private javax.swing.JButton b_fire;
     private javax.swing.JButton b_get_details;
     private javax.swing.JButton b_get_truck_usage;
     private javax.swing.JButton b_hire;
     private javax.swing.JButton b_mscvp;
+    private javax.swing.JButton b_remove_access;
     private javax.swing.JButton b_reset;
     private javax.swing.JButton b_set_ip;
     private javax.swing.JButton b_view_applicatns;
@@ -2027,8 +2143,6 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JTextArea cs_ta_b;
     private javax.swing.JTextArea cs_ta_tpn;
     private javax.swing.JInternalFrame if_employee_list;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -2041,6 +2155,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -2072,6 +2187,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_atit;
     private javax.swing.JRadioButton rb_bch;
     private javax.swing.JTable table_query;
+    private javax.swing.JTable table_truck_at_branch;
     private javax.swing.JTextField tf_charge;
     private javax.swing.JTextField tf_cost;
     private javax.swing.JTextField tf_employee_id;
