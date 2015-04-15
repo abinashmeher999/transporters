@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -340,6 +341,9 @@ public class Employee extends javax.swing.JFrame {
         sp_billing_details = new javax.swing.JScrollPane();
         ta_billing_details = new javax.swing.JTextArea();
         b_generate_bill = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        table_branch_trucks = new javax.swing.JTable();
+        b_view_branch_trucks = new javax.swing.JButton();
         b_back = new javax.swing.JButton();
         b_refresh = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -805,31 +809,69 @@ public class Employee extends javax.swing.JFrame {
             }
         });
 
+        table_branch_trucks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Truck Id", "Destination", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(table_branch_trucks);
+
+        b_view_branch_trucks.setText("View Trucks at Branch");
+        b_view_branch_trucks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_view_branch_trucksActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout p_new_consignmentLayout = new javax.swing.GroupLayout(p_new_consignment);
         p_new_consignment.setLayout(p_new_consignmentLayout);
         p_new_consignmentLayout.setHorizontalGroup(
             p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_new_consignmentLayout.createSequentialGroup()
-                .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                     .addGroup(p_new_consignmentLayout.createSequentialGroup()
-                        .addComponent(b_generate_bill)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sp_billing_details, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                            .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                                .addComponent(b_generate_bill)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane4)))
                 .addContainerGap())
+            .addGroup(p_new_consignmentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(b_view_branch_trucks)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         p_new_consignmentLayout.setVerticalGroup(
             p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_new_consignmentLayout.createSequentialGroup()
                 .addGroup(p_new_consignmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, p_new_consignmentLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(b_generate_bill)
                         .addGap(2, 2, 2)
+                        .addComponent(b_generate_bill)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(sp_billing_details))
                     .addComponent(tp_new_consignment, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(b_view_branch_trucks)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tp_employee.addTab("New Consignment", p_new_consignment);
@@ -868,12 +910,12 @@ public class Employee extends javax.swing.JFrame {
         p_employeeLayout.setVerticalGroup(
             p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_employeeLayout.createSequentialGroup()
-                .addContainerGap(151, Short.MAX_VALUE)
+                .addContainerGap(150, Short.MAX_VALUE)
                 .addComponent(tp_employee, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(b_back)
-                    .addComponent(b_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(p_employeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(b_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -957,14 +999,14 @@ public class Employee extends javax.swing.JFrame {
                                 tb.addRow(rowData);
                                 consignment.setStatus_delivery(Consignment.Status.DELIVERED);
                                 consignments.add(consignment);
-                                current_branch.setRevenue(consignment.getDelivery_charge());
+                                curr_branch.setRevenue(consignment.getDelivery_charge());
 
                             }
                             truck.setStatus(Truck.Status.AVAILABLE);
                             truck.setIdle_time_start(Calendar.getInstance());
                             truck_iter.remove();
                             trucks.add(truck);
-                            current_branch.setTruck_list(trucks);
+                            curr_branch.setTruck_list(trucks);
                             break;
                         } else {
                             throw new Exception("Truck already unloaded for consignments at this destination");
@@ -978,6 +1020,15 @@ public class Employee extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         } finally {
+            for (ListIterator<Branch> branch_iter = branch_list.listIterator(); branch_iter.hasNext();) {
+                if (branch_iter.next().getName().equals(current_branch.getName())) {
+                    branch_iter.set(curr_branch);
+                    break;
+                }
+            }
+//            branch_list.remove(current_branch);
+//            current_branch = curr_branch;
+//            branch_list.add(current_branch);
             writeToDatabase();
         }
     }//GEN-LAST:event_b_receive_truckActionPerformed
@@ -996,45 +1047,42 @@ public class Employee extends javax.swing.JFrame {
                 for (Iterator<Truck> truck_iter = trucks.iterator(); truck_iter.hasNext();) {
                     Truck truck = truck_iter.next();
                     if (plate_num.equals(truck.getPlate_number())) {
-                        {
-                            truck_found = true;
-                            if (truck.getStatus() == Truck.Status.DISPATCHABLE) {
-                                int option = JOptionPane.showConfirmDialog(this, "Confirm Dispatch", "Dispatch", 1);
-                                if (option == 0) {
-                                    int distance = (Math.abs(curr_branch.getId() - truck.getDestination_office().getId())) * 100;
-                                    truck.setCurrent_office(truck.getDestination_office());
-                                    truck.setDestination_office(null);
-                                    truck.setStatus(Truck.Status.ENROUTE);
-                                    truck.setTotalKM(truck.getTotalKM() + distance);
+                        truck_found = true;
+                        if (truck.getStatus() == Truck.Status.DISPATCHABLE) {
+                            int option = JOptionPane.showConfirmDialog(this, "Confirm Dispatch", "Dispatch", 1);
+                            if (option == 0) {
+                                int distance = (Math.abs(curr_branch.getId() - truck.getDestination_office().getId())) * 100;
+                                truck.setCurrent_office(truck.getDestination_office());
+                                truck.setDestination_office(null);
+                                truck.setStatus(Truck.Status.ENROUTE);
+                                truck.setTotalKM(truck.getTotalKM() + distance);
 
-                                    ArrayList<Consignment> consignments = truck.getConsignment_list();
-                                    ArrayList<Consignment> consignments_new = new ArrayList<>();
-                                    Consignment consignment = null;
-                                    long branch_waiting_time = 0;
-                                    for (Iterator<Consignment> consignment_iter = consignments.iterator(); consignment_iter.hasNext();) {
-                                        consignment = consignment_iter.next();
-                                        consignment.setWaiting_time(Math.abs(consignment.getEntry_date().getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / 1000);
-                                        consignment.setStatus_delivery(Consignment.Status.ENROUTE);
-                                        branch_waiting_time += consignment.getWaiting_time();
-                                        consignments_new.add(consignment);
-                                    }
-                                    truck.setConsignment_list(consignments_new);
-                                    curr_branch.setCumulative_truck_count(curr_branch.getCumulative_truck_count() + 1);
-                                    curr_branch.setVolume_dispatched(curr_branch.getVolume_dispatched() + truck.getCurrent_occupied_volume());
-                                    long consignment_count = curr_branch.getCumulative_truck_count();
-                                    curr_branch.setAvgConsignmentWaitingTime((curr_branch.getAvg_consignment_waiting_time() * consignment_count + branch_waiting_time) / (consignment_count + consignments.size()));
-                                    curr_branch.setCumulative_consignment_count(consignment_count + consignments.size());
-                                    truck_iter.remove();
-                                    trucks.add(truck);
-                                    curr_branch.setTruck_list(trucks);
-                                    String details = null;
-                                    details = com.transporters.System.printDispatchDetails(truck);
-                                    ta_dispatch_details.setText(details);
-                                    JOptionPane.showMessageDialog(this, "Truck " + plate_num + "dispatched.", "Dispatch Successful", 1);
+                                ArrayList<Consignment> consignments = truck.getConsignment_list();
+                                Consignment consignment = null;
+                                long branch_waiting_time = 0;
+                                for (ListIterator<Consignment> consignment_iter = consignments.listIterator(); consignment_iter.hasNext();) {
+                                    consignment = consignment_iter.next();
+                                    consignment.setWaiting_time(Math.abs(consignment.getEntry_date().getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / 1000);
+                                    consignment.setStatus_delivery(Consignment.Status.ENROUTE);
+                                    branch_waiting_time += consignment.getWaiting_time();
+                                    consignment_iter.set(consignment);
                                 }
-                            } else {
-                                throw new Exception("Truck not dispatchable yet");
+                                truck.setConsignment_list(consignments);
+                                curr_branch.setCumulative_truck_count(curr_branch.getCumulative_truck_count() + 1);
+                                curr_branch.setVolume_dispatched(curr_branch.getVolume_dispatched() + truck.getCurrent_occupied_volume());
+                                long consignment_count = curr_branch.getCumulative_truck_count();
+                                curr_branch.setAvgConsignmentWaitingTime((curr_branch.getAvg_consignment_waiting_time() * consignment_count + branch_waiting_time) / (consignment_count + consignments.size()));
+                                curr_branch.setCumulative_consignment_count(consignment_count + consignments.size());
+                                truck_iter.remove();
+                                trucks.add(truck);
+                                curr_branch.setTruck_list(trucks);
+                                String details = null;
+                                details = com.transporters.System.printDispatchDetails(truck);
+                                ta_dispatch_details.setText(details);
+                                JOptionPane.showMessageDialog(this, "Truck " + plate_num + "dispatched.", "Dispatch Successful", 1);
                             }
+                        } else {
+                            throw new Exception("Truck not dispatchable yet");
                         }
                     }
                 }
@@ -1045,9 +1093,13 @@ public class Employee extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         } finally {
-            branch_list.remove(current_branch);
-            current_branch = curr_branch;
-            branch_list.add(current_branch);
+            for (ListIterator<Branch> branch_iter = branch_list.listIterator(); branch_iter.hasNext();) {
+                if (branch_iter.next().getName().equals(current_branch.getName())) {
+                    branch_iter.set(curr_branch);
+                    break;
+                }
+            }
+
             writeToDatabase();
         }
     }//GEN-LAST:event_b_dispatchActionPerformed
@@ -1164,14 +1216,13 @@ public class Employee extends javax.swing.JFrame {
             String to_branch_name = null;
             to_branch_name = cmb_to_branch.getSelectedItem().toString();
             for (Branch branch : branch_list) {
-
-                
-            if (to_branch_name.equals(branch.getName())) {
-
-                to_branch = branch;
+                if (to_branch_name.equals(branch.getName())) {
+                    to_branch = branch;
+                }
             }
+            if (to_branch == null) {
+                throw new Exception("To branch not found");
             }
-            
             curr_branch.setVolume_dispatched(curr_branch.getVolume_dispatched() + consignment.getVolume());
             consignment.setFrom_branch(curr_branch);
             consignment.setTo_branch(to_branch);
@@ -1183,67 +1234,85 @@ public class Employee extends javax.swing.JFrame {
 
             Truck assigned_truck = null;
             Truck truck_list_item = null;
-            ArrayList<Truck> truck_list = curr_branch.getTruck_list();
-            for (Iterator<Truck> iter = truck_list.iterator(); iter.hasNext();) {
+            ArrayList<Truck> trucks = curr_branch.getTruck_list();
+            for (ListIterator<Truck> iter = trucks.listIterator(); iter.hasNext();) {
                 truck_list_item = iter.next();
-                if (truck_list_item.getDestination_office().equals(to_branch) && truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
-                    if (truck_list_item.getCurrent_occupied_volume() + consignment.getVolume() < Truck.MAX_CAPACITY) {
-                        assigned_truck = truck_list_item;
-                        iter.remove();
-                        break;
+                if (truck_list_item.getDestination_office() != null) {
+                    if (truck_list_item.getDestination_office().getName().equals(to_branch.getName()) && truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
+                        if (truck_list_item.getCurrent_occupied_volume() + consignment.getVolume() < Truck.MAX_CAPACITY) {
+                            assigned_truck = truck_list_item;
+                            break;
+                        }
                     }
                 }
             }
 
             if (assigned_truck == null) {
-                for (Iterator<Truck> iter = truck_list.iterator(); iter.hasNext();) {
+                for (ListIterator<Truck> iter = trucks.listIterator(); iter.hasNext();) {
                     truck_list_item = iter.next();
-                    if (truck_list_item.getDestination_office().equals(null) && truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
+                    if (truck_list_item.getDestination_office() == null && truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
                         assigned_truck = truck_list_item;
                         assigned_truck.setDestination_office(consignment.getTo_branch());
-                        assigned_truck.setTruck_idle_time(Math.abs(assigned_truck.getIdle_time_start().getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / 1000);
-                        iter.remove();
+                        
                         break;
                     }
                 }
             }
 
             if (assigned_truck != null) {
+                assigned_truck.setCurrent_occupied_volume(assigned_truck.getCurrent_occupied_volume() + consignment.getVolume());
                 ArrayList<Consignment> consignments = assigned_truck.getConsignment_list();
                 ArrayList<Truck> carrier_trucks = consignment.getCarrier_trucks();
                 carrier_trucks.add(assigned_truck);
                 consignment.setCarrier_trucks(carrier_trucks);
-                assigned_truck.setCurrent_occupied_volume(assigned_truck.getCurrent_occupied_volume() + consignment.getVolume());
                 consignments.add(consignment);
                 assigned_truck.setConsignment_list(consignments);
                 if (assigned_truck.getCurrent_occupied_volume() > Truck.MAX_CAPACITY - 50) {
                     assigned_truck.setStatus(Truck.Status.DISPATCHABLE);
                 }
-                truck_list.add(assigned_truck);
-                curr_branch.setTruck_list(truck_list);
+                Truck truck = null;
+                for (ListIterator<Truck> truck_iter = truck_list.listIterator(); truck_iter.hasNext();) {
+                    truck = truck_iter.next();
+                    if (assigned_truck.getPlate_number().equals(truck.getPlate_number())) {
+                        truck_iter.set(assigned_truck);
+                        break;
+                    }
+                }
+                for (ListIterator<Truck> truck_iter = trucks.listIterator(); truck_iter.hasNext();) {
+                    truck = truck_iter.next();
+                    if (assigned_truck.getPlate_number().equals(truck.getPlate_number())) {
+                        truck_iter.set(assigned_truck);
+                        break;
+                    }
+                }
+                trucks.add(assigned_truck);
+                curr_branch.setTruck_list(trucks);
+                JOptionPane.showMessageDialog(this, "Truck assigned" + assigned_truck.getPlate_number(), "Consignment Loaded", 1);
             } else {
                 consignment.setWaiting_time_start(Calendar.getInstance());
                 consignment.setStatus_delivery(Consignment.Status.PENDING);
                 ArrayList<Consignment> consignments = curr_branch.getWaiting_consignment_list();
                 consignments.add(consignment);
                 curr_branch.setWaiting_consignment_list(consignments);
+                JOptionPane.showMessageDialog(this, "No truck available", "Consignment Waiting", 1);
             }
             String bill = null;
             bill = com.transporters.System.printBill(consignment);
             ta_billing_details.setText(bill);
             consignment_list.add(consignment);
             JOptionPane.showMessageDialog(this, "Consignment Added", "Success", 1);
-
         } catch (NumberFormatException | HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Error in consignment Details", "Error", 0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 0);
         } finally {
-
-            branch_list.remove(current_branch);
-            current_branch = curr_branch;
-            branch_list.add(current_branch);
-
+            for (ListIterator<Branch> branch_iter = branch_list.listIterator(); branch_iter.hasNext();) {
+                if (branch_iter.next().getName().equals(current_branch.getName())) {
+                    branch_iter.set(curr_branch);
+                    break;
+                }
+            }
+            
             writeToDatabase();
         }
     }//GEN-LAST:event_b_generate_billActionPerformed
@@ -1341,6 +1410,28 @@ public class Employee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_b_refreshMouseClicked
 
+    private void b_view_branch_trucksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_view_branch_trucksActionPerformed
+        readDatabase();
+        DefaultTableModel tb = (DefaultTableModel) table_branch_trucks.getModel();
+        tb.setRowCount(0);
+//        tb = new DefaultTableModel(new Object[]{"Consignment ID(s)", "Destination", "Source", "Status"}, 1);
+//        table_branch_trucks.setModel(tb);
+        tb.setRowCount(0);
+        if (!(current_branch.getTruck_list().isEmpty())) {
+            for (Truck truck : current_branch.getTruck_list()) {
+                String destination = "None";
+                if (!(truck.getDestination_office() == null)) {
+                    destination = truck.getDestination_office().getName();
+                }
+                Object[] rowData = new Object[]{truck.getPlate_number(), destination, truck.getStatus().toString()};
+                tb.addRow(rowData);
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No truck at this branch", "No trucks", 0);
+        }
+    }//GEN-LAST:event_b_view_branch_trucksActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1381,6 +1472,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JButton b_receive_truck;
     private javax.swing.JButton b_refresh;
     private javax.swing.JButton b_show_dispatchable_trucks;
+    private javax.swing.JButton b_view_branch_trucks;
     private javax.swing.JButton b_waiting_trucks_list;
     private javax.swing.ButtonGroup bg_delievery_type;
     private javax.swing.JComboBox cmb_to_branch;
@@ -1390,6 +1482,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel l_billing_address;
     private javax.swing.JLabel l_billing_contact;
     private javax.swing.JLabel l_billing_name;
@@ -1418,6 +1511,7 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JScrollPane sp_billing_details;
     private javax.swing.JTextArea ta_billing_details;
     private javax.swing.JTextArea ta_dispatch_details;
+    private javax.swing.JTable table_branch_trucks;
     private javax.swing.JTable table_consignment_id;
     private javax.swing.JTable table_dispatchable_trucks;
     private javax.swing.JTextField tf_billing_address;

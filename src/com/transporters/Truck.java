@@ -46,6 +46,8 @@ public class Truck implements Serializable {
         total_km = 0;
         current_occupied_volume = 0;
         consignment_list = new ArrayList<Consignment>();
+        idle_time_start = Calendar.getInstance();
+        truck_idle_time = 0;
     }
 
     ;

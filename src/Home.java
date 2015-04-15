@@ -333,10 +333,10 @@ public class Home extends javax.swing.JFrame {
                 } else {
                     throw new Exception("Password doesn't match");
                 }
-            } else if (login_id.equals("akash")){
+            } else {
                 if (password.equals("akash")) {
-                    int branch_id = 1;
-                    Employee employee = new Employee(branch_id);
+//                    int branch_id = 2;
+                    Employee employee = new Employee(Integer.valueOf(login_id));
                     employee.setVisible(true);
                     dispose();
                 } else {
