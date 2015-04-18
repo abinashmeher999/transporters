@@ -131,7 +131,7 @@ public class Employee extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
-            
+
 //            rs2.next();
 //            login_counter = rs2.getInt("counter");
 //            //rs.next();
@@ -191,12 +191,11 @@ public class Employee extends javax.swing.JFrame {
             PreparedStatement pstmt4 = head_office.getDatabase().getConnection().prepareStatement(update4);
             pstmt4.setObject(1, consignment_list);
             pstmt4.executeUpdate();
-            
+
 //            String update5 = "UPDATE Lists SET list=? WHERE name='login'";
 //            PreparedStatement pstmt5 = head_office.getDatabase().getConnection().prepareStatement(update5);
 //            pstmt5.setObject(1, login_list);
 //            pstmt5.executeUpdate();
-
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -212,6 +211,8 @@ public class Employee extends javax.swing.JFrame {
 
     /**
      * Creates new form Employee
+     *
+     * @param id
      */
     public Employee(int id) {
         branch_id = id;
@@ -1101,7 +1102,7 @@ public class Employee extends javax.swing.JFrame {
                                 Truck truck_2 = null;
                                 for (ListIterator<Truck> truck_iterator_2 = truck_list.listIterator(); truck_iterator_2.hasNext();) {
                                     truck_2 = truck_iterator_2.next();
-                                    if (truck_2.getPlate_number() == truck.getPlate_number()) {
+                                    if (truck_2.getPlate_number().equals(truck.getPlate_number())) {
                                         truck_iterator_2.set(truck);
                                     }
                                 }
@@ -1129,7 +1130,6 @@ public class Employee extends javax.swing.JFrame {
                     break;
                 }
             }
-
             writeToDatabase();
         }
     }//GEN-LAST:event_b_dispatchActionPerformed
@@ -1258,7 +1258,8 @@ public class Employee extends javax.swing.JFrame {
             consignment.setTo_branch(to_branch);
             int distance;
             distance = Math.abs(curr_branch.getId() - to_branch.getId()) * 100;
-            double delivery_charge = distance * consignment.getVolume() * consignment.getCharge_per_km();
+            double delivery_charge;
+            delivery_charge = distance * consignment.getVolume() * Consignment.getCharge_per_km();
             consignment.setDelivery_charge(delivery_charge);
             consignment.setDistance(distance);
 
@@ -1341,7 +1342,6 @@ public class Employee extends javax.swing.JFrame {
                     break;
                 }
             }
-
             writeToDatabase();
         }
     }//GEN-LAST:event_b_generate_billActionPerformed
@@ -1371,26 +1371,30 @@ public class Employee extends javax.swing.JFrame {
         Truck truck = null;
         for (ListIterator<Truck> truck_iter = truck_list.listIterator(); truck_iter.hasNext();) {
             truck = truck_iter.next();
-            if (truck.getDestination_office().getName().equals(current_branch.getName()) && truck.getStatus().equals(Truck.Status.ENROUTE)) {
-                Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName()};
-                model.addRow(rowData);
+            if (truck.getDestination_office() != null) {
+                if (truck.getDestination_office().getName().equals(current_branch.getName()) && truck.getStatus().equals(Truck.Status.ENROUTE)) {
+                    Object[] rowData = new Object[]{truck.getPlate_number(), truck.getCurrent_office().getName()};
+                    model.addRow(rowData);
+                }
             }
         }
     }//GEN-LAST:event_b_waiting_trucks_listActionPerformed
     private void refresh_write() {
-        
+
         for (Consignment waiting_consignment_list_item : current_branch.getWaiting_consignment_list()) {
             Truck assigned_truck = null;
             for (Truck truck_list_item : current_branch.getTruck_list()) {
-                if (truck_list_item.getDestination_office().equals(waiting_consignment_list_item.getTo_branch())) {
-                    if (truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
-                        if (truck_list_item.getCurrent_occupied_volume() + waiting_consignment_list_item.getVolume() < Truck.MAX_CAPACITY) {
-                            assigned_truck = truck_list_item;
-                            truck_list_item.getConsignment_list().add(waiting_consignment_list_item);
-                            long waiting_time = (Calendar.getInstance().getTimeInMillis() - waiting_consignment_list_item.getWaiting_time_start().getTimeInMillis()) / 1000;
-                            waiting_consignment_list_item.setWaiting_time(waiting_time);
-                            waiting_consignment_list_item.setStatus_delivery(Consignment.Status.ENROUTE);
-                            truck_list_item.setCurrent_occupied_volume(truck_list_item.getCurrent_occupied_volume() + waiting_consignment_list_item.getVolume());
+                if (truck_list_item.getDestination_office() != null) {
+                    if (truck_list_item.getDestination_office().equals(waiting_consignment_list_item.getTo_branch())) {
+                        if (truck_list_item.getStatus().equals(Truck.Status.AVAILABLE)) {
+                            if (truck_list_item.getCurrent_occupied_volume() + waiting_consignment_list_item.getVolume() < Truck.MAX_CAPACITY) {
+                                assigned_truck = truck_list_item;
+                                truck_list_item.getConsignment_list().add(waiting_consignment_list_item);
+                                long waiting_time = (Calendar.getInstance().getTimeInMillis() - waiting_consignment_list_item.getWaiting_time_start().getTimeInMillis()) / 1000;
+                                waiting_consignment_list_item.setWaiting_time(waiting_time);
+                                waiting_consignment_list_item.setStatus_delivery(Consignment.Status.ENROUTE);
+                                truck_list_item.setCurrent_occupied_volume(truck_list_item.getCurrent_occupied_volume() + waiting_consignment_list_item.getVolume());
+                            }
                         }
                     }
                 }
@@ -1398,8 +1402,9 @@ public class Employee extends javax.swing.JFrame {
         }
         writeToDatabase();
     }
+
     private void b_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_refreshActionPerformed
-        
+
         readDatabase();
         refresh_write();
 
