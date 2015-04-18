@@ -45,11 +45,7 @@ public class Home extends javax.swing.JFrame {
 
     Branch current_branch;
 
-    /**
-     * Creates new form Home
-     */
-    public Home() {
-        initComponents();
+    public void readDatabase() {
         try {
             Database.setIPAddress("localhost");
             db = new Database();
@@ -61,17 +57,18 @@ public class Home extends javax.swing.JFrame {
             Statement stmt3 = db.getConnection().createStatement();
             Statement stmt4 = db.getConnection().createStatement();
 
-            String query = "SELECT * FROM Lists";
-            ResultSet rs = stmt.executeQuery(query);
             List<byte[]> buf = new ArrayList<>();
             ObjectInputStream o;
 
-            String query2 = "SELECT * FROM ID_data";
+
+            String query = "SELECT * from Lists";
+            String query2 = "SELECT * from ID_data";
+
+            ResultSet rs1 = stmt.executeQuery(query);
             ResultSet rs2 = stmt2.executeQuery(query2);
 
             String query3 = "SELECT * FROM IP";
             ResultSet rs3 = stmt3.executeQuery(query3);
-
             rs3.next();
             Database.setIPAddress(rs3.getString("address"));
 
@@ -80,11 +77,12 @@ public class Home extends javax.swing.JFrame {
             rs4.next();
             Consignment.setCharge_per_km(rs4.getDouble("value"));
 
+
             rs2.next();
             head_counter = rs2.getInt("counter");
             int temp = 0;
-            while (rs.next()) {
-                buf.add(rs.getBytes("list"));
+            while (rs1.next()) {
+                buf.add(rs1.getBytes("list"));
             }
             if (head_counter != 0) {
                 //buf = rs.getBytes("list");
@@ -133,24 +131,135 @@ public class Home extends javax.swing.JFrame {
             } else {
                 consignment_list = new ArrayList<>();
             }
-
-            rs2.next();
-            login_counter = rs2.getInt("counter");
-            //rs.next();
-            if (login_counter != 0) {
-
-                //buf = rs.getBytes("list");
-                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
-                login_list = (ArrayList<Login>) o.readObject();
-            } else {
-                login_list = new ArrayList<>();
-            }
-            rs.close();
+            
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                ObjectInputStream o1 = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o1.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
+            
+            rs1.close();
             rs2.close();
+            rs3.close();
+            rs4.close();
         } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
             java.lang.System.out.println("What");
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    /**
+     * Creates new form Home
+     */
+    public Home() {
+        initComponents();
+        readDatabase();
+//        try {
+//            Database.setIPAddress("localhost");
+//            db = new Database();
+//            db.setUrl(Database.getBranchURL());
+//            db.setUser("root");
+//            db.setPassword("alsk");
+//            Statement stmt = db.getConnection().createStatement();
+//            Statement stmt2 = db.getConnection().createStatement();
+//            Statement stmt3 = db.getConnection().createStatement();
+//            Statement stmt4  = db.getConnection().createStatement();
+//            
+//            String query = "SELECT * FROM Lists";
+//            ResultSet rs = stmt.executeQuery(query);
+//            List<byte[]> buf = new ArrayList<>();
+//            ObjectInputStream o;
+//
+//            String query2 = "SELECT * FROM ID_data";
+//            ResultSet rs2 = stmt2.executeQuery(query2);
+//
+//            String query3 = "SELECT * FROM IP";
+//            ResultSet rs3 = stmt3.executeQuery(query3);
+//
+//            rs3.next();
+//            Database.setIPAddress(rs3.getString("address"));
+//            
+//            String query4  = "SELECT * FROM Charge";
+//            ResultSet rs4 = stmt4.executeQuery(query4);
+//            rs4.next();
+//            Consignment.setCharge_per_km(rs4.getDouble("value"));
+//
+//            rs2.next();
+//            head_counter = rs2.getInt("counter");
+//            int temp = 0;
+//            while (rs.next()) {
+//                buf.add(rs.getBytes("list"));
+//            }
+//            if (head_counter != 0) {
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                head_office = (HeadOffice) o.readObject();
+//            } else {
+//                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+//                String update = "UPDATE Lists SET list=? WHERE name='head_office'";
+//                PreparedStatement pstmt = db.getConnection().prepareStatement(update);
+//                pstmt.setObject(1, head_office);
+//                pstmt.executeUpdate();
+//                stmt.executeUpdate("UPDATE ID_data SET counter=1 WHERE name='head_counter'");
+//            }
+//
+//            rs2.next();
+//            branch_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (branch_counter != 0) {
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                branch_list = (ArrayList<Branch>) o.readObject();
+//            } else {
+//                branch_list = new ArrayList<>();
+//            }
+//
+//            rs2.next();
+//            truck_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (truck_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                truck_list = (ArrayList<Truck>) o.readObject();
+//            } else {
+//                truck_list = new ArrayList<>();
+//            }
+//
+//            rs2.next();
+//            consignment_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (consignment_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                consignment_list = (ArrayList<Consignment>) o.readObject();
+//            } else {
+//                consignment_list = new ArrayList<>();
+//            }
+//
+//            rs2.next();
+//            login_counter = rs2.getInt("counter");
+//            //rs.next();
+//            if (login_counter != 0) {
+//
+//                //buf = rs.getBytes("list");
+//                o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
+//                login_list = (ArrayList<Login>) o.readObject();
+//            } else {
+//                login_list = new ArrayList<>();
+//            }
+//            rs.close();
+//            rs2.close();
+//        } catch (SQLException | IOException | ClassNotFoundException ex) {//SQLException | IOException | ClassNotFoundException
+//            java.lang.System.out.println("What");
+//            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
