@@ -152,7 +152,6 @@ public class Manager extends javax.swing.JFrame {
 //            } else {
 //                login_list = new ArrayList<>();
 //            }
-
             rs1.close();
             rs2.close();
             rs3.close();
@@ -1394,28 +1393,28 @@ public class Manager extends javax.swing.JFrame {
 
     private void b_add_branchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_add_branchMouseClicked
         String branch_name = tf_mbn.getText();
-        if(branch_name.equals("")){
-            JOptionPane.showMessageDialog(this,"Branch Name cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+        if (branch_name.equals("")) {
+            JOptionPane.showMessageDialog(this, "Branch Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String contact = tf_mc.getText();
-        if(contact.equals("")){
-            JOptionPane.showMessageDialog(this,"Contact cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+        if (contact.equals("")) {
+            JOptionPane.showMessageDialog(this, "Contact cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String address = tf_ma.getText();
-        if(address.equals("")){
-            JOptionPane.showMessageDialog(this,"Address cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+        if (address.equals("")) {
+            JOptionPane.showMessageDialog(this, "Address cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String username = tf_mun.getText();
-        if(username.equals("")){
-            JOptionPane.showMessageDialog(this,"Username cannot be empty","Error",JOptionPane.ERROR_MESSAGE);
+        if (username.equals("")) {
+            JOptionPane.showMessageDialog(this, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String password = tf_mp.getText();
-        if(password.equals("")){
-            JOptionPane.showMessageDialog(this,"Password cannot empty","Error",JOptionPane.ERROR_MESSAGE);
+        if (password.equals("")) {
+            JOptionPane.showMessageDialog(this, "Password cannot empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Database tempdb = new Database();
@@ -2026,9 +2025,12 @@ public class Manager extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "List Empty", "Info", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 for (Login login : login_list) {
-                    if (login.getBranchName().equals(selected_branch.getName())) {
-                        model.addRow(new Object[]{login.getName(), login.getLogin_id(), login.getPassword()});
-
+                    if (selected_branch != null) {
+                        if (login.getBranchName().equals(selected_branch.getName())) {
+                            model.addRow(new Object[]{login.getName(), login.getLogin_id(), login.getPassword()});
+                        }
+                    }else{
+                        throw new Exception("Select a branch");
                     }
                 }
             }
