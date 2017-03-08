@@ -89,7 +89,7 @@ public class Employee extends javax.swing.JFrame {
                 o = new ObjectInputStream(new ByteArrayInputStream(buf.get(temp++)));
                 head_office = (HeadOffice) o.readObject();
             } else {
-                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+                head_office = new HeadOffice("transporters", new Address("9876543210", "LBS IITKGP"));
                 String update = "UPDATE Lists SET list=? WHERE name='head_office'";
                 PreparedStatement pstmt = db.getConnection().prepareStatement(update);
                 pstmt.setObject(1, head_office);
@@ -241,7 +241,7 @@ public class Employee extends javax.swing.JFrame {
                 o = new ObjectInputStream(new ByteArrayInputStream(buf));
                 head_office = (HeadOffice) o.readObject();
             } else {
-                head_office = new HeadOffice("transporters", new Address("9641183277", "LBS IITKGP"));
+                head_office = new HeadOffice("transporters", new Address("9876543210", "LBS IITKGP"));
                 String update = "UPDATE Lists SET list=? WHERE name='head_office'";
                 PreparedStatement pstmt = db.getConnection().prepareStatement(update);
                 pstmt.setObject(1, head_office);
